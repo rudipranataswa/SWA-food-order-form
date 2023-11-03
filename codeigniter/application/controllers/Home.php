@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Welcome extends CI_Controller
+class Home extends CI_Controller
 {
 
 	/**
@@ -20,16 +20,8 @@ class Welcome extends CI_Controller
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->load->model('product_model');
-		$this->load->helper('url_helper');
-	}
-
 	public function index()
 	{
-		$data['product_item'] = $this->product_model->get_product(1);
-		$this->load->view('welcome_message', array('data' => $data));
+		$this->load->view('index');
 	}
 }
