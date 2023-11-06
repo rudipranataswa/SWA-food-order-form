@@ -221,11 +221,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 		<tr>
-			<td>Steamed fish Hong Kong and bean curd fritter (Ikan Penderl)</td>
-			<td>Rosemary chicken</td>
-			<td></td>
-			<td></td>
+			<?php for ($i = 0; $i < count($menu_daily_set); $i++) : ?>
+				<td>
+					<?php echo $menu_daily_set[$i]['name']; ?>
+					<?php
+					if (isset($menu_soup[$i])) {
+						echo '<br>' . $menu_soup[$i]['name'];
+					}
+					if (isset($menu_protein[$i])) {
+						echo '<br>' . $menu_protein[$i]['name'];
+					}
+					if (isset($menu_rice[$i])) {
+						echo '<br>' . $menu_rice[$i]['name'];
+					}
+					if (isset($menu_fruit[$i])) {
+						echo '<br>' . $menu_fruit[$i]['name'];
+					}
+					?>
+				</td>
+			<?php endfor; ?>
 		</tr>
+
+
 
 		<tr>
 			<td rowspan="2">Week 2</td>
@@ -245,8 +262,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</tr>
 
 		<tr>
-			<td>Steamed fish Hong Kong and bean curd fritter (Ikan Penderl)</td>
-			<td>Rosemary chicken</td>
+			<?php foreach ($menu_daily_set as $item) : ?>
+				<td><?php echo $item['name']; ?></td>
+			<?php endforeach; ?>
 		</tr>
 		<!-- Add more rows as needed -->
 	</table>

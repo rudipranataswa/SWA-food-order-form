@@ -35,7 +35,12 @@ class Welcome extends CI_Controller
 	{
 		$data = array(
 			'product_item' => $this->product_model->get_product(),
-			'dates' => $this->product_model->get_dates()
+			'dates' => $this->product_model->get_dates(),
+			'menu_daily_set' => $this->product_model->get_menu_daily_set(),
+			'menu_soup' => $this->product_model->get_menu_soup(),
+			'menu_protein' => $this->product_model->get_menu_protein(),
+			'menu_rice' => $this->product_model->get_menu_rice(),
+			'menu_fruit' => $this->product_model->get_menu_fruit(),
 		);
 		$this->load->view('welcome_message', $data);
 	}

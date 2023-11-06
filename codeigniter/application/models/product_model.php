@@ -43,4 +43,69 @@ class Product_model extends CI_Model
 
                 $this->db->insert('order_hdr', $data);
         }
+
+        public function get_menu_daily_set()
+        {
+                $this->db->select('menu.name');
+                $this->db->from('po_purchase_meal_dtl');
+                $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
+                $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
+                $this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
+                $this->db->where('id_category', 1);
+                $this->db->where('po_purchase_meal_hdr.status', 'active');
+                $query = $this->db->get();
+                return $query->result_array();
+        }
+
+        public function get_menu_soup()
+        {
+                $this->db->select('menu.name');
+                $this->db->from('po_purchase_meal_dtl');
+                $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
+                $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
+                $this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
+                $this->db->where('id_category', 2);
+                $this->db->where('po_purchase_meal_hdr.status', 'active');
+                $query = $this->db->get();
+                return $query->result_array();
+        }
+
+        public function get_menu_protein()
+        {
+                $this->db->select('menu.name');
+                $this->db->from('po_purchase_meal_dtl');
+                $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
+                $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
+                $this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
+                $this->db->where('id_category', 5);
+                $this->db->where('po_purchase_meal_hdr.status', 'active');
+                $query = $this->db->get();
+                return $query->result_array();
+        }
+
+        public function get_menu_rice()
+        {
+                $this->db->select('menu.name');
+                $this->db->from('po_purchase_meal_dtl');
+                $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
+                $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
+                $this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
+                $this->db->where('id_category', 7);
+                $this->db->where('po_purchase_meal_hdr.status', 'active');
+                $query = $this->db->get();
+                return $query->result_array();
+        }
+
+        public function get_menu_fruit()
+        {
+                $this->db->select('menu.name');
+                $this->db->from('po_purchase_meal_dtl');
+                $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
+                $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
+                $this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
+                $this->db->where('id_category', 8);
+                $this->db->where('po_purchase_meal_hdr.status', 'active');
+                $query = $this->db->get();
+                return $query->result_array();
+        }
 }
