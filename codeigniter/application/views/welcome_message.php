@@ -6,144 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Food Order</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-	<link rel="stylesheet" href="/codeigniter/application/main.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>css/main.css">
 
-
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-		}
-
-		::selection {
-			background-color: #E13300;
-			color: white;
-		}
-
-		::-moz-selection {
-			background-color: #E13300;
-			color: white;
-		}
-
-		body {
-			background-color: #fff;
-			margin: 40px;
-			font: 13px/20px normal Helvetica, Arial, sans-serif;
-			color: #4F5155;
-		}
-
-		a {
-			color: #003399;
-			background-color: transparent;
-			font-weight: normal;
-			text-decoration: none;
-		}
-
-		a:hover {
-			color: #97310e;
-		}
-
-		h1 {
-			color: #444;
-			background-color: transparent;
-			border-bottom: 1px solid #D0D0D0;
-			font-size: 19px;
-			font-weight: normal;
-			margin: 0 0 14px 0;
-			padding: 14px 15px 10px 15px;
-		}
-
-		code {
-			font-family: Consolas, Monaco, Courier New, Courier, monospace;
-			font-size: 12px;
-			background-color: #f9f9f9;
-			border: 1px solid #D0D0D0;
-			color: #002166;
-			display: block;
-			margin: 14px 0 14px 0;
-			padding: 12px 10px 12px 10px;
-		}
-
-		#body {
-			margin: 0 15px 0 15px;
-			min-height: 96px;
-		}
-
-		p {
-			margin: 0 0 10px;
-			padding: 0;
-		}
-
-		p.footer {
-			text-align: right;
-			font-size: 11px;
-			border-top: 1px solid #D0D0D0;
-			line-height: 32px;
-			padding: 0 10px 0 10px;
-			margin: 20px 0 0 0;
-		}
-
-		#container {
-			margin: 10px;
-			border: 1px solid #D0D0D0;
-			box-shadow: 0 0 8px #D0D0D0;
-		}
-
-		.form-control::placeholder {
-			font-size: 14px;
-			opacity: 0.5;
-		}
-
-		form div {
-			margin-bottom: 10px;
-		}
-
-		form label {
-			font-weight: bold;
-		}
-
-		form .submit-btn {
-			margin-left: auto;
-			margin-top: auto;
-		}
-
-		p.thanks_label {
-			font-size: 36px;
-			text-align: center;
-		}
-
-		table {
-			width: 100%;
-			border-collapse: collapse;
-		}
-
-		table,
-		th {
-			border: 1px solid black;
-			padding: 15px;
-			text-align: center;
-			width: auto;
-		}
-
-		td {
-			border: 1px solid black;
-			padding: 15px;
-			text-align: left;
-			width: auto;
-		}
-
-		.gradient-custom-3 {
-			background: #84fab0;
-			background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
-			background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
-		}
-
-		.gradient-custom-4 {
-			background: #84fab0;
-			background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
-			background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
-		}
-	</style>
 </head>
 
 <body>
@@ -531,8 +395,23 @@
 		function addValue(checkbox) {
 			if (checkbox.checked) {
 				total += parseInt(checkbox.value);
+				if (checkbox.id === "checkbox1") {
+					document.getElementById("checkbox2").checked = true;
+					document.getElementById("checkbox3").checked = true;
+					document.getElementById("checkbox4").checked = true;
+					document.getElementById("checkbox5").checked = true;
+					total = parseInt(checkbox.value);
+				}
 			} else {
 				total -= parseInt(checkbox.value);
+				if (checkbox.id === "checkbox1") {
+					document.getElementById("checkbox2").checked = false;
+					document.getElementById("checkbox3").checked = false;
+					document.getElementById("checkbox4").checked = false;
+					document.getElementById("checkbox5").checked = false;
+				} else {
+					document.getElementById("checkbox1").checked = false;
+				}
 			}
 			document.getElementById("total").innerText = total;
 		}
