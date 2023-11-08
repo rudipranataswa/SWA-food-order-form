@@ -239,7 +239,6 @@
 	<br><br>
 
 	<table class="dailyset-table mb-5">
-		<h4><strong>Daily Set</strong></h4>
 		<tr>
 			<th>All <br><input type="checkbox"></th>
 			<th>Monday</th>
@@ -263,12 +262,93 @@
 			endforeach; ?>
 		</tr>
 
+
 		<tr>
-			<td>Steamed fish Hong Kong and bean curd fritter (Ikan Penderl) <input id="checkbox1" value="1" type="checkbox" onclick="addValue(this)"></td>
-			<td>Rosemary chicken <input id="checkbox2" value="2" type="checkbox" onclick="addValue(this)"></td>
-			<td></td>
-			<td></td>
+			<?php
+			foreach ($dates as $item) :
+				$begin_date = new DateTime($item['begin_date']);
+				$end_date = clone $begin_date;
+				$end_date->modify('+5 day');
+
+				for ($i = 0; $i < 5; $i++) :
+					$date_to_check = clone $begin_date;
+					$date_to_check->modify("+$i day");
+					$menu_name = '';
+					$menu_price = '';
+					$menu1_name = '';
+					$menu1_price = '';
+					$menu2_name = '';
+					$menu2_price = '';
+					$menu3_name = '';
+					$menu3_price = '';
+					$menu4_name = '';
+					$menu4_price = '';
+
+
+					foreach ($menu_daily_set as $menu) {
+						$menu_date = new DateTime($menu['date']);
+
+						if ($menu_date == $date_to_check) {
+							$menu_name = $menu['name'];
+							$menu_price = $menu['price'];
+							break;
+						}
+					}
+
+					foreach ($menu_soup as $menu1) {
+						$menu1_date = new DateTime($menu1['date']);
+
+						if ($menu1_date == $date_to_check) {
+							$menu1_name = $menu1['name'];
+							$menu1_price = $menu1['price'];
+							break;
+						}
+					}
+
+					foreach ($menu_protein as $menu2) {
+						$menu2_date = new DateTime($menu2['date']);
+
+						if ($menu2_date == $date_to_check) {
+							$menu2_name = $menu2['name'];
+							$menu2_price = $menu2['price'];
+							break;
+						}
+					}
+
+					foreach ($menu_rice as $menu3) {
+						$menu3_date = new DateTime($menu3['date']);
+
+						if ($menu3_date == $date_to_check) {
+							$menu3_name = $menu3['name'];
+							$menu3_price = $menu3['price'];
+							break;
+						}
+					}
+
+					foreach ($menu_fruit as $menu4) {
+						$menu4_date = new DateTime($menu4['date']);
+
+						if ($menu4_date == $date_to_check) {
+							$menu4_name = $menu4['name'];
+							$menu4_price = $menu4['price'];
+							break;
+						}
+					}
+			?>
+					<td>
+						<?php echo $menu_name . ' - ' . $menu_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox1" value="<?php echo $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+						<hr>
+						<?php echo $menu1_name . ' - ' . $menu1_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox2" value="<?php echo $menu1_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+						<?php echo $menu2_name . ' - ' . $menu2_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox3" value="<?php echo $menu2_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+						<?php echo $menu3_name . ' - ' . $menu3_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox4" value="<?php echo $menu3_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+						<?php echo $menu4_name . ' - ' . $menu4_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox5" value="<?php echo $menu4_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+					</td>
+			<?php
+				endfor;
+			endforeach;
+			?>
 		</tr>
+
 
 		<tr>
 			<td rowspan="2">Week 2</td>
@@ -287,13 +367,97 @@
 		</tr>
 
 		<tr>
-			<td>Steamed fish Hong Kong and bean curd fritter (Ikan Penderl) <input id="checkbox3" value="3" type="checkbox" onclick="addValue(this)"></td>
-			<td>Rosemary chicken <input id="checkbox4" value="4" type="checkbox" onclick="addValue(this)"></td>
-			<td></td>
-			<td></td>
-		</tr>
+			<?php
+			foreach ($dates as $item) :
+				$begin_date = new DateTime($item['begin_date']);
+				$end_date = clone $begin_date;
+				$end_date->modify('+5 day');
+
+				for ($i = 7; $i < 12; $i++) :
+					$date_to_check = clone $begin_date;
+					$date_to_check->modify("+$i day");
+					$menu_name = '';
+					$menu_price = '';
+					$menu1_name = '';
+					$menu1_price = '';
+					$menu2_name = '';
+					$menu2_price = '';
+					$menu3_name = '';
+					$menu3_price = '';
+					$menu4_name = '';
+					$menu4_price = '';
+
+
+					foreach ($menu_daily_set as $menu) {
+						$menu_date = new DateTime($menu['date']);
+
+						if ($menu_date == $date_to_check) {
+							$menu_name = $menu['name'];
+							$menu_price = $menu['price'];
+							break;
+						}
+					}
+
+					foreach ($menu_soup as $menu1) {
+						$menu1_date = new DateTime($menu1['date']);
+
+						if ($menu1_date == $date_to_check) {
+							$menu1_name = $menu1['name'];
+							$menu1_price = $menu1['price'];
+							break;
+						}
+					}
+
+					foreach ($menu_protein as $menu2) {
+						$menu2_date = new DateTime($menu2['date']);
+
+						if ($menu2_date == $date_to_check) {
+							$menu2_name = $menu2['name'];
+							$menu2_price = $menu2['price'];
+							break;
+						}
+					}
+
+					foreach ($menu_rice as $menu3) {
+						$menu3_date = new DateTime($menu3['date']);
+
+						if ($menu3_date == $date_to_check) {
+							$menu3_name = $menu3['name'];
+							$menu3_price = $menu3['price'];
+							break;
+						}
+					}
+
+					foreach ($menu_fruit as $menu4) {
+						$menu4_date = new DateTime($menu4['date']);
+
+						if ($menu4_date == $date_to_check) {
+							$menu4_name = $menu4['name'];
+							$menu4_price = $menu4['price'];
+							break;
+						}
+					}
+			?>
+					<td>
+						<?php echo $menu_name . ' - ' . $menu_price; ?><br>
+						<hr>
+						<?php echo $menu1_name . ' - ' . $menu1_price; ?><br>
+						<?php echo $menu2_name . ' - ' . $menu2_price; ?><br>
+						<?php echo $menu3_name . ' - ' . $menu3_price; ?><br>
+						<?php echo $menu4_name . ' - ' . $menu4_price; ?><br>
+					</td>
+			<?php
+				endfor;
+			endforeach;
+			?>
 
 	</table>
+
+
+	<div style="display: flex; margin-left: 990px;">
+		<h3>Total:<span style="display:inline-block; width: 10px;"></span></h3>
+		<h3 id="total">0</h3>
+	</div>
 
 
 
@@ -323,8 +487,8 @@
 		</tr>
 
 		<tr>
-			<td>Sphagetti Bolognese</td>
-			<td>Pesto</td>
+			<td>Sphagetti Bolognese<input id="checkbox5" value="5" type="checkbox" onclick="addValue(this)"></td>
+			<td>Pesto <input id="checkbox6" value="6" type="checkbox" onclick="addValue(this)"></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -346,15 +510,16 @@
 		</tr>
 
 		<tr>
-			<td>Sphagetti Bolognese</td>
-			<td>Pesto</td>
+			<td>Sphagetti Bolognese<input id="checkbox7" value="7" type="checkbox" onclick="addValue(this)"></td>
+			<td>Pesto<input id="checkbox8" value="8" type="checkbox" onclick="addValue(this)"></td>
 			<td></td>
 			<td></td>
 		</tr>
 
 	</table>
-	<h3>Total: </h3>
-	<h3 id="total">0</h3>
+
+
+
 
 
 
