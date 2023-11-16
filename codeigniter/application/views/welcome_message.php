@@ -94,6 +94,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		form .submit-btn {
 			margin-left: auto;
 			margin-top: auto;
+			/* align-items: center;
+			size: 45%; */
 		}
 
 		p.thanks_label {
@@ -186,352 +188,476 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<label for="Parent's Phone Number">Parent's Phone Number:</label>
 				<input type="text" maxlength=50 name="Phone_Number" required>
 			</div>
+			<!-- <div>
+				<input class="submit-btn" type="Submit" value="Submit">
+			</div> -->
+
+
+			<?php if ($this->session->flashdata('thank_you_note')) : ?>
+				<p class="thanks_label"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
+			<?php endif; ?>
+
+
+			<h1>Daily Set</h1>
+			<table>
+				<tr>
+					<th>All <br><input type="checkbox"></th>
+					<th>Monday</th>
+					<th>Tuesday</th>
+					<th>Wednesday</th>
+					<th>Thursday</th>
+					<th>Friday</th>
+				</tr>
+				<tr>
+					<td rowspan="2">Week 1</td>
+					<?php foreach ($dates as $item) : ?>
+					<?php
+						$date = new DateTime($item['begin_date']);
+						$days_added = 0;
+
+						for ($i = 0; $days_added < 5; $i++) : // Add a day
+							// Print the date and increment the counter
+							echo '<td>' . $date->format('j M Y') . '</td>';
+							$date->modify('+1 day');
+							$days_added++;
+						endfor;
+					endforeach; ?>
+				</tr>
+
+
+				<tr>
+					<?php
+					$counter = 1;
+					foreach ($dates as $item) :
+						$begin_date = new DateTime($item['begin_date']);
+						$end_date = clone $begin_date;
+						$end_date->modify('+5 day');
+
+						for ($i = 0; $i < 5; $i++) :
+							$date_to_check = clone $begin_date;
+							$date_to_check->modify("+$i day");
+							$menu_name = '';
+							$menu_price = '';
+							$menu1_name = '';
+							$menu1_price = '';
+							$menu2_name = '';
+							$menu2_price = '';
+							$menu3_name = '';
+							$menu3_price = '';
+							$menu4_name = '';
+							$menu4_price = '';
+
+
+							foreach ($menu_daily_set as $menu) {
+								$menu_date = new DateTime($menu['date']);
+
+								if ($menu_date == $date_to_check) {
+									$menu_name = $menu['name'];
+									$menu_price = $menu['price'];
+									break;
+								}
+							}
+
+							foreach ($menu_soup as $menu1) {
+								$menu1_date = new DateTime($menu1['date']);
+
+								if ($menu1_date == $date_to_check) {
+									$menu1_name = $menu1['name'];
+									$menu1_price = $menu1['price'];
+									break;
+								}
+							}
+
+							foreach ($menu_protein as $menu2) {
+								$menu2_date = new DateTime($menu2['date']);
+
+								if ($menu2_date == $date_to_check) {
+									$menu2_name = $menu2['name'];
+									$menu2_price = $menu2['price'];
+									break;
+								}
+							}
+
+							foreach ($menu_rice as $menu3) {
+								$menu3_date = new DateTime($menu3['date']);
+
+								if ($menu3_date == $date_to_check) {
+									$menu3_name = $menu3['name'];
+									$menu3_price = $menu3['price'];
+									break;
+								}
+							}
+
+							foreach ($menu_fruit as $menu4) {
+								$menu4_date = new DateTime($menu4['date']);
+
+								if ($menu4_date == $date_to_check) {
+									$menu4_name = $menu4['name'];
+									$menu4_price = $menu4['price'];
+									break;
+								}
+							}
+					?>
+							<td>
+								<?php echo $menu_name . ' - ' . $menu_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu_name; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<hr>
+								<?php echo $menu1_name . ' - ' . $menu1_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu1_name; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<?php echo $menu2_name . ' - ' . $menu2_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu2_name; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<?php echo $menu3_name . ' - ' . $menu3_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu3_name; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<?php echo $menu4_name . ' - ' . $menu4_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu4_name; ?>" type="checkbox" onclick="addValue(this)"><br>
+							</td>
+					<?php
+						endfor;
+					endforeach;
+					?>
+				</tr>
+
+
+
+
+				<tr>
+					<td rowspan="2">Week 2</td>
+					<?php foreach ($dates as $item) : ?>
+					<?php
+						$date = new DateTime($item['begin_date']);
+						$date->modify('+7 day'); // Add 7 days to the start date
+						$days_added = 0;
+
+						for ($i = 0; $days_added < 5; $i++) : // Add a day
+							// Print the date and increment the counter
+							echo '<td>' . $date->format('j M Y') . '</td>';
+							$date->modify('+1 day');
+							$days_added++;
+						endfor;
+					endforeach; ?>
+				</tr>
+
+				<tr>
+					<?php
+					$counter = 26;
+					foreach ($dates as $item) :
+						$begin_date = new DateTime($item['begin_date']);
+						$end_date = clone $begin_date;
+						$end_date->modify('+5 day');
+
+						for ($i = 7; $i < 12; $i++) :
+							$date_to_check = clone $begin_date;
+							$date_to_check->modify("+$i day");
+							$menu_name = '';
+							$menu_price = '';
+							$menu1_name = '';
+							$menu1_price = '';
+							$menu2_name = '';
+							$menu2_price = '';
+							$menu3_name = '';
+							$menu3_price = '';
+							$menu4_name = '';
+							$menu4_price = '';
+
+
+							foreach ($menu_daily_set as $menu) {
+								$menu_date = new DateTime($menu['date']);
+
+								if ($menu_date == $date_to_check) {
+									$menu_name = $menu['name'];
+									$menu_price = $menu['price'];
+									break;
+								}
+							}
+
+							foreach ($menu_soup as $menu1) {
+								$menu1_date = new DateTime($menu1['date']);
+
+								if ($menu1_date == $date_to_check) {
+									$menu1_name = $menu1['name'];
+									$menu1_price = $menu1['price'];
+									break;
+								}
+							}
+
+							foreach ($menu_protein as $menu2) {
+								$menu2_date = new DateTime($menu2['date']);
+
+								if ($menu2_date == $date_to_check) {
+									$menu2_name = $menu2['name'];
+									$menu2_price = $menu2['price'];
+									break;
+								}
+							}
+
+							foreach ($menu_rice as $menu3) {
+								$menu3_date = new DateTime($menu3['date']);
+
+								if ($menu3_date == $date_to_check) {
+									$menu3_name = $menu3['name'];
+									$menu3_price = $menu3['price'];
+									break;
+								}
+							}
+
+							foreach ($menu_fruit as $menu4) {
+								$menu4_date = new DateTime($menu4['date']);
+
+								if ($menu4_date == $date_to_check) {
+									$menu4_name = $menu4['name'];
+									$menu4_price = $menu4['price'];
+									break;
+								}
+							}
+					?>
+							<td>
+								<?php echo $menu_name . ' - ' . $menu_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu_name; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<hr>
+								<?php echo $menu1_name . ' - ' . $menu1_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu1_name; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<?php echo $menu2_name . ' - ' . $menu2_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu2_name; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<?php echo $menu3_name . ' - ' . $menu3_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu3_name; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<?php echo $menu4_name . ' - ' . $menu4_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu4_name; ?>" type="checkbox" onclick="addValue(this)"><br>
+							</td>
+					<?php
+						endfor;
+					endforeach;
+					?>
+
+					<!-- Add more rows as needed -->
+			</table>
+
+			<h1>Pasta</h1>
+			<table>
+				<tr>
+					<th>All <br><input type="checkbox"></th>
+					<th>Monday</th>
+					<th>Tuesday</th>
+					<th>Wednesday</th>
+					<th>Thursday</th>
+					<th>Friday</th>
+				</tr>
+				<tr>
+					<td rowspan="2">Week 1</td>
+					<?php foreach ($dates as $item) : ?>
+					<?php
+						$date = new DateTime($item['begin_date']);
+						$days_added = 0;
+
+						for ($i = 0; $days_added < 5; $i++) : // Add a day
+							// Print the date and increment the counter
+							echo '<td>' . $date->format('j M Y') . '</td>';
+							$date->modify('+1 day');
+							$days_added++;
+						endfor;
+					endforeach; ?>
+				</tr>
+
+
+				<tr>
+					<?php
+					foreach ($dates as $item) :
+						$begin_date = new DateTime($item['begin_date']);
+						$end_date = clone $begin_date;
+						$end_date->modify('+5 day');
+
+						for ($i = 0; $i < 5; $i++) :
+							$date_to_check = clone $begin_date;
+							$date_to_check->modify("+$i day");
+							$menu_name = '';
+							$menu_price = '';
+
+							foreach ($menu_pasta as $menu) {
+								$menu_date = new DateTime($menu['date']);
+
+								if ($menu_date == $date_to_check) {
+									$menu_name = $menu['name'];
+									$menu_price = $menu['price'];
+									break;
+								}
+							}
+					?>
+							<td>
+								<?php echo $menu_name . ' - ' . $menu_price; ?><br>
+							</td>
+					<?php
+						endfor;
+					endforeach;
+					?>
+				</tr>
+
+
+
+
+				<tr>
+					<td rowspan="2">Week 2</td>
+					<?php foreach ($dates as $item) : ?>
+					<?php
+						$date = new DateTime($item['begin_date']);
+						$date->modify('+7 day'); // Add 7 days to the start date
+						$days_added = 0;
+
+						for ($i = 0; $days_added < 5; $i++) : // Add a day
+							// Print the date and increment the counter
+							echo '<td>' . $date->format('j M Y') . '</td>';
+							$date->modify('+1 day');
+							$days_added++;
+						endfor;
+					endforeach; ?>
+				</tr>
+
+				<tr>
+					<?php
+					foreach ($dates as $item) :
+						$begin_date = new DateTime($item['begin_date']);
+						$end_date = clone $begin_date;
+						$end_date->modify('+5 day');
+
+						for ($i = 7; $i < 12; $i++) :
+							$date_to_check = clone $begin_date;
+							$date_to_check->modify("+$i day");
+							$menu_name = '';
+							$menu_price = '';
+
+
+							foreach ($menu_pasta as $menu) {
+								$menu_date = new DateTime($menu['date']);
+
+								if ($menu_date == $date_to_check) {
+									$menu_name = $menu['name'];
+									$menu_price = $menu['price'];
+									break;
+								}
+							}
+
+					?>
+							<td>
+								<?php echo $menu_name . ' - ' . $menu_price; ?><br>
+
+							</td>
+					<?php
+						endfor;
+					endforeach;
+					?>
+
+					<!-- Add more rows as needed -->
+			</table>
+
+			<h1>Breakfast and stall</h1>
+			<table>
+				<tr>
+					<th>All <br><input type="checkbox"></th>
+					<th>Monday</th>
+					<th>Tuesday</th>
+					<th>Wednesday</th>
+					<th>Thursday</th>
+					<th>Friday</th>
+				</tr>
+				<tr>
+					<td rowspan="2">Week 1</td>
+					<?php foreach ($dates as $item) : ?>
+					<?php
+						$date = new DateTime($item['begin_date']);
+						$days_added = 0;
+
+						for ($i = 0; $days_added < 5; $i++) : // Add a day
+							// Print the date and increment the counter
+							echo '<td>' . $date->format('j M Y') . '</td>';
+							$date->modify('+1 day');
+							$days_added++;
+						endfor;
+					endforeach; ?>
+				</tr>
+
+
+				<tr>
+					<?php
+					foreach ($dates as $item) :
+						$begin_date = new DateTime($item['begin_date']);
+						$end_date = clone $begin_date;
+						$end_date->modify('+5 day');
+
+						for ($i = 0; $i < 5; $i++) :
+							$date_to_check = clone $begin_date;
+							$date_to_check->modify("+$i day");
+							$menu_name = '';
+							$menu_price = '';
+
+							foreach ($menu_breakfast as $menu) {
+								$menu_date = new DateTime($menu['date']);
+
+								if ($menu_date == $date_to_check) {
+									$menu_name = $menu['name'];
+									$menu_price = $menu['price'];
+									break;
+								}
+							}
+					?>
+							<td>
+								<?php echo $menu_name . ' - ' . $menu_price; ?><br>
+							</td>
+					<?php
+						endfor;
+					endforeach;
+					?>
+				</tr>
+
+
+
+
+				<tr>
+					<td rowspan="2">Week 2</td>
+					<?php foreach ($dates as $item) : ?>
+					<?php
+						$date = new DateTime($item['begin_date']);
+						$date->modify('+7 day'); // Add 7 days to the start date
+						$days_added = 0;
+
+						for ($i = 0; $days_added < 5; $i++) : // Add a day
+							// Print the date and increment the counter
+							echo '<td>' . $date->format('j M Y') . '</td>';
+							$date->modify('+1 day');
+							$days_added++;
+						endfor;
+					endforeach; ?>
+				</tr>
+
+				<tr>
+					<?php
+					foreach ($dates as $item) :
+						$begin_date = new DateTime($item['begin_date']);
+						$end_date = clone $begin_date;
+						$end_date->modify('+5 day');
+
+						for ($i = 7; $i < 12; $i++) :
+							$date_to_check = clone $begin_date;
+							$date_to_check->modify("+$i day");
+							$menu_name = '';
+							$menu_price = '';
+
+
+							foreach ($menu_breakfast as $menu) {
+								$menu_date = new DateTime($menu['date']);
+
+								if ($menu_date == $date_to_check) {
+									$menu_name = $menu['name'];
+									$menu_price = $menu['price'];
+									break;
+								}
+							}
+
+					?>
+							<td>
+								<?php echo $menu_name . ' - ' . $menu_price; ?><br>
+
+							</td>
+					<?php
+						endfor;
+					endforeach;
+					?>
+
+					<!-- Add more rows as needed -->
+			</table>
+
 			<div>
 				<input class="submit-btn" type="Submit" value="Submit">
 			</div>
+
 		</form>
-
-		<?php if ($this->session->flashdata('thank_you_note')) : ?>
-			<p class="thanks_label"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
-		<?php endif; ?>
-
-
-		<h1>Daily Set</h1>
-		<table>
-			<tr>
-				<th>All <br><input type="checkbox"></th>
-				<th>Monday</th>
-				<th>Tuesday</th>
-				<th>Wednesday</th>
-				<th>Thursday</th>
-				<th>Friday</th>
-			</tr>
-			<tr>
-				<td rowspan="2">Week 1</td>
-				<?php foreach ($dates as $item) : ?>
-				<?php
-					$date = new DateTime($item['begin_date']);
-					$days_added = 0;
-
-					for ($i = 0; $days_added < 5; $i++) : // Add a day
-						// Print the date and increment the counter
-						echo '<td>' . $date->format('j M Y') . '</td>';
-						$date->modify('+1 day');
-						$days_added++;
-					endfor;
-				endforeach; ?>
-			</tr>
-
-
-			<tr>
-				<?php
-				foreach ($dates as $item) :
-					$begin_date = new DateTime($item['begin_date']);
-					$end_date = clone $begin_date;
-					$end_date->modify('+5 day');
-
-					for ($i = 0; $i < 5; $i++) :
-						$date_to_check = clone $begin_date;
-						$date_to_check->modify("+$i day");
-						$menu_name = '';
-						$menu_price = '';
-						$menu1_name = '';
-						$menu1_price = '';
-						$menu2_name = '';
-						$menu2_price = '';
-						$menu3_name = '';
-						$menu3_price = '';
-						$menu4_name = '';
-						$menu4_price = '';
-
-
-						foreach ($menu_daily_set as $menu) {
-							$menu_date = new DateTime($menu['date']);
-
-							if ($menu_date == $date_to_check) {
-								$menu_name = $menu['name'];
-								$menu_price = $menu['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_soup as $menu1) {
-							$menu1_date = new DateTime($menu1['date']);
-
-							if ($menu1_date == $date_to_check) {
-								$menu1_name = $menu1['name'];
-								$menu1_price = $menu1['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_protein as $menu2) {
-							$menu2_date = new DateTime($menu2['date']);
-
-							if ($menu2_date == $date_to_check) {
-								$menu2_name = $menu2['name'];
-								$menu2_price = $menu2['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_rice as $menu3) {
-							$menu3_date = new DateTime($menu3['date']);
-
-							if ($menu3_date == $date_to_check) {
-								$menu3_name = $menu3['name'];
-								$menu3_price = $menu3['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_fruit as $menu4) {
-							$menu4_date = new DateTime($menu4['date']);
-
-							if ($menu4_date == $date_to_check) {
-								$menu4_name = $menu4['name'];
-								$menu4_price = $menu4['price'];
-								break;
-							}
-						}
-				?>
-						<td>
-							<?php echo $menu_name . ' - ' . $menu_price; ?><br>
-							<hr>
-							<?php echo $menu1_name . ' - ' . $menu1_price; ?><br>
-							<?php echo $menu2_name . ' - ' . $menu2_price; ?><br>
-							<?php echo $menu3_name . ' - ' . $menu3_price; ?><br>
-							<?php echo $menu4_name . ' - ' . $menu4_price; ?><br>
-						</td>
-				<?php
-					endfor;
-				endforeach;
-				?>
-			</tr>
-
-
-
-
-			<tr>
-				<td rowspan="2">Week 2</td>
-				<?php foreach ($dates as $item) : ?>
-				<?php
-					$date = new DateTime($item['begin_date']);
-					$date->modify('+7 day'); // Add 7 days to the start date
-					$days_added = 0;
-
-					for ($i = 0; $days_added < 5; $i++) : // Add a day
-						// Print the date and increment the counter
-						echo '<td>' . $date->format('j M Y') . '</td>';
-						$date->modify('+1 day');
-						$days_added++;
-					endfor;
-				endforeach; ?>
-			</tr>
-
-			<tr>
-				<?php
-				foreach ($dates as $item) :
-					$begin_date = new DateTime($item['begin_date']);
-					$end_date = clone $begin_date;
-					$end_date->modify('+5 day');
-
-					for ($i = 7; $i < 12; $i++) :
-						$date_to_check = clone $begin_date;
-						$date_to_check->modify("+$i day");
-						$menu_name = '';
-						$menu_price = '';
-						$menu1_name = '';
-						$menu1_price = '';
-						$menu2_name = '';
-						$menu2_price = '';
-						$menu3_name = '';
-						$menu3_price = '';
-						$menu4_name = '';
-						$menu4_price = '';
-
-
-						foreach ($menu_daily_set as $menu) {
-							$menu_date = new DateTime($menu['date']);
-
-							if ($menu_date == $date_to_check) {
-								$menu_name = $menu['name'];
-								$menu_price = $menu['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_soup as $menu1) {
-							$menu1_date = new DateTime($menu1['date']);
-
-							if ($menu1_date == $date_to_check) {
-								$menu1_name = $menu1['name'];
-								$menu1_price = $menu1['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_protein as $menu2) {
-							$menu2_date = new DateTime($menu2['date']);
-
-							if ($menu2_date == $date_to_check) {
-								$menu2_name = $menu2['name'];
-								$menu2_price = $menu2['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_rice as $menu3) {
-							$menu3_date = new DateTime($menu3['date']);
-
-							if ($menu3_date == $date_to_check) {
-								$menu3_name = $menu3['name'];
-								$menu3_price = $menu3['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_fruit as $menu4) {
-							$menu4_date = new DateTime($menu4['date']);
-
-							if ($menu4_date == $date_to_check) {
-								$menu4_name = $menu4['name'];
-								$menu4_price = $menu4['price'];
-								break;
-							}
-						}
-				?>
-						<td>
-							<?php echo $menu_name . ' - ' . $menu_price; ?><br>
-							<hr>
-							<?php echo $menu1_name . ' - ' . $menu1_price; ?><br>
-							<?php echo $menu2_name . ' - ' . $menu2_price; ?><br>
-							<?php echo $menu3_name . ' - ' . $menu3_price; ?><br>
-							<?php echo $menu4_name . ' - ' . $menu4_price; ?><br>
-						</td>
-				<?php
-					endfor;
-				endforeach;
-				?>
-
-				<!-- Add more rows as needed -->
-		</table>
-
-		<h1>Pasta</h1>
-		<table>
-			<tr>
-				<th>All <br><input type="checkbox"></th>
-				<th>Monday</th>
-				<th>Tuesday</th>
-				<th>Wednesday</th>
-				<th>Thursday</th>
-				<th>Friday</th>
-			</tr>
-			<tr>
-				<td rowspan="2">Week 1</td>
-				<?php foreach ($dates as $item) : ?>
-				<?php
-					$date = new DateTime($item['begin_date']);
-					$days_added = 0;
-
-					for ($i = 0; $days_added < 5; $i++) : // Add a day
-						// Print the date and increment the counter
-						echo '<td>' . $date->format('j M Y') . '</td>';
-						$date->modify('+1 day');
-						$days_added++;
-					endfor;
-				endforeach; ?>
-			</tr>
-
-
-			<tr>
-				<?php
-				foreach ($dates as $item) :
-					$begin_date = new DateTime($item['begin_date']);
-					$end_date = clone $begin_date;
-					$end_date->modify('+5 day');
-
-					for ($i = 0; $i < 5; $i++) :
-						$date_to_check = clone $begin_date;
-						$date_to_check->modify("+$i day");
-						$menu_name = '';
-						$menu_price = '';
-
-						foreach ($menu_pasta as $menu) {
-							$menu_date = new DateTime($menu['date']);
-
-							if ($menu_date == $date_to_check) {
-								$menu_name = $menu['name'];
-								$menu_price = $menu['price'];
-								break;
-							}
-						}
-				?>
-						<td>
-							<?php echo $menu_name . ' - ' . $menu_price; ?><br>
-						</td>
-				<?php
-					endfor;
-				endforeach;
-				?>
-			</tr>
-
-
-
-
-			<tr>
-				<td rowspan="2">Week 2</td>
-				<?php foreach ($dates as $item) : ?>
-				<?php
-					$date = new DateTime($item['begin_date']);
-					$date->modify('+7 day'); // Add 7 days to the start date
-					$days_added = 0;
-
-					for ($i = 0; $days_added < 5; $i++) : // Add a day
-						// Print the date and increment the counter
-						echo '<td>' . $date->format('j M Y') . '</td>';
-						$date->modify('+1 day');
-						$days_added++;
-					endfor;
-				endforeach; ?>
-			</tr>
-
-			<tr>
-				<?php
-				foreach ($dates as $item) :
-					$begin_date = new DateTime($item['begin_date']);
-					$end_date = clone $begin_date;
-					$end_date->modify('+5 day');
-
-					for ($i = 7; $i < 12; $i++) :
-						$date_to_check = clone $begin_date;
-						$date_to_check->modify("+$i day");
-						$menu_name = '';
-						$menu_price = '';
-
-
-						foreach ($menu_pasta as $menu) {
-							$menu_date = new DateTime($menu['date']);
-
-							if ($menu_date == $date_to_check) {
-								$menu_name = $menu['name'];
-								$menu_price = $menu['price'];
-								break;
-							}
-						}
-
-				?>
-						<td>
-							<?php echo $menu_name . ' - ' . $menu_price; ?><br>
-
-						</td>
-				<?php
-					endfor;
-				endforeach;
-				?>
-
-				<!-- Add more rows as needed -->
-		</table>
 
 
 		<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>

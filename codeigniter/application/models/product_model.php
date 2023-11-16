@@ -124,4 +124,17 @@ class Product_model extends CI_Model
                 $query = $this->db->get();
                 return $query->result_array();
         }
+
+        public function get_menu_breakfast()
+        {
+                $this->db->select('menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price');
+                $this->db->from('po_purchase_meal_dtl');
+                $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
+                $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
+                $this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
+                $this->db->where('id_category', 4);
+                $this->db->where('po_purchase_meal_hdr.status', 'active');
+                $query = $this->db->get();
+                return $query->result_array();
+        }
 }

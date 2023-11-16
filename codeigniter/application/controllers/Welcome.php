@@ -42,6 +42,7 @@ class Welcome extends CI_Controller
 			'menu_rice' => $this->product_model->get_menu_rice(),
 			'menu_fruit' => $this->product_model->get_menu_fruit(),
 			'menu_pasta' => $this->product_model->get_menu_pasta(),
+			'menu_breakfast' => $this->product_model->get_menu_breakfast(),
 		);
 		$this->load->view('welcome_message', $data);
 	}
