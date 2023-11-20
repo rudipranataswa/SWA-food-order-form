@@ -7,8 +7,7 @@
                     <!-- Input Size -->
                     <div class="card">
                         <div class="card-header">
-                            Add
-                            <strong>Category</strong>
+                            <strong>Add Category</strong>
                         </div>
                         <div class="card-body card-block">
                             <form action="" method="post" class="form-horizontal">
