@@ -7,14 +7,12 @@
 	<title>Food Order</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>/css/main.css">
-	<script src="<?php echo base_url(); ?>js/welcome.js"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Viga&display=swap" rel="stylesheet">
 
 
 </head>
 
 <body>
-
 	<div class="container page-header">
 		<h1>Pre Order Purchase Meals From
 			<?php foreach ($dates as $item) : ?>
@@ -79,15 +77,16 @@
 		<table class="table table-striped w-auto dailyset-table ">
 			<h4><strong>Daily Set</strong></h4>
 			<tr>
-				<th>All <br><input type="checkbox"></th>
+				<th>All <br><input type="checkbox" id="checkboxall"></th>
 				<th>Monday</th>
 				<th>Tuesday</th>
 				<th>Wednesday</th>
 				<th>Thursday</th>
 				<th>Friday</th>
 			</tr>
+
 			<tr>
-				<td rowspan="2">Week 1<span style="display:inline-block; width: 7px;"></span><input id="checkboxw1" type="checkbox" onclick="addValue(this)"></td>
+				<td rowspan=" 2">Week 1<span style="display:inline-block; width: 7px;"></span><input id="checkboxw1" type="checkbox" onclick="addValue(this)"></td>
 				<?php foreach ($dates as $item) : ?>
 				<?php
 					$date = new DateTime($item['begin_date']);
@@ -112,6 +111,7 @@
 					for ($i = 0; $i < 5; $i++) :
 						$date_to_check = clone $begin_date;
 						$date_to_check->modify("+$i day");
+						$menu_id = '';
 						$menu_name = '';
 						$menu_price = '';
 						$menu1_name = '';
@@ -123,11 +123,11 @@
 						$menu4_name = '';
 						$menu4_price = '';
 
-
 						foreach ($menu_daily_set as $menu) {
 							$menu_date = new DateTime($menu['date']);
 
 							if ($menu_date == $date_to_check) {
+								$menu_id = $menu['id'];
 								$menu_name = $menu['name'];
 								$menu_price = $menu['price'];
 								break;
@@ -138,6 +138,7 @@
 							$menu1_date = new DateTime($menu1['date']);
 
 							if ($menu1_date == $date_to_check) {
+								$menu1_id = $menu1['id'];
 								$menu1_name = $menu1['name'];
 								$menu1_price = $menu1['price'];
 								break;
@@ -148,6 +149,7 @@
 							$menu2_date = new DateTime($menu2['date']);
 
 							if ($menu2_date == $date_to_check) {
+								$menu2_id = $menu2['id'];
 								$menu2_name = $menu2['name'];
 								$menu2_price = $menu2['price'];
 								break;
@@ -158,6 +160,7 @@
 							$menu3_date = new DateTime($menu3['date']);
 
 							if ($menu3_date == $date_to_check) {
+								$menu3_id = $menu3['id'];
 								$menu3_name = $menu3['name'];
 								$menu3_price = $menu3['price'];
 								break;
@@ -168,6 +171,7 @@
 							$menu4_date = new DateTime($menu4['date']);
 
 							if ($menu4_date == $date_to_check) {
+								$menu4_id = $menu4['id'];
 								$menu4_name = $menu4['name'];
 								$menu4_price = $menu4['price'];
 								break;
@@ -175,14 +179,14 @@
 						}
 				?>
 						<td>
-							<?php echo $menu_name . ' - ' . $menu_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox1" value="21#<?php echo $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+							<?php echo $menu_name . ' - ' . $menu_price . '-' . $menu_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 1; ?>" value="<?php echo $menu_id . ',' . $menu_price; ?>" type="checkbox" onclick="addValue(this,'p')"><br>
 							<hr>
-							<?php echo $menu1_name . ' - ' . $menu1_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox2" value="<?php echo $menu1_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu2_name . ' - ' . $menu2_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox3" value="<?php echo $menu2_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu3_name . ' - ' . $menu3_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox4" value="<?php echo $menu3_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu4_name . ' - ' . $menu4_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox5" value="<?php echo $menu4_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-
+							<?php echo $menu1_name . ' - ' . $menu1_price . '-' . $menu1_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 6; ?>" value="<?php echo $menu1_id . ',' . $menu1_price; ?>" type="checkbox" onclick="addValue(this, 'c')"><br>
+							<?php echo $menu2_name . ' - ' . $menu2_price . '-' . $menu2_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 11; ?>" value="<?php echo $menu2_id . ',' . $menu2_price; ?>" type="checkbox" onclick="addValue(this,'c')"><br>
+							<?php echo $menu3_name . ' - ' . $menu3_price . '-' . $menu3_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 16; ?>" value="<?php echo $menu3_id . ',' . $menu3_price; ?>" type="checkbox" onclick="addValue(this,'c')"><br>
+							<?php echo $menu4_name . ' - ' . $menu4_price . '-' . $menu4_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 21; ?>" value="<?php echo $menu4_id . ',' . $menu4_price; ?>" type="checkbox" onclick="addValue(this,'c')"><br>
 						</td>
+
 				<?php
 					endfor;
 				endforeach;
@@ -216,6 +220,7 @@
 					for ($i = 7; $i < 12; $i++) :
 						$date_to_check = clone $begin_date;
 						$date_to_check->modify("+$i day");
+						$menu_id = '';
 						$menu_name = '';
 						$menu_price = '';
 						$menu1_name = '';
@@ -227,11 +232,11 @@
 						$menu4_name = '';
 						$menu4_price = '';
 
-
 						foreach ($menu_daily_set as $menu) {
 							$menu_date = new DateTime($menu['date']);
 
 							if ($menu_date == $date_to_check) {
+								$menu_id = $menu['id'];
 								$menu_name = $menu['name'];
 								$menu_price = $menu['price'];
 								break;
@@ -242,6 +247,7 @@
 							$menu1_date = new DateTime($menu1['date']);
 
 							if ($menu1_date == $date_to_check) {
+								$menu1_id = $menu1['id'];
 								$menu1_name = $menu1['name'];
 								$menu1_price = $menu1['price'];
 								break;
@@ -252,6 +258,7 @@
 							$menu2_date = new DateTime($menu2['date']);
 
 							if ($menu2_date == $date_to_check) {
+								$menu2_id = $menu2['id'];
 								$menu2_name = $menu2['name'];
 								$menu2_price = $menu2['price'];
 								break;
@@ -262,6 +269,7 @@
 							$menu3_date = new DateTime($menu3['date']);
 
 							if ($menu3_date == $date_to_check) {
+								$menu3_id = $menu3['id'];
 								$menu3_name = $menu3['name'];
 								$menu3_price = $menu3['price'];
 								break;
@@ -272,6 +280,7 @@
 							$menu4_date = new DateTime($menu4['date']);
 
 							if ($menu4_date == $date_to_check) {
+								$menu4_id = $menu4['id'];
 								$menu4_name = $menu4['name'];
 								$menu4_price = $menu4['price'];
 								break;
@@ -279,17 +288,19 @@
 						}
 				?>
 						<td>
-							<?php echo $menu_name . ' - ' . $menu_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox6" value="<?php echo $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+							<?php echo $menu_name . ' - ' . $menu_price . '-' . $menu_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 19; ?>" value="<?php echo $menu_id . ',' . $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
 							<hr>
-							<?php echo $menu1_name . ' - ' . $menu1_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox7" value="<?php echo $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu2_name . ' - ' . $menu2_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox8" value="<?php echo $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu3_name . ' - ' . $menu3_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox9" value="<?php echo $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu4_name . ' - ' . $menu4_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox10" value="<?php echo $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+							<?php echo $menu1_name . ' - ' . $menu1_price . '-' . $menu1_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 24; ?>" value="<?php echo $menu1_id . ',' . $menu1_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+							<?php echo $menu2_name . ' - ' . $menu2_price . '-' . $menu2_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 29; ?>" value="<?php echo $menu2_id . ',' . $menu2_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+							<?php echo $menu3_name . ' - ' . $menu3_price . '-' . $menu3_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 34; ?>" value="<?php echo $menu3_id . ',' . $menu3_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+							<?php echo $menu4_name . ' - ' . $menu4_price . '-' . $menu4_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 39; ?>" value="<?php echo $menu4_id . ',' . $menu4_price; ?>" type="checkbox" onclick="addValue(this)"><br>
 						</td>
+
 				<?php
 					endfor;
 				endforeach;
 				?>
+			</tr>
 
 		</table>
 	</div>
@@ -299,15 +310,16 @@
 		<table class="table table-striped w-auto pasta-table">
 			<h4><strong>Pasta</strong></h4>
 			<tr>
-				<th>All <br><input type="checkbox"></th>
+				<th>All <br><input type="checkbox" id="checkboxall_pasta" onclick="addValue(this)"></th>
 				<th>Monday</th>
 				<th>Tuesday</th>
 				<th>Wednesday</th>
 				<th>Thursday</th>
 				<th>Friday</th>
 			</tr>
+
 			<tr>
-				<td rowspan="2">Week 1<span style="display:inline-block; width: 7px;"></span><input id="checkboxw3" type="checkbox" onclick="addValue(this)"></td>
+				<td rowspan="2">Week 1<span style="display:inline-block; width: 7px;"></span><input id="checkboxw1_pasta" type="checkbox"></td>
 				<?php foreach ($dates as $item) : ?>
 				<?php
 					$date = new DateTime($item['begin_date']);
@@ -331,6 +343,7 @@
 					for ($i = 0; $i < 5; $i++) :
 						$date_to_check = clone $begin_date;
 						$date_to_check->modify("+$i day");
+						$menu_id = '';
 						$menu_name = '';
 						$menu_price = '';
 						$menu1_name = '';
@@ -343,63 +356,19 @@
 						$menu4_price = '';
 
 
-						foreach ($menu_daily_set as $menu) {
+						foreach ($menu_pasta as $menu) {
 							$menu_date = new DateTime($menu['date']);
 
 							if ($menu_date == $date_to_check) {
+								$menu_id = $menu['id'];
 								$menu_name = $menu['name'];
 								$menu_price = $menu['price'];
 								break;
 							}
 						}
-
-						foreach ($menu_soup as $menu1) {
-							$menu1_date = new DateTime($menu1['date']);
-
-							if ($menu1_date == $date_to_check) {
-								$menu1_name = $menu1['name'];
-								$menu1_price = $menu1['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_protein as $menu2) {
-							$menu2_date = new DateTime($menu2['date']);
-
-							if ($menu2_date == $date_to_check) {
-								$menu2_name = $menu2['name'];
-								$menu2_price = $menu2['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_rice as $menu3) {
-							$menu3_date = new DateTime($menu3['date']);
-
-							if ($menu3_date == $date_to_check) {
-								$menu3_name = $menu3['name'];
-								$menu3_price = $menu3['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_fruit as $menu4) {
-							$menu4_date = new DateTime($menu4['date']);
-
-							if ($menu4_date == $date_to_check) {
-								$menu4_name = $menu4['name'];
-								$menu4_price = $menu4['price'];
-								break;
-							}
-						}
 				?>
 						<td>
-							<?php echo $menu_name . ' - ' . $menu_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox11" value="<?php echo $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<hr>
-							<?php echo $menu1_name . ' - ' . $menu1_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox12" value="<?php echo $menu1_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu2_name . ' - ' . $menu2_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox13" value="<?php echo $menu2_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu3_name . ' - ' . $menu3_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox14" value="<?php echo $menu3_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu4_name . ' - ' . $menu4_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox15" value="<?php echo $menu4_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+							<?php echo $menu_name . ' - ' . $menu_price . '-' . $menu_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 51; ?>" value="<?php echo $menu_id . ',' . $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
 						</td>
 				<?php
 					endfor;
@@ -407,8 +376,9 @@
 				?>
 			</tr>
 
+
 			<tr>
-				<td rowspan="2">Week 2<span style="display:inline-block; width: 7px;"></span><input id="checkboxw4" type="checkbox" onclick="addValue(this)"></td>
+				<td rowspan="2">Week 2<span style="display:inline-block; width: 7px;"></span><input id="checkboxw2_pasta" type="checkbox"></td>
 				<?php foreach ($dates as $item) : ?>
 				<?php
 					$date = new DateTime($item['begin_date']);
@@ -430,9 +400,10 @@
 					$end_date = clone $begin_date;
 					$end_date->modify('+5 day');
 
-					for ($i = 0; $i < 5; $i++) :
+					for ($i = 7; $i < 12; $i++) :
 						$date_to_check = clone $begin_date;
 						$date_to_check->modify("+$i day");
+						$menu_id = '';
 						$menu_name = '';
 						$menu_price = '';
 						$menu1_name = '';
@@ -445,63 +416,19 @@
 						$menu4_price = '';
 
 
-						foreach ($menu_daily_set as $menu) {
+						foreach ($menu_pasta as $menu) {
 							$menu_date = new DateTime($menu['date']);
 
 							if ($menu_date == $date_to_check) {
+								$menu_id = $menu['id'];
 								$menu_name = $menu['name'];
 								$menu_price = $menu['price'];
 								break;
 							}
 						}
-
-						foreach ($menu_soup as $menu1) {
-							$menu1_date = new DateTime($menu1['date']);
-
-							if ($menu1_date == $date_to_check) {
-								$menu1_name = $menu1['name'];
-								$menu1_price = $menu1['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_protein as $menu2) {
-							$menu2_date = new DateTime($menu2['date']);
-
-							if ($menu2_date == $date_to_check) {
-								$menu2_name = $menu2['name'];
-								$menu2_price = $menu2['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_rice as $menu3) {
-							$menu3_date = new DateTime($menu3['date']);
-
-							if ($menu3_date == $date_to_check) {
-								$menu3_name = $menu3['name'];
-								$menu3_price = $menu3['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_fruit as $menu4) {
-							$menu4_date = new DateTime($menu4['date']);
-
-							if ($menu4_date == $date_to_check) {
-								$menu4_name = $menu4['name'];
-								$menu4_price = $menu4['price'];
-								break;
-							}
-						}
 				?>
 						<td>
-							<?php echo $menu_name . ' - ' . $menu_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox16" value="<?php echo $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<hr>
-							<?php echo $menu1_name . ' - ' . $menu1_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox17" value="<?php echo $menu1_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu2_name . ' - ' . $menu2_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox18" value="<?php echo $menu2_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu3_name . ' - ' . $menu3_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox19" value="<?php echo $menu3_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu4_name . ' - ' . $menu4_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox20" value="<?php echo $menu4_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+							<?php echo $menu_name . ' - ' . $menu_price . '-' . $menu_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 49; ?>" value="<?php echo $menu_id . ',' . $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
 						</td>
 				<?php
 					endfor;
@@ -512,11 +439,12 @@
 		</table>
 	</div>
 
+
 	<div class="table-responsive mb-5" style="overflow-x:auto;">
-		<table class="table table-striped w-auto pasta-table">
+		<table class="table table-striped w-auto breakfast-table">
 			<h4><strong>Breakfast & Stall</strong></h4>
 			<tr>
-				<th>All <br><input type="checkbox"></th>
+				<th>All <br><input type="checkbox" id="checkboxall_breakfast" onclick="addValue(this)"></th>
 				<th>Monday</th>
 				<th>Tuesday</th>
 				<th>Wednesday</th>
@@ -524,7 +452,7 @@
 				<th>Friday</th>
 			</tr>
 			<tr>
-				<td rowspan="2">Week 1<span style="display:inline-block; width: 7px;"></span><input id="checkboxw5" type="checkbox" onclick="addValue(this)"></td>
+				<td rowspan="2">Week 1<span style="display:inline-block; width: 7px;"></span><input id="checkboxw1_breakfast" type="checkbox"></td>
 				<?php foreach ($dates as $item) : ?>
 				<?php
 					$date = new DateTime($item['begin_date']);
@@ -548,6 +476,7 @@
 					for ($i = 0; $i < 5; $i++) :
 						$date_to_check = clone $begin_date;
 						$date_to_check->modify("+$i day");
+						$menu_id = '';
 						$menu_name = '';
 						$menu_price = '';
 						$menu1_name = '';
@@ -560,63 +489,19 @@
 						$menu4_price = '';
 
 
-						foreach ($menu_daily_set as $menu) {
+						foreach ($menu_breakfast as $menu) {
 							$menu_date = new DateTime($menu['date']);
 
 							if ($menu_date == $date_to_check) {
+								$menu_id = $menu['id'];
 								$menu_name = $menu['name'];
 								$menu_price = $menu['price'];
 								break;
 							}
 						}
-
-						foreach ($menu_soup as $menu1) {
-							$menu1_date = new DateTime($menu1['date']);
-
-							if ($menu1_date == $date_to_check) {
-								$menu1_name = $menu1['name'];
-								$menu1_price = $menu1['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_protein as $menu2) {
-							$menu2_date = new DateTime($menu2['date']);
-
-							if ($menu2_date == $date_to_check) {
-								$menu2_name = $menu2['name'];
-								$menu2_price = $menu2['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_rice as $menu3) {
-							$menu3_date = new DateTime($menu3['date']);
-
-							if ($menu3_date == $date_to_check) {
-								$menu3_name = $menu3['name'];
-								$menu3_price = $menu3['price'];
-								break;
-							}
-						}
-
-						foreach ($menu_fruit as $menu4) {
-							$menu4_date = new DateTime($menu4['date']);
-
-							if ($menu4_date == $date_to_check) {
-								$menu4_name = $menu4['name'];
-								$menu4_price = $menu4['price'];
-								break;
-							}
-						}
 				?>
 						<td>
-							<?php echo $menu_name . ' - ' . $menu_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox21" value="<?php echo $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<hr>
-							<?php echo $menu1_name . ' - ' . $menu1_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox22" value="<?php echo $menu1_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu2_name . ' - ' . $menu2_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox23" value="<?php echo $menu2_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu3_name . ' - ' . $menu3_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox24" value="<?php echo $menu3_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu4_name . ' - ' . $menu4_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox25" value="<?php echo $menu4_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+							<?php echo $menu_name . ' - ' . $menu_price . '-' . $menu_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 61; ?>" value="<?php echo $menu_id . ',' . $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
 						</td>
 				<?php
 					endfor;
@@ -625,7 +510,7 @@
 			</tr>
 
 			<tr>
-				<td rowspan="2">Week 2<span style="display:inline-block; width: 7px;"></span><input id="checkboxw6" type="checkbox" onclick="addValue(this)"></td>
+				<td rowspan="2">Week 2<span style="display:inline-block; width: 7px;"></span><input id="checkboxw2_breakfast" type="checkbox"></td>
 				<?php foreach ($dates as $item) : ?>
 				<?php
 					$date = new DateTime($item['begin_date']);
@@ -641,11 +526,46 @@
 			</tr>
 
 			<tr>
-				<td>Sphagetti Bolognese<input id="checkbox7" value="7" type="checkbox" onclick="addValue(this)"></td>
-				<td>Pesto<input id="checkbox8" value="8" type="checkbox" onclick="addValue(this)"></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<?php
+				foreach ($dates as $item) :
+					$begin_date = new DateTime($item['begin_date']);
+					$end_date = clone $begin_date;
+					$end_date->modify('+5 day');
+
+					for ($i = 7; $i < 12; $i++) :
+						$date_to_check = clone $begin_date;
+						$date_to_check->modify("+$i day");
+						$menu_id = '';
+						$menu_name = '';
+						$menu_price = '';
+						$menu1_name = '';
+						$menu1_price = '';
+						$menu2_name = '';
+						$menu2_price = '';
+						$menu3_name = '';
+						$menu3_price = '';
+						$menu4_name = '';
+						$menu4_price = '';
+
+
+						foreach ($menu_breakfast as $menu) {
+							$menu_date = new DateTime($menu['date']);
+
+							if ($menu_date == $date_to_check) {
+								$menu_id = $menu['id'];
+								$menu_name = $menu['name'];
+								$menu_price = $menu['price'];
+								break;
+							}
+						}
+				?>
+						<td>
+							<?php echo $menu_name . ' - ' . $menu_price . '-' . $menu_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 59; ?>" value="<?php echo $menu_id . ',' . $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+						</td>
+				<?php
+					endfor;
+				endforeach;
+				?>
 			</tr>
 
 		</table>
@@ -662,12 +582,330 @@
 		<button type="Submit" value="Submit" class="default-btn">Submit</button>
 	</div>
 
-	<?php if ($this->session->flashdata('thank_you_note')) : ?>
-		<p class="thanks_label"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
-	<?php endif; ?>
 
 
 
+
+	<script>
+		function addValue(checkboxElement, level) {
+			var value = checkboxElement.value;
+
+			if (!value) {
+				return;
+			}
+
+			var splitValue = value.split(',');
+			var price = parseInt(splitValue[1]);
+
+			if (isNaN(price)) {
+				price = 0;
+			}
+
+			var totalElement = document.getElementById('total');
+			var currentTotal = parseInt(totalElement.innerHTML);
+
+			if (checkboxElement.checked) {
+				currentTotal += price;
+			} else {
+				currentTotal -= price;
+			}
+
+			totalElement.innerHTML = currentTotal;
+		}
+	</script>
+
+
+	<!-- Daily Set -->
+	<script>
+		document.getElementById('checkboxall').addEventListener('change', function() {
+			for (let i = 1; i <= 50; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+			document.getElementById('checkboxw1').checked = this.checked;
+			document.getElementById('checkboxw2').checked = this.checked;
+		});
+
+		for (let i = 1; i <= 50; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				document.getElementById('checkboxall').checked = Array.from({
+					length: 50
+				}, (_, j) => j + 1).every(j => document.getElementById('checkbox' + j).checked);
+			});
+		}
+
+		document.getElementById('checkboxw1').addEventListener('change', function() {
+			document.getElementById('checkboxall').checked = document.getElementById('checkboxw1').checked && document.getElementById('checkboxw2').checked;
+		});
+
+		document.getElementById('checkboxw2').addEventListener('change', function() {
+			document.getElementById('checkboxall').checked = document.getElementById('checkboxw1').checked && document.getElementById('checkboxw2').checked;
+		});
+
+		// Daily Set Week 1
+		document.getElementById('checkboxw1').addEventListener('change', function() {
+			for (let i = 1; i <= 25; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+
+		for (let i = 1; i <= 25; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				document.getElementById('checkboxw1').checked = Array.from({
+					length: 5
+				}, (_, j) => j + 1).every(j => document.getElementById('checkbox' + j).checked);
+			});
+		}
+
+		//Daily Set Week 2
+		document.getElementById('checkboxw2').addEventListener('change', function() {
+			for (let i = 26; i <= 50; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+
+		for (let i = 26; i <= 50; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				document.getElementById('checkboxw2').checked = Array.from({
+					length: 5
+				}, (_, j) => j + 26).every(j => document.getElementById('checkbox' + j).checked);
+			});
+		}
+	</script>
+
+
+	<!-- Pasta -->
+	<script>
+		document.getElementById('checkboxall_pasta').addEventListener('change', function() {
+			for (let i = 51; i <= 60; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+			document.getElementById('checkboxw1_pasta').checked = this.checked;
+			document.getElementById('checkboxw2_pasta').checked = this.checked;
+		});
+
+		for (let i = 51; i <= 60; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				document.getElementById('checkboxall_pasta').checked = Array.from({
+					length: 10
+				}, (_, j) => j + 51).every(j => document.getElementById('checkbox' + j).checked);
+			});
+		}
+
+		document.getElementById('checkboxw1_pasta').addEventListener('change', function() {
+			document.getElementById('checkboxall_pasta').checked = document.getElementById('checkboxw1_pasta').checked && document.getElementById('checkboxw2_pasta').checked;
+		});
+
+		document.getElementById('checkboxw2_pasta').addEventListener('change', function() {
+			document.getElementById('checkboxall_pasta').checked = document.getElementById('checkboxw1_pasta').checked && document.getElementById('checkboxw2_pasta').checked;
+		});
+
+		// Pasta Week 1
+		document.getElementById('checkboxw1_pasta').addEventListener('change', function() {
+			for (let i = 51; i <= 55; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+
+		for (let i = 51; i <= 55; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				document.getElementById('checkboxw1_pasta').checked = Array.from({
+					length: 5
+				}, (_, j) => j + 51).every(j => document.getElementById('checkbox' + j).checked);
+			});
+		}
+
+		//Pasta Week 2
+		document.getElementById('checkboxw2_pasta').addEventListener('change', function() {
+			for (let i = 56; i <= 60; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+
+		for (let i = 56; i <= 60; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				document.getElementById('checkboxw2_pasta').checked = Array.from({
+					length: 5
+				}, (_, j) => j + 56).every(j => document.getElementById('checkbox' + j).checked);
+			});
+		}
+	</script>
+
+
+	<!-- Breakfast & Stall -->
+	<script>
+		document.getElementById('checkboxall_breakfast').addEventListener('change', function() {
+			for (let i = 61; i <= 70; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+			document.getElementById('checkboxw1_breakfast').checked = this.checked;
+			document.getElementById('checkboxw2_breakfast').checked = this.checked;
+		});
+
+		for (let i = 61; i <= 70; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				document.getElementById('checkboxall_breakfast').checked = Array.from({
+					length: 10
+				}, (_, j) => j + 61).every(j => document.getElementById('checkbox' + j).checked);
+			});
+		}
+
+		document.getElementById('checkboxw1_breakfast').addEventListener('change', function() {
+			document.getElementById('checkboxall_breakfast').checked = document.getElementById('checkboxw1_breakfast').checked && document.getElementById('checkboxw2_breakfast').checked;
+		});
+
+		document.getElementById('checkboxw2_breakfast').addEventListener('change', function() {
+			document.getElementById('checkboxall_breakfast').checked = document.getElementById('checkboxw1_breakfast').checked && document.getElementById('checkboxw2_breakfast').checked;
+		});
+
+		// Breakfast Week 1
+		document.getElementById('checkboxw1_breakfast').addEventListener('change', function() {
+			for (let i = 61; i <= 65; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+
+		for (let i = 61; i <= 65; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				document.getElementById('checkboxw1_breakfast').checked = Array.from({
+					length: 5
+				}, (_, j) => j + 61).every(j => document.getElementById('checkbox' + j).checked);
+			});
+		}
+
+		//Breakfast Week 2
+		document.getElementById('checkboxw2_breakfast').addEventListener('change', function() {
+			for (let i = 66; i <= 70; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+
+		for (let i = 66; i <= 70; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				document.getElementById('checkboxw2_breakfast').checked = Array.from({
+					length: 5
+				}, (_, j) => j + 66).every(j => document.getElementById('checkbox' + j).checked);
+			});
+		}
+	</script>
+
+	<script>
+
+	</script>
+
+
+
+	<!--<script>
+		document.getElementById('checkboxall').addEventListener('change', function() {
+			for (let i = 1; i <= 50; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+		for (let i = 1; i <= 50; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				let allChecked = true;
+				for (let j = 1; j <= 50; j++) {
+					if (!document.getElementById('checkbox' + j).checked) {
+						allChecked = false;
+						break;
+					}
+				}
+				document.getElementById('checkboxall').checked = allChecked;
+			});
+		}
+
+
+		document.getElementById('checkboxw1').addEventListener('change', function() {
+			for (let i = 1; i <= 25; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+		for (let i = 1; i <= 25; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				let allChecked = true;
+				for (let j = 1; j <= 25; j++) {
+					if (!document.getElementById('checkbox' + j).checked) {
+						allChecked = false;
+						break;
+					}
+				}
+				document.getElementById('checkboxw1').checked = allChecked;
+			});
+		}
+
+
+		document.getElementById('checkboxw2').addEventListener('change', function() {
+			for (let i = 26; i <= 50; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+		for (let i = 26; i <= 50; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				let allChecked = true;
+				for (let j = 26; j <= 50; j++) {
+					if (!document.getElementById('checkbox' + j).checked) {
+						allChecked = false;
+						break;
+					}
+				}
+				document.getElementById('checkboxw2').checked = allChecked;
+			});
+		}
+
+
+		document.getElementById('checkboxall_pasta').addEventListener('change', function() {
+			for (let i = 51; i <= 60; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+		for (let i = 51; i <= 60; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				let allChecked = true;
+				for (let j = 1; j <= 50; j++) {
+					if (!document.getElementById('checkbox' + j).checked) {
+						allChecked = false;
+						break;
+					}
+				}
+				document.getElementById('checkboxall_pasta').checked = allChecked;
+			});
+		}
+
+		document.getElementById('checkboxw1_pasta').addEventListener('change', function() {
+			for (let i = 51; i <= 55; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+		for (let i = 51; i <= 55; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				let allChecked = true;
+				for (let j = 51; j <= 55; j++) {
+					if (!document.getElementById('checkbox' + j).checked) {
+						allChecked = false;
+						break;
+					}
+				}
+				document.getElementById('checkboxw1_pasta').checked = allChecked;
+			});
+		}
+
+		document.getElementById('checkboxw2_pasta').addEventListener('change', function() {
+			for (let i = 56; i <= 60; i++) {
+				document.getElementById('checkbox' + i).checked = this.checked;
+			}
+		});
+		for (let i = 56; i <= 60; i++) {
+			document.getElementById('checkbox' + i).addEventListener('change', function() {
+				let allChecked = true;
+				for (let j = 56; j <= 60; j++) {
+					if (!document.getElementById('checkbox' + j).checked) {
+						allChecked = false;
+						break;
+					}
+				}
+				document.getElementById('checkboxw2_pasta').checked = allChecked;
+			});
+		}
+	</script>-->
 
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
