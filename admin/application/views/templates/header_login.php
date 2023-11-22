@@ -15,7 +15,7 @@
     <title><?php echo $judul; ?></title>
 
     <!-- Main CSS -->
-    <!-- <link href="css/theme.css" rel="stylesheet" media="all" /> --> 
+    <!-- <link href="css/theme.css" rel="stylesheet" media="all" />  -->
     <!-- Fontfaces CSS-->
     <link href="<?php echo base_url('css/font-face.css'); ?>" rel="stylesheet" media="all" />
     <link href="<?php echo base_url('vendor/font-awesome-4.7/css/font-awesome.min.css'); ?>" rel="stylesheet" media="all" />
