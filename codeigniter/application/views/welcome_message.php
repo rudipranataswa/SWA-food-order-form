@@ -177,14 +177,15 @@
 								break;
 							}
 						}
+						$checkbox_name = $date_to_check->format('Y-m-d');
 				?>
 						<td>
-							<?php echo $menu_name . ' - ' . $menu_price . '-' . $menu_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 1; ?>" value="<?php echo $menu_id . ',' . $menu_price; ?>" type="checkbox" onclick="addValue(this,'p')"><br>
+							<?php echo $menu_name . ' - ' . $menu_price . '-' . $menu_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 1; ?>" name="<?php echo $checkbox_name . '_ds'; ?>" value="<?php echo $menu_id . ',' . $menu_price; ?>" type="checkbox" onclick="addValue(this,'p')"><br>
 							<hr>
-							<?php echo $menu1_name . ' - ' . $menu1_price . '-' . $menu1_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 6; ?>" value="<?php echo $menu1_id . ',' . $menu1_price; ?>" type="checkbox" onclick="addValue(this, 'c')"><br>
-							<?php echo $menu2_name . ' - ' . $menu2_price . '-' . $menu2_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 11; ?>" value="<?php echo $menu2_id . ',' . $menu2_price; ?>" type="checkbox" onclick="addValue(this,'c')"><br>
-							<?php echo $menu3_name . ' - ' . $menu3_price . '-' . $menu3_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 16; ?>" value="<?php echo $menu3_id . ',' . $menu3_price; ?>" type="checkbox" onclick="addValue(this,'c')"><br>
-							<?php echo $menu4_name . ' - ' . $menu4_price . '-' . $menu4_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 21; ?>" value="<?php echo $menu4_id . ',' . $menu4_price; ?>" type="checkbox" onclick="addValue(this,'c')"><br>
+							<?php echo $menu1_name . ' - ' . $menu1_price . '-' . $menu1_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 6; ?>" name="<?php echo $checkbox_name . '_ds'; ?>" value="<?php echo $menu1_id . ',' . $menu1_price; ?>" type="checkbox" onclick="addValue(this, 'c')"><br>
+							<?php echo $menu2_name . ' - ' . $menu2_price . '-' . $menu2_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 11; ?>" name="<?php echo $checkbox_name . '_ds'; ?>" value="<?php echo $menu2_id . ',' . $menu2_price; ?>" type="checkbox" onclick="addValue(this,'c')"><br>
+							<?php echo $menu3_name . ' - ' . $menu3_price . '-' . $menu3_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 16; ?>" name="<?php echo $checkbox_name . '_ds'; ?>" value="<?php echo $menu3_id . ',' . $menu3_price; ?>" type="checkbox" onclick="addValue(this,'c')"><br>
+							<?php echo $menu4_name . ' - ' . $menu4_price . '-' . $menu4_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 21; ?>" name="<?php echo $checkbox_name . '_ds'; ?>" value="<?php echo $menu4_id . ',' . $menu4_price; ?>" type="checkbox" onclick="addValue(this,'c')"><br>
 						</td>
 
 				<?php
@@ -288,12 +289,12 @@
 						}
 				?>
 						<td>
-							<?php echo $menu_name . ' - ' . $menu_price . '-' . $menu_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 19; ?>" value="<?php echo $menu_id . ',' . $menu_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+							<?php echo $menu_name . ' - ' . $menu_price . '-' . $menu_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 19; ?>" name="<?php echo $checkbox_name . '_ds'; ?>" value="<?php echo $menu_id . ',' . $menu_price; ?>" type="checkbox" onclick="addValue(this, 'p')"><br>
 							<hr>
-							<?php echo $menu1_name . ' - ' . $menu1_price . '-' . $menu1_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 24; ?>" value="<?php echo $menu1_id . ',' . $menu1_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu2_name . ' - ' . $menu2_price . '-' . $menu2_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 29; ?>" value="<?php echo $menu2_id . ',' . $menu2_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu3_name . ' - ' . $menu3_price . '-' . $menu3_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 34; ?>" value="<?php echo $menu3_id . ',' . $menu3_price; ?>" type="checkbox" onclick="addValue(this)"><br>
-							<?php echo $menu4_name . ' - ' . $menu4_price . '-' . $menu4_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 39; ?>" value="<?php echo $menu4_id . ',' . $menu4_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+							<?php echo $menu1_name . ' - ' . $menu1_price . '-' . $menu1_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 24; ?>" name="<?php echo $checkbox_name . '_ds'; ?>" value="<?php echo $menu1_id . ',' . $menu1_price; ?>" type="checkbox" onclick="addValue(this, 'c')"><br>
+							<?php echo $menu2_name . ' - ' . $menu2_price . '-' . $menu2_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 29; ?>" name="<?php echo $checkbox_name . '_ds'; ?>" value="<?php echo $menu2_id . ',' . $menu2_price; ?>" type="checkbox" onclick="addValue(this, 'c')"><br>
+							<?php echo $menu3_name . ' - ' . $menu3_price . '-' . $menu3_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 34; ?>" name="<?php echo $checkbox_name . '_ds'; ?>" value="<?php echo $menu3_id . ',' . $menu3_price; ?>" type="checkbox" onclick="addValue(this, 'c')"><br>
+							<?php echo $menu4_name . ' - ' . $menu4_price . '-' . $menu4_id; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $i + 39; ?>" name="<?php echo $checkbox_name . '_ds'; ?>" value="<?php echo $menu4_id . ',' . $menu4_price; ?>" type="checkbox" onclick="addValue(this, 'c')"><br>
 						</td>
 
 				<?php
@@ -586,326 +587,7 @@
 
 
 
-	<script>
-		function addValue(checkboxElement, level) {
-			var value = checkboxElement.value;
 
-			if (!value) {
-				return;
-			}
-
-			var splitValue = value.split(',');
-			var price = parseInt(splitValue[1]);
-
-			if (isNaN(price)) {
-				price = 0;
-			}
-
-			var totalElement = document.getElementById('total');
-			var currentTotal = parseInt(totalElement.innerHTML);
-
-			if (checkboxElement.checked) {
-				currentTotal += price;
-			} else {
-				currentTotal -= price;
-			}
-
-			totalElement.innerHTML = currentTotal;
-		}
-	</script>
-
-
-	<!-- Daily Set -->
-	<script>
-		document.getElementById('checkboxall').addEventListener('change', function() {
-			for (let i = 1; i <= 50; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-			document.getElementById('checkboxw1').checked = this.checked;
-			document.getElementById('checkboxw2').checked = this.checked;
-		});
-
-		for (let i = 1; i <= 50; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				document.getElementById('checkboxall').checked = Array.from({
-					length: 50
-				}, (_, j) => j + 1).every(j => document.getElementById('checkbox' + j).checked);
-			});
-		}
-
-		document.getElementById('checkboxw1').addEventListener('change', function() {
-			document.getElementById('checkboxall').checked = document.getElementById('checkboxw1').checked && document.getElementById('checkboxw2').checked;
-		});
-
-		document.getElementById('checkboxw2').addEventListener('change', function() {
-			document.getElementById('checkboxall').checked = document.getElementById('checkboxw1').checked && document.getElementById('checkboxw2').checked;
-		});
-
-		// Daily Set Week 1
-		document.getElementById('checkboxw1').addEventListener('change', function() {
-			for (let i = 1; i <= 25; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-
-		for (let i = 1; i <= 25; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				document.getElementById('checkboxw1').checked = Array.from({
-					length: 5
-				}, (_, j) => j + 1).every(j => document.getElementById('checkbox' + j).checked);
-			});
-		}
-
-		//Daily Set Week 2
-		document.getElementById('checkboxw2').addEventListener('change', function() {
-			for (let i = 26; i <= 50; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-
-		for (let i = 26; i <= 50; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				document.getElementById('checkboxw2').checked = Array.from({
-					length: 5
-				}, (_, j) => j + 26).every(j => document.getElementById('checkbox' + j).checked);
-			});
-		}
-	</script>
-
-
-	<!-- Pasta -->
-	<script>
-		document.getElementById('checkboxall_pasta').addEventListener('change', function() {
-			for (let i = 51; i <= 60; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-			document.getElementById('checkboxw1_pasta').checked = this.checked;
-			document.getElementById('checkboxw2_pasta').checked = this.checked;
-		});
-
-		for (let i = 51; i <= 60; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				document.getElementById('checkboxall_pasta').checked = Array.from({
-					length: 10
-				}, (_, j) => j + 51).every(j => document.getElementById('checkbox' + j).checked);
-			});
-		}
-
-		document.getElementById('checkboxw1_pasta').addEventListener('change', function() {
-			document.getElementById('checkboxall_pasta').checked = document.getElementById('checkboxw1_pasta').checked && document.getElementById('checkboxw2_pasta').checked;
-		});
-
-		document.getElementById('checkboxw2_pasta').addEventListener('change', function() {
-			document.getElementById('checkboxall_pasta').checked = document.getElementById('checkboxw1_pasta').checked && document.getElementById('checkboxw2_pasta').checked;
-		});
-
-		// Pasta Week 1
-		document.getElementById('checkboxw1_pasta').addEventListener('change', function() {
-			for (let i = 51; i <= 55; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-
-		for (let i = 51; i <= 55; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				document.getElementById('checkboxw1_pasta').checked = Array.from({
-					length: 5
-				}, (_, j) => j + 51).every(j => document.getElementById('checkbox' + j).checked);
-			});
-		}
-
-		//Pasta Week 2
-		document.getElementById('checkboxw2_pasta').addEventListener('change', function() {
-			for (let i = 56; i <= 60; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-
-		for (let i = 56; i <= 60; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				document.getElementById('checkboxw2_pasta').checked = Array.from({
-					length: 5
-				}, (_, j) => j + 56).every(j => document.getElementById('checkbox' + j).checked);
-			});
-		}
-	</script>
-
-
-	<!-- Breakfast & Stall -->
-	<script>
-		document.getElementById('checkboxall_breakfast').addEventListener('change', function() {
-			for (let i = 61; i <= 70; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-			document.getElementById('checkboxw1_breakfast').checked = this.checked;
-			document.getElementById('checkboxw2_breakfast').checked = this.checked;
-		});
-
-		for (let i = 61; i <= 70; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				document.getElementById('checkboxall_breakfast').checked = Array.from({
-					length: 10
-				}, (_, j) => j + 61).every(j => document.getElementById('checkbox' + j).checked);
-			});
-		}
-
-		document.getElementById('checkboxw1_breakfast').addEventListener('change', function() {
-			document.getElementById('checkboxall_breakfast').checked = document.getElementById('checkboxw1_breakfast').checked && document.getElementById('checkboxw2_breakfast').checked;
-		});
-
-		document.getElementById('checkboxw2_breakfast').addEventListener('change', function() {
-			document.getElementById('checkboxall_breakfast').checked = document.getElementById('checkboxw1_breakfast').checked && document.getElementById('checkboxw2_breakfast').checked;
-		});
-
-		// Breakfast Week 1
-		document.getElementById('checkboxw1_breakfast').addEventListener('change', function() {
-			for (let i = 61; i <= 65; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-
-		for (let i = 61; i <= 65; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				document.getElementById('checkboxw1_breakfast').checked = Array.from({
-					length: 5
-				}, (_, j) => j + 61).every(j => document.getElementById('checkbox' + j).checked);
-			});
-		}
-
-		//Breakfast Week 2
-		document.getElementById('checkboxw2_breakfast').addEventListener('change', function() {
-			for (let i = 66; i <= 70; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-
-		for (let i = 66; i <= 70; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				document.getElementById('checkboxw2_breakfast').checked = Array.from({
-					length: 5
-				}, (_, j) => j + 66).every(j => document.getElementById('checkbox' + j).checked);
-			});
-		}
-	</script>
-
-	<script>
-
-	</script>
-
-
-
-	<!--<script>
-		document.getElementById('checkboxall').addEventListener('change', function() {
-			for (let i = 1; i <= 50; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-		for (let i = 1; i <= 50; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				let allChecked = true;
-				for (let j = 1; j <= 50; j++) {
-					if (!document.getElementById('checkbox' + j).checked) {
-						allChecked = false;
-						break;
-					}
-				}
-				document.getElementById('checkboxall').checked = allChecked;
-			});
-		}
-
-
-		document.getElementById('checkboxw1').addEventListener('change', function() {
-			for (let i = 1; i <= 25; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-		for (let i = 1; i <= 25; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				let allChecked = true;
-				for (let j = 1; j <= 25; j++) {
-					if (!document.getElementById('checkbox' + j).checked) {
-						allChecked = false;
-						break;
-					}
-				}
-				document.getElementById('checkboxw1').checked = allChecked;
-			});
-		}
-
-
-		document.getElementById('checkboxw2').addEventListener('change', function() {
-			for (let i = 26; i <= 50; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-		for (let i = 26; i <= 50; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				let allChecked = true;
-				for (let j = 26; j <= 50; j++) {
-					if (!document.getElementById('checkbox' + j).checked) {
-						allChecked = false;
-						break;
-					}
-				}
-				document.getElementById('checkboxw2').checked = allChecked;
-			});
-		}
-
-
-		document.getElementById('checkboxall_pasta').addEventListener('change', function() {
-			for (let i = 51; i <= 60; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-		for (let i = 51; i <= 60; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				let allChecked = true;
-				for (let j = 1; j <= 50; j++) {
-					if (!document.getElementById('checkbox' + j).checked) {
-						allChecked = false;
-						break;
-					}
-				}
-				document.getElementById('checkboxall_pasta').checked = allChecked;
-			});
-		}
-
-		document.getElementById('checkboxw1_pasta').addEventListener('change', function() {
-			for (let i = 51; i <= 55; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-		for (let i = 51; i <= 55; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				let allChecked = true;
-				for (let j = 51; j <= 55; j++) {
-					if (!document.getElementById('checkbox' + j).checked) {
-						allChecked = false;
-						break;
-					}
-				}
-				document.getElementById('checkboxw1_pasta').checked = allChecked;
-			});
-		}
-
-		document.getElementById('checkboxw2_pasta').addEventListener('change', function() {
-			for (let i = 56; i <= 60; i++) {
-				document.getElementById('checkbox' + i).checked = this.checked;
-			}
-		});
-		for (let i = 56; i <= 60; i++) {
-			document.getElementById('checkbox' + i).addEventListener('change', function() {
-				let allChecked = true;
-				for (let j = 56; j <= 60; j++) {
-					if (!document.getElementById('checkbox' + j).checked) {
-						allChecked = false;
-						break;
-					}
-				}
-				document.getElementById('checkboxw2_pasta').checked = allChecked;
-			});
-		}
-	</script>-->
 
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
