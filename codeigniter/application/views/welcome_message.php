@@ -61,10 +61,6 @@
 									<label class="form-label text-dark">Parent's Phone Number</label>
 									<input placeholder="086384678976" type="tel" name="Phone_Number" class="form-control form-control-lg" />
 								</div>
-
-
-							</form>
-
 						</div>
 					</div>
 				</div>
@@ -583,7 +579,7 @@
 		<button type="Submit" value="Submit" class="default-btn">Submit</button>
 	</div>
 
-
+	</form>
 
 
 
