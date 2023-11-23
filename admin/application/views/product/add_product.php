@@ -14,7 +14,7 @@
                             <form action="" method="post" class="form-horizontal">
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="input-normal" class=" form-control-label">Category</label>
+                                        <label for="input-normal" class=" form-control-label">Category <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="text" id="input-normal" name="input-normal" placeholder="Type here..." class="form-control">
@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="input-normal" class=" form-control-label">Menu Name</label>
+                                        <label for="input-normal" class=" form-control-label">Menu Name <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="text" id="input-normal" name="input-normal" placeholder="Type here..." class="form-control">

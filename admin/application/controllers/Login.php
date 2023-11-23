@@ -23,8 +23,12 @@ class Login extends CI_Controller {
         // Handle user login
     }
 
-    public function register() 
+    public function forget_password() 
     {
-        // Handle user registration
+        $data['judul'] = 'Forget Password';
+        // $data['login_item'] = $this->login_model->get_login();
+        $this->load->view('templates/header_login', $data);
+        $this->load->view('login/forget_password');
+        $this->load->view('templates/footer_login');
     }
 }

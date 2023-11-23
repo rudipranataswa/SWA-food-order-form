@@ -14,14 +14,14 @@ class Report extends CI_Controller
         $data['judul'] = 'Report';
         $data['report'] = $this->report_model->get_report();
         $this->load->view('templates/header', $data);
-        $this->load->view('report', $data);    
+        $this->load->view('report/index', $data);    
         $this->load->view('templates/footer');
     }
 
-    public function viewReport() 
+    public function view_report() 
     {
         $data['judul'] = 'View Report#1';
-        $data['view_report'] = $this->report_model->get__report();
+        $data['view_report'] = $this->report_model->get_view_report();
 
         // Add the following lines to separate the date and time components
         foreach ($data['view_report'] as &$vrpt) {
@@ -31,15 +31,16 @@ class Report extends CI_Controller
             $vrpt['time_only'] = $date->format('H:i:s');
         }
         $this->load->view('templates/header', $data);
-        $this->load->view('report/view_report');    
+        $this->load->view('report/view_report', $data);    
         $this->load->view('templates/footer');
     }
 
-    public function detailReport() 
+    public function detail_report() 
     {
         $data['judul'] = 'Detail Report';
+        $data['detail_report'] = $this->report_model->get_detail_report();
         $this->load->view('templates/header', $data);
-        $this->load->view('report/view_detail');    
+        $this->load->view('report/detail_report');    
         $this->load->view('templates/footer');
     }
 }

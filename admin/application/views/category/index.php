@@ -9,14 +9,14 @@
                 <!-- DATA TABLE -->
                 <h3 class="title-5 m-b-35">Category List</h3>
                 <div class="table-data__tool">
-                <div class="table-data__tool-left">
-                    <a
-                    class="au-btn au-btn-icon au-btn--green au-btn--small"
-                    href="<?= base_url(); ?>category/add_category"
-                    >
-                    <i class="zmdi zmdi-plus"></i>create new
-                    </a>
-                </div>
+                    <div class="table-data__tool-left">
+                        <a
+                        class="au-btn au-btn-icon au-btn--green au-btn--small"
+                        href="<?= base_url(); ?>category/add_category"
+                        >
+                        <i class="zmdi zmdi-plus"></i>create new
+                        </a>
+                    </div>
                 </div>
                 <div class="table-responsive table-responsive-data2">
                 <table class="table table-data2">

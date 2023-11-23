@@ -33,7 +33,7 @@
                                     data-toggle="tooltip"
                                     data-placement="top"
                                     title="View"
-                                    href="detail_report.html"
+                                    href="<?= base_url(); ?>report/detail_report"
                                     >
                                     <i class="zmdi zmdi-eye"></i>
                                     </a>

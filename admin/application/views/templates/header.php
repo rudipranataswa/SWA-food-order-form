@@ -14,57 +14,7 @@
     <!-- Title Page-->
     <title><?php echo $judul; ?></title>
 
-    <!-- Fontfaces CSS
-    <link href="css/font-face.css" rel="stylesheet" media="all" />
-    <link
-      href="vendor/font-awesome-4.7/css/font-awesome.min.css"
-      rel="stylesheet"
-      media="all"
-    />
-    <link
-      href="vendor/font-awesome-5/css/fontawesome-all.min.css"
-      rel="stylesheet"
-      media="all"
-    />
-    <link
-      href="vendor/mdi-font/css/material-design-iconic-font.min.css"
-      rel="stylesheet"
-      media="all"
-    />
-
-    Bootstrap CSS
-    <link
-      href="vendor/bootstrap-4.1/bootstrap.min.css"
-      rel="stylesheet"
-      media="all"
-    />
-
-    Vendor CSS
-    <link
-      href="vendor/animsition/animsition.min.css"
-      rel="stylesheet"
-      media="all"
-    />
-    <link
-      href="vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css"
-      rel="stylesheet"
-      media="all"
-    />
-    <link href="vendor/wow/animate.css" rel="stylesheet" media="all" />
-    <link
-      href="vendor/css-hamburgers/hamburgers.min.css"
-      rel="stylesheet"
-      media="all"
-    />
-    <link href="vendor/slick/slick.css" rel="stylesheet" media="all" />
-    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all" />
-    <link
-      href="vendor/perfect-scrollbar/perfect-scrollbar.css"
-      rel="stylesheet"
-      media="all"
-    />
-
-    Main CSS
+    <!-- Main CSS -->
     <link href="css/theme.css" rel="stylesheet" media="all" /> -->
     <!-- Fontfaces CSS-->
     <link href="<?php echo base_url('css/font-face.css'); ?>" rel="stylesheet" media="all" />
@@ -127,6 +77,11 @@
                       <i class="fas fa-shopping-cart"></i>PO Purchase Meal
                   </a>
               </li>
+              <li <?php if (strpos($judul, 'Holiday') !== false) { echo 'class="active"'; } ?>>
+                <a href="<?= base_url(); ?>holiday">
+                  <i class="fas fa-calendar-alt"></i>Holiday</a
+                >
+              </li>
               <li <?php if (strpos($judul, 'Report') !== false) { echo 'class="active"'; } ?>>
                   <a href="<?= base_url(); ?>report">
                       <i class="fas fa-file-text"></i>Report
@@ -179,6 +134,11 @@
                   <i class="fas fa-briefcase"></i>Product</a
                 >
               </li>
+              <li <?php if (strpos($judul, 'Holiday') !== false) { echo 'class="active"'; } ?>>
+                <a href="<?= base_url(); ?>holiday">
+                  <i class="fas fa-calendar-alt"></i>Holiday</a
+                >
+              </li> 
               <li <?php if (strpos($judul, 'PO Purchase') !== false) { echo 'class="active"'; } ?>>
                 <a href="<?= base_url(); ?>po_meal">
                   <i class="fas fa-shopping-cart"></i>PO Purchase</a
@@ -241,6 +201,7 @@
                           </div>
                         </div>
                         <div class="account-dropdown__footer">
+                          <a href="#"> <i class="zmdi zmdi-key"></i>Reset Password</a>
                           <a href="#"> <i class="zmdi zmdi-power"></i>Logout</a>
                         </div>
                       </div>

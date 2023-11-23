@@ -61,37 +61,37 @@
                             <?php foreach ($detail_report as $drpt) : ?>
                                 <tr class="tr">
                                     <td rowspan="2" class="align-middle">Daily Set</td>
-                                    <td class="desc">
-                                        Samsung S8 Blue
+                                    <td>
+                                        <?= $drpt['name']; ?>
                                     </td>
-                                    <td class="desc">
-                                        Samsung S8 Blue
+                                    <td>
+                                        <?= $drpt['name']; ?>
                                     </td>
-                                    <td class="desc">
-                                        Samsung S8 Blue
+                                    <td>
+                                        <?= $drpt['name']; ?>
                                     </td>
-                                    <td class="desc">
-                                        Samsung S8 Blue
+                                    <td>
+                                        <?= $drpt['name']; ?>
                                     </td>
-                                    <td class="desc">
-                                        Samsung S8 Blue
+                                    <td>
+                                        <?= $drpt['name']; ?>
                                     </td>
                                 </tr>
                                 <tr class="tr">
                                     <td class="number">
-                                        50000
+                                        <?= $drpt['price']; ?>
                                     </td>
                                     <td class="number">
-                                        50000
+                                        <?= $drpt['price']; ?>
                                     </td>
                                     <td class="number">
-                                        50000
+                                        <?= $drpt['price']; ?>
                                     </td>
                                     <td class="number">
-                                        50000
+                                        <?= $drpt['price']; ?>
                                     </td>
                                     <td class="number">
-                                        50000
+                                        <?= $drpt['price']; ?>
                                     </td> 
                                 </tr>
                                 <tr class="spacer"></tr>
@@ -104,8 +104,8 @@
             </div>
             <div class="row form-group">
                 <div class="col-md-12">
-                    <button class="btn btn-success btn-lg float-right"
-                            type="submit">
+                    <button class="btn btn-warning btn-lg float-right"
+                            type="">
                         Submit 
                     </button>
                 </div>
