@@ -1,33 +1,54 @@
-<?php  ?>
-<form>
-    <!-- Email input -->
-    <div class="form-outline mb-4">
-        <input type="email" id="form2Example1" class="form-control" />
-        <label class="form-label" for="form2Example1">Email address</label>
-    </div>
-
-    <!-- Password input -->
-    <div class="form-outline mb-4">
-        <input type="password" id="form2Example2" class="form-control" />
-        <label class="form-label" for="form2Example2">Password</label>
-    </div>
-
-    <!-- 2 column grid layout for inline styling -->
-    <div class="row mb-4">
-        <div class="col d-flex justify-content-center">
-            <!-- Checkbox -->
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-                <label class="form-check-label" for="form2Example31"> Remember me </label>
+<div class="page-content--bge5">
+    <div class="container">
+        <div class="login-wrap">
+            <div class="login-content">
+                <div class="login-logo">
+                <a href="#">
+                    <img src="https://www.swa-jkt.com/uploads/logo/logo.png" alt="SWA" />
+                </a>
+                </div>
+                <div class="login-form">
+                <form action="" method="post">
+                    <div class="form-group">
+                    <label class="font-weight-bold">
+                        Email Address
+                        <span class="text-danger">*</span> 
+                    </label>
+                    
+                    <input
+                        class="au-input au-input--full"
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                    />
+                    </div>
+                    <div class="form-group">
+                    <label class="font-weight-bold">Password <span class="text-danger">*</span></label>
+                    
+                    <input
+                        class="au-input au-input--full"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                    />
+                    </div>
+                    <a
+                    class="au-btn au-btn-lg au-btn--block btn-danger text-center m-b-20"
+                    type="submit"
+                    href="<?= base_url(); ?>login/forget_password"
+                    >
+                    forget password
+                    </a>
+                    <a
+                    class="au-btn au-btn-lg au-btn--block btn-danger text-center m-b-20"
+                    type="submit"
+                    href="<?= base_url(); ?>"
+                    >
+                    sign in
+                    </a>
+                </form>
+                </div>
             </div>
         </div>
-
-        <div class="col">
-            <!-- Simple link -->
-            <a href="#!">Forgot password?</a>
-        </div>
     </div>
-
-    <!-- Submit button -->
-    <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
-</form>
+</div>

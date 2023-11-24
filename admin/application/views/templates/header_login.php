@@ -15,7 +15,7 @@
     <title><?php echo $judul; ?></title>
 
     <!-- Main CSS -->
-    <link href="css/theme.css" rel="stylesheet" media="all" /> -->
+    <!-- <link href="css/theme.css" rel="stylesheet" media="all" />  -->
     <!-- Fontfaces CSS-->
     <link href="<?php echo base_url('css/font-face.css'); ?>" rel="stylesheet" media="all" />
     <link href="<?php echo base_url('vendor/font-awesome-4.7/css/font-awesome.min.css'); ?>" rel="stylesheet" media="all" />
@@ -42,7 +42,7 @@
   <body class="animsition">
     <div class="page-wrapper">
       <!-- HEADER MOBILE-->
-      <header class="header-mobile d-block d-lg-none">
+      <!-- <header class="header-mobile d-block d-lg-none">
         <div class="header-mobile__bar">
           <div class="container-fluid">
             <div class="header-mobile-inner">
@@ -77,11 +77,6 @@
                       <i class="fas fa-shopping-cart"></i>PO Purchase Meal
                   </a>
               </li>
-              <li <?php if (strpos($judul, 'Holiday') !== false) { echo 'class="active"'; } ?>>
-                <a href="<?= base_url(); ?>holiday">
-                  <i class="fas fa-calendar-alt"></i>Holiday</a
-                >
-              </li>
               <li <?php if (strpos($judul, 'Report') !== false) { echo 'class="active"'; } ?>>
                   <a href="<?= base_url(); ?>report">
                       <i class="fas fa-file-text"></i>Report
@@ -109,11 +104,11 @@
             </ul>
           </div>
         </nav>
-      </header>
+      </header> -->
       <!-- END HEADER MOBILE-->
 
       <!-- MENU SIDEBAR-->
-      <aside class="menu-sidebar d-none d-lg-block">
+      <!-- <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
           <a href="#">
             <img
@@ -134,11 +129,6 @@
                   <i class="fas fa-briefcase"></i>Product</a
                 >
               </li>
-              <li <?php if (strpos($judul, 'Holiday') !== false) { echo 'class="active"'; } ?>>
-                <a href="<?= base_url(); ?>holiday">
-                  <i class="fas fa-calendar-alt"></i>Holiday</a
-                >
-              </li> 
               <li <?php if (strpos($judul, 'PO Purchase') !== false) { echo 'class="active"'; } ?>>
                 <a href="<?= base_url(); ?>po_meal">
                   <i class="fas fa-shopping-cart"></i>PO Purchase</a
@@ -171,13 +161,13 @@
             </ul>
           </nav>
         </div>
-      </aside>
+      </aside> -->
       <!-- END MENU SIDEBAR-->
 
       <!-- PAGE CONTAINER-->
-      <div class="page-container">
+      <!-- <div class="page-container"> -->
         <!-- HEADER DESKTOP-->
-        <header class="header-desktop">
+        <!-- <header class="header-desktop">
           <div class="section__content section__content--p30">
             <div class="container-fluid">
               <div class="header-wrap">
@@ -201,7 +191,6 @@
                           </div>
                         </div>
                         <div class="account-dropdown__footer">
-                          <a href="#"> <i class="zmdi zmdi-key"></i>Reset Password</a>
                           <a href="#"> <i class="zmdi zmdi-power"></i>Logout</a>
                         </div>
                       </div>
@@ -211,5 +200,5 @@
               </div>
             </div>
           </div>
-        </header>
+        </header> -->
         <!-- END HEADER DESKTOP-->      

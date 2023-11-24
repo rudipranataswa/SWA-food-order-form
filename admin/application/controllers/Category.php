@@ -20,7 +20,6 @@ class Category extends CI_Controller
 
     public function add_category()
     {
-        echo "Coba Tambah";
         $data['judul'] = 'Create New Category';
         $data['category_item'] = $this->category_model->get_category();
         $this->load->view('templates/header', $data);

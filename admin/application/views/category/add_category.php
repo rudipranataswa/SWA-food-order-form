@@ -7,14 +7,13 @@
                     <!-- Input Size -->
                     <div class="card">
                         <div class="card-header">
-                            Add
-                            <strong>Category</strong>
+                            <strong>Add Category</strong>
                         </div>
                         <div class="card-body card-block">
                             <form action="" method="post" class="form-horizontal">
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="input-normal" class=" form-control-label">Category</label>
+                                        <label for="input-normal" class=" form-control-label">Category <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="text" id="input-normal" name="input-normal" placeholder="Type here..." class="form-control">
@@ -24,11 +23,8 @@
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
-                                <i class="fa fa-dot-circle-o"></i> Submit
+                                <i class=""></i> Submit
                             </button>
-                            <!-- <button type="reset" class="btn btn-danger btn-sm">
-                                <i class="fa fa-ban"></i> Reset
-                            </button> -->
                         </div>
                     </div>
                 </div>
