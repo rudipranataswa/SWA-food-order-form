@@ -23,12 +23,14 @@ class Welcome extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		date_default_timezone_set('Asia/Jakarta');
 		$this->load->model('product_model');
 		$this->load->helper('url_helper');
 		$this->load->database();
 		$this->load->helper('form');
 		$this->load->library('user_agent');
 		$this->load->library('session');
+		// $this->load->library('security');
 	}
 
 	public function index()
@@ -43,7 +45,12 @@ class Welcome extends CI_Controller
 			'menu_fruit' => $this->product_model->get_menu_fruit(),
 			'menu_pasta' => $this->product_model->get_menu_pasta(),
 			'menu_breakfast' => $this->product_model->get_menu_breakfast(),
+			'csrf' => array(
+				'name' => $this->security->get_csrf_token_name(),
+				'hash' => $this->security->get_csrf_hash()
+			)
 		);
+
 		$this->load->view('welcome_message', $data);
 	}
 

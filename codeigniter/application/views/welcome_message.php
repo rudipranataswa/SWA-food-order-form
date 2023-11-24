@@ -408,10 +408,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<td>
 								<?php echo $menu_name . ' - ' . $menu_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu_name; ?>" type="checkbox" onclick="addValue(this)"><br>
 								<hr>
-								<?php echo $menu1_name . ' - ' . $menu1_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu1_name; ?>" type="checkbox" onclick="addValue(this)"><br>
-								<?php echo $menu2_name . ' - ' . $menu2_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu2_name; ?>" type="checkbox" onclick="addValue(this)"><br>
-								<?php echo $menu3_name . ' - ' . $menu3_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu3_name; ?>" type="checkbox" onclick="addValue(this)"><br>
-								<?php echo $menu4_name . ' - ' . $menu4_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu4_name; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<?php echo $menu1_name . ' - ' . $menu1_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu1_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<?php echo $menu2_name . ' - ' . $menu2_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu2_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<?php echo $menu3_name . ' - ' . $menu3_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu3_price; ?>" type="checkbox" onclick="addValue(this)"><br>
+								<?php echo $menu4_name . ' - ' . $menu4_price; ?><span style="display:inline-block; width: 7px;"></span><input id="checkbox<?php echo $counter++; ?>" value="<?php echo $menu4_price; ?>" type="checkbox" onclick="addValue(this)"><br>
 							</td>
 					<?php
 						endfor;
@@ -652,6 +652,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 					<!-- Add more rows as needed -->
 			</table>
+
+			<input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
 
 			<div>
 				<input class="submit-btn" type="Submit" value="Submit">

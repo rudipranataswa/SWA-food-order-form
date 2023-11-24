@@ -41,7 +41,9 @@ class Product_model extends CI_Model
                         'submitted_date' => date('Y-m-d H:i:s')
                 );
 
-                $this->db->insert('order_hdr', $data);
+                $clean_data = $this->security->xss_clean($data);
+
+                $this->db->insert('order_hdr', $clean_data);
         }
 
         public function get_menu_daily_set()
@@ -56,7 +58,6 @@ class Product_model extends CI_Model
                 $query = $this->db->get();
                 return $query->result_array();
         }
-
 
 
         public function get_menu_soup()
