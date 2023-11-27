@@ -7,6 +7,7 @@ class Holiday extends CI_Controller
     {
         parent::__construct();
         $this->load->model('holiday_model');
+        $this->load->library('form_validation');
     }
 
     public function index()
@@ -21,16 +22,29 @@ class Holiday extends CI_Controller
     public function add_holiday()
     {
         $data['judul'] = 'Create New Holiday';
-        // $data['holiday'] = $this->holiday_model->get_by_id();
-        $this->load->view('templates/header', $data);
-        $this->load->view('holiday/add_holiday', $data);
-        $this->load->view('templates/footer');
+
+        $this->form_validation->set_rules('date', 'date', 'required|date');
+        $this->form_validation->set_rules('description', 'description', 'required');
+        
+        if($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('holiday/add_holiday');
+            $this->load->view('templates/footer');
+        } else {
+            
+            $this->holiday_model->add_holdiay_data();
+            redirect('holiday');
+        }
     }
 
-    public function edit_holiday()
+    public function edit_holiday($id)
     {
-        $data['judul'] = 'Edit Holiday #1';
+        $data['judul'] = 'Edit Holiday#1';
         // $data['holiday'] = $this->holiday_model->get_by_id();
+        
+        $this->db->where('id', $id);
+        $this->db->update('holiday/food_order', $data);
+        redirect('holiday/index');
         $this->load->view('templates/header', $data);
         $this->load->view('holiday/edit_holiday', $data);
         $this->load->view('templates/footer');

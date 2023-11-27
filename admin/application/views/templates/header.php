@@ -131,7 +131,7 @@
               </li>
               <li <?php if (strpos($judul, 'Product') !== false) { echo 'class="active"'; } ?>>
                 <a href="<?= base_url(); ?>product">
-                  <i class="fas fa-briefcase"></i>Product</a
+                  <i class="fas fa-book"></i>Menu</a
                 >
               </li>
               <li <?php if (strpos($judul, 'Holiday') !== false) { echo 'class="active"'; } ?>>

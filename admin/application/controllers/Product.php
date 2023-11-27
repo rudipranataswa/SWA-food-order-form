@@ -11,8 +11,8 @@ class Product extends CI_Controller
 
     public function index()
     {
-        $data['judul'] = 'Product';
-        $data['product'] = $this->product_model->get_by_id();
+        $data['judul'] = 'Menu';
+        $data['product'] = $this->product_model->get_menu();
         $this->load->view('templates/header', $data);
         $this->load->view('product/index', $data);
         $this->load->view('templates/footer');
@@ -20,7 +20,7 @@ class Product extends CI_Controller
 
     public function add_product()
     {
-        $data['judul'] = 'Create New Product';
+        $data['judul'] = 'Create New Menu';
         // $data['product'] = $this->product_model->get_by_id();
         $this->load->view('templates/header', $data);
         $this->load->view('product/add_product', $data);
@@ -29,7 +29,7 @@ class Product extends CI_Controller
 
     public function edit_product()
     {
-        $data['judul'] = 'Edit Product #1';
+        $data['judul'] = 'Edit Menu#1';
         // $data['product'] = $this->product_model->get_by_id();
         $this->load->view('templates/header', $data);
         $this->load->view('product/edit_product', $data);

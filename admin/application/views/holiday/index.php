@@ -46,7 +46,7 @@
                                           data-toggle="tooltip"
                                           data-placement="top"
                                           title="Edit"
-                                          href="<?= base_url(); ?>holiday/edit_holiday"
+                                          href="<?= base_url();?>holiday/edit_holiday/<?= $hdy['id']; ?>"
                                       >
                                           <i class="zmdi zmdi-edit"></i>
                                       </a>
