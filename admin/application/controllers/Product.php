@@ -11,12 +11,20 @@ class Product extends CI_Controller
 
 	public function index()
 	{
+		$this->load->library('pagination');
+		$config['base_url'] = base_url('Product/index');
+		$config['total_rows'] = $this->db->count_all('menu');
+		$config['per_page'] = 10;
+
+		$this->pagination->initialize($config);
+
 		$data['judul'] = 'Product';
-		$data['product'] = $this->product_model->get_by_id();
+		$data['product'] = $this->product_model->get_by_id($config['per_page'], $this->uri->segment(3));
 		$this->load->view('templates/header', $data);
 		$this->load->view('product/index', $data);
 		$this->load->view('templates/footer');
 	}
+
 
 	public function add_product()
 	{
@@ -31,6 +39,8 @@ class Product extends CI_Controller
 	public function edit_product()
 	{
 		$data['judul'] = 'Edit Product #1';
+		$data['categories'] = $this->product_model->get_category();
+		$data['products'] = $this->product_model->get_product();
 		// $data['product'] = $this->product_model->get_by_id();
 		$this->load->view('templates/header', $data);
 		$this->load->view('product/edit_product', $data);
@@ -41,6 +51,20 @@ class Product extends CI_Controller
 	{
 		$category = $this->input->post('Category');
 		$name = $this->input->post('Name');
-		$this->product_model->create_menu($category, $name);
+		$result = $this->product_model->create_menu($category, $name);
+		if ($result) {
+			echo 'Insert New Product Succeed!';
+		} else {
+			echo 'Insert New Product Failed!';
+		}
+	}
+
+	public function update_menu()
+	{
+		$id = $this->input->post('hf-id');
+		$category_id = $this->input->post('Category');
+		$name = $this->input->post('Name');
+		$this->product_model->update_product($id, $category_id, $name);
+		redirect('product');
 	}
 }

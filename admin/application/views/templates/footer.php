@@ -26,6 +26,28 @@
       <script>
       	$("#zero_config").DataTable();
       </script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+      	$(document).ready(function() {
+      		$("#productForm").on('submit', function(e) {
+      			e.preventDefault();
+      			$.ajax({
+      				url: '<?php echo site_url('Product/create_new'); ?>',
+      				type: 'post',
+      				data: $(this).serialize(),
+      				success: function(response) {
+      					alert(response);
+      				},
+      				error: function(jqXHR, textStatus, errorThrown) {
+      					console.log(textStatus, errorThrown);
+      				}
+      			});
+      		});
+      	});
+      </script>
+
+
+
       </body>
 
       </html>

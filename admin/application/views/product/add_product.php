@@ -1,6 +1,6 @@
 <!-- MAIN CONTENT-->
 <style>
-	.col-lg-6 {
+	.row .col-lg-6 {
 		padding-top: 100px;
 	}
 </style>
@@ -35,10 +35,10 @@
 									<label for="input-normal" class=" form-control-label">Menu Name</label>
 								</div>
 								<div class="col col-sm-6">
-									<input type="text" id="input-normal" name="Name" placeholder="Type here..." class="form-control">
+									<input type="text" id="input-normal" name="Name" placeholder="Type here..." class="form-control" required>
 								</div>
 							</div>
-							<button type="submit" class="btn btn-primary btn-sm">
+							<button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
 								<i class=""></i> Submit
 							</button>
 						</form>

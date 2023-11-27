@@ -18,14 +18,16 @@ class Product_model extends CI_Model
 		return $query->row_array();
 	}
 
-	public function get_by_id()
+	public function get_by_id($limit, $start)
 	{
+		$this->db->limit($limit, $start);
 		$this->db->select('menu.id, menu.name, category.category');
 		$this->db->from('menu');
 		$this->db->join('category', 'menu.category_id = category.id');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
 
 	public function get_category($slug = FALSE)
 	{
@@ -46,5 +48,16 @@ class Product_model extends CI_Model
 		);
 
 		return $this->db->insert('menu', $data);
+	}
+
+	public function update_product($id, $category_id, $name)
+	{
+		$data = array(
+			'category_id' => $category_id,
+			'name' => $name,
+		);
+
+		$this->db->where('id', $id);
+		return $this->db->update('menu', $data);
 	}
 }
