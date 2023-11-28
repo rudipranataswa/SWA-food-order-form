@@ -60,4 +60,10 @@ class Product_model extends CI_Model
 		$this->db->where('id', $id);
 		return $this->db->update('menu', $data);
 	}
+
+	public function delete_product($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->delete('menu');
+	}
 }

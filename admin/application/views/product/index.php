@@ -31,6 +31,7 @@
      											<th>delete</th>
      										</tr>
      									</thead>
+
      									<tbody>
      										<?php foreach ($product as $pro) : ?>
      											<tr class="tr-shadow">
@@ -46,9 +47,12 @@
      												</td>
      												<td>
      													<div class="table-data-feature">
-     														<button type="button" class="btn item" data-toggle="modal" data-target="#exampleModalCenter" title="Delete">
-     															<i class="zmdi zmdi-delete"></i>
-     														</button>
+     														<form action="<?= base_url('Product/delete_product'); ?>" method="post" class="form-horizontal">
+     															<input type="hidden" name="id" value="<?= $pro['id']; ?>">
+     															<button type="submit" class="btn item" data-toggle="modal" data-target="#exampleModalCenter" title="Delete">
+     																<i class="zmdi zmdi-delete"></i>
+     															</button>
+     														</form>
      													</div>
      												</td>
      											</tr>
@@ -58,7 +62,7 @@
 
      								</table>
      							</div>
-     							<!-- END DATA TABLE -->
+
      							<div class="pagination-link">
      								<?php echo $this->pagination->create_links(); ?>
      							</div>
@@ -72,7 +76,7 @@
      </div>
 
      <!-- Modal Pop-up -->
-     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+     <!--<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
      	<div class="modal-dialog modal-dialog-centered" role="document">
      		<div class="modal-content">
      			<div class="modal-header">
@@ -92,4 +96,4 @@
      	</div>
      </div>
      </div>
-     </div>
+     </div>-->

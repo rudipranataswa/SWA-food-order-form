@@ -67,4 +67,18 @@ class Product extends CI_Controller
 		$this->product_model->update_product($id, $category_id, $name);
 		redirect('product');
 	}
+
+	public function delete_product()
+	{
+		$id = $this->input->post('id');
+		$this->db->where('id_menu', $id);
+		$query = $this->db->get('po_purchase_meal_dtl');
+
+		if ($query->num_rows() > 0) {
+			echo "Cannot delete product because it exists in po_purchase_meal_dtl";
+		} else {
+			$this->product_model->delete_product($id);
+		}
+		redirect('product');
+	}
 }
