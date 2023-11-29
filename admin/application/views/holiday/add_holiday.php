@@ -6,7 +6,7 @@
                 <div class="col-lg-6">
                     <!-- Input Size -->
                     <div class="card">
-                        <form action="" method="post" class="form-horizontal">
+                        <form action="" method="post" class="form-horizontal" id="holiday_form">
                             <div class="card-header">
                                 <strong>Create New Holiday</strong>
                             </div>
@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" name="add_holiday" class="btn btn-primary btn-sm" >
+                                <button type="button" name="add_holiday" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
                                     Submit
                                 </button>
                             </div>
@@ -42,8 +42,8 @@
         </div>
     </div>
 </div>
-<!-- 
-Modal Pop-up 
+
+<!-- Modal Pop-up  -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -58,8 +58,8 @@ Modal Pop-up
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary">Yes</button>
+                <button type="submit" class="btn btn-primary" form="holiday_form">Yes</button>
             </div>
         </div>
     </div>
-</div> -->
+</div>

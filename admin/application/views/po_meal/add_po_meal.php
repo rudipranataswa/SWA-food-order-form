@@ -45,18 +45,15 @@
                                             <label for="input-normal" class=" form-control-label">Status <span class="text-danger">*</span></label>
                                         </div>
                                         <div class="col col-sm-6">
-                                            <?php foreach ($category_item as $cat) : ?>
                                             <select
                                                 name="select"
                                                 id="input-normal"
                                                 class="form-control"
                                             >
                                             <option value="0">Please select</option>
-                                            <option value="1">Option #1</option>
-                                            <option value="2">Option #2</option>
-                                            <option value="3">Option #3</option>
+                                            <option value="1">Active</option>
+                                            <option value="2">Unactive</option>
                                             </select>
-                                            <?php endforeach; ?>
                                         </div>
                                     </div> 
                                 </div>

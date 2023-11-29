@@ -16,7 +16,7 @@
                                         <label for="hf-id" class=" form-control-label">ID</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="int" id="hf-id" name="hf-id" placeholder="ID" class="form-control" disabled>
+                                        <input type="int" id="hf-id" name="hf-id" value="<?= $holiday['id']; ?>" class="form-control" disabled>
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -24,7 +24,7 @@
                                         <label for="hf-menu" class=" form-control-label">Date</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="date" id="hf-menu" name="hf-menu" placeholder="" class="form-control">
+                                        <input type="date" id="hf-menu" name="hf-menu" value="<?= $holiday['date']; ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -32,7 +32,7 @@
                                         <label for="hf-menu" class=" form-control-label">Description</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="text" id="hf-menu" name="hf-menu" placeholder="Edit description..." class="form-control">
+                                        <input type="text" id="hf-menu" name="hf-menu" value="<?= $holiday['description']; ?>" class="form-control">
                                     </div>
                                 </div>
                             </form>

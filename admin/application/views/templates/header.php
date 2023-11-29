@@ -15,7 +15,7 @@
     <title><?php echo $judul; ?></title>
 
     <!-- Main CSS -->
-    <link href="css/theme.css" rel="stylesheet" media="all" /> -->
+    <link href="css/theme.css" rel="stylesheet" media="all" /> 
     <!-- Fontfaces CSS-->
     <link href="<?php echo base_url('css/font-face.css'); ?>" rel="stylesheet" media="all" />
     <link href="<?php echo base_url('vendor/font-awesome-4.7/css/font-awesome.min.css'); ?>" rel="stylesheet" media="all" />
@@ -64,17 +64,15 @@
         <nav class="navbar-mobile">
           <div class="container-fluid">
             <ul class="navbar-mobile__list list-unstyled">
+              <li <?php if (strpos($judul, 'Dashboard') !== false) { echo 'class="active"'; } ?>>
+                  <a href="<?= base_url(); ?>dashboard"> <i class="fas fa-home"></i>Dashboard</a>
+              </li>
               <li <?php if (strpos($judul, 'Category') !== false) { echo 'class="active"'; } ?>>
                   <a href="<?= base_url(); ?>category"> <i class="fas fa-th"></i>Category</a>
               </li>
               <li <?php if (strpos($judul, 'Product') !== false) { echo 'class="active"'; } ?>>
                   <a href="<?= base_url(); ?>product">
-                      <i class="fas fa-briefcase"></i>Product
-                  </a>
-              </li>
-              <li <?php if (strpos($judul, 'PO Purchase') !== false) { echo 'class="active"'; } ?>>
-                  <a href="<?= base_url(); ?>po_meal">
-                      <i class="fas fa-shopping-cart"></i>PO Purchase Meal
+                      <i class="fas fa-briefcase"></i>Menu
                   </a>
               </li>
               <li <?php if (strpos($judul, 'Holiday') !== false) { echo 'class="active"'; } ?>>
@@ -82,12 +80,17 @@
                   <i class="fas fa-calendar-alt"></i>Holiday</a
                 >
               </li>
+              <li <?php if (strpos($judul, 'PO Purchase') !== false) { echo 'class="active"'; } ?>>
+                  <a href="<?= base_url(); ?>po_meal">
+                      <i class="fas fa-shopping-cart"></i>PO Purchase Meal
+                  </a>
+              </li>
               <li <?php if (strpos($judul, 'Report') !== false) { echo 'class="active"'; } ?>>
                   <a href="<?= base_url(); ?>report">
                       <i class="fas fa-file-text"></i>Report
                   </a>
               </li>
-              <li class="has-sub">
+              <!-- <li class="has-sub">
                 <a class="js-arrow" href="#">
                   <i class="fas fa-user"></i>Profile</a
                 >
@@ -105,7 +108,7 @@
                     <a href="logout.html">Logout</a>
                   </li>
                 </ul>
-              </li>
+              </li> -->
             </ul>
           </div>
         </nav>
@@ -126,6 +129,9 @@
         <div class="menu-sidebar__content js-scrollbar1">
           <nav class="navbar-sidebar">
             <ul class="list-unstyled navbar__list">
+              <li <?php if (strpos($judul, 'Dashboard') !== false) { echo 'class="active"'; } ?>>
+                  <a href="<?= base_url(); ?>dashboard"> <i class="fas fa-home"></i>Dashboard</a>
+              </li>
               <li <?php if (strpos($judul, 'Category') !== false) { echo 'class="active"'; } ?>>
                 <a href="<?= base_url(); ?>category"> <i class="fas fa-th"></i>Category</a>
               </li>
@@ -149,7 +155,7 @@
                   <i class="fas fa-file-text"></i>Report</a
                 >
               </li>
-              <li class="has-sub">
+              <!-- <li class="has-sub">
                 <a class="js-arrow" href="#">
                   <i class="fas fa-user"></i>Profile</a
                 >
@@ -167,7 +173,7 @@
                     <a href="logout.html">Logout</a>
                   </li>
                 </ul>
-              </li>
+              </li> -->
             </ul>
           </nav>
         </div>
