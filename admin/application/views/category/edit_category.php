@@ -30,7 +30,7 @@
                             </form>
                         </div>
                         <div class="card-footer">
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+                            <button type="submit" name="add" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
                                 <i class=""></i> Submit
                             </button>
                         </div>

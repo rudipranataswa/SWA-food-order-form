@@ -29,7 +29,7 @@ class Po_meal extends CI_Controller
 
     public function edit_po_meal()
     {
-        $data['judul'] = 'Edit PO Purchase Meal #1';
+        $data['judul'] = 'Edit PO Purchase Meal#1';
         // $data['po_meal'] = $this->po_meal_model->get_po_meal();
         $this->load->view('templates/header', $data);
         $this->load->view('po_meal/edit_po_meal');        

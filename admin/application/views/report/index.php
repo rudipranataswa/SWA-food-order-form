@@ -45,6 +45,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="pagination-link">
+                                <?php echo $this->pagination->create_links(); ?>
+                            </div>
                             <!-- END DATA TABLE -->
                         </div>
                     </div>

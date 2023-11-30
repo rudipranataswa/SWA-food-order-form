@@ -8,33 +8,36 @@
                     <div class="col-lg-6">
                         <h3 class="title-5 m-b-35">New PO Meal</h3>
                         <div class="card">
-                            <div class="card-header">                                       
-                                <strong>PO Meal Detail</strong>
-                            </div>
-                            <div class="card-body card-block">
-                                <form action="" method="post" class="form-horizontal">
+                            <form action="" method="post" class="form-horizontal">
+                                <div class="card-header">                                       
+                                    <strong>PO Meal Detail</strong>
+                                </div>
+                                <div class="card-body card-block">
                                     <div class="row form-group">
                                         <div class="col col-sm-5">
-                                            <label for="input-normal" class=" form-control-label">Title <span class="text-danger">*</span></label>
+                                            <label for="title" class=" form-control-label">Title <span class="text-danger">*</span></label>
                                         </div>
                                         <div class="col col-sm-6">
-                                            <input type="text" id="input-normal" name="input-normal" placeholder="Type here..." class="form-control">
+                                            <input type="text" id="title" name="title" placeholder="Type here..." class="form-control">
+                                            <small class="form-text text-danger"><?= form_error('title'); ?></small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-sm-5">
-                                            <label for="input-normal" class=" form-control-label">Begin Date <span class="text-danger">*</span></label>
+                                            <label for="begin-date" class=" form-control-label">Begin Date <span class="text-danger">*</span></label>
                                         </div>
                                         <div class="col col-sm-6">
-                                            <input type="date" id="input-normal" name="input-normal" placeholder="Type here..." class="form-control">
+                                            <input type="date" id="begin-date" name="begin-date" placeholder="Type here..." class="form-control">
+                                            <small class="form-text text-danger"><?= form_error('begin_date'); ?></small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-sm-5">
-                                            <label for="input-normal" class=" form-control-label">End Date <span class="text-danger">*</span></label>
+                                            <label for="end-date" class=" form-control-label">End Date <span class="text-danger">*</span></label>
                                         </div>
                                         <div class="col col-sm-6">
-                                            <input type="date" id="input-normal" name="input-normal" placeholder="Type here..." class="form-control">
+                                            <input type="date" id="end-date" name="end-date" placeholder="Type here..." class="form-control">
+                                            <small class="form-text text-danger"><?= form_error('end_date'); ?></small>
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -48,22 +51,21 @@
                                                 class="form-control"
                                             >
                                             <option value="0">Please select</option>
-                                            <option value="1">Option #1</option>
-                                            <option value="2">Option #2</option>
-                                            <option value="3">Option #3</option>
+                                            <option value="1">Active</option>
+                                            <option value="2">Unactive</option>
                                             </select>
                                         </div>
                                     </div> 
-                                </form>
-                            </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class=""></i> Submit
-                                </button>
-                                <!-- <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-ban"></i> Reset
-                                </button> -->
-                            </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class=""></i> Submit
+                                    </button>
+                                    <!-- <button type="reset" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-ban"></i> Reset
+                                    </button> -->
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

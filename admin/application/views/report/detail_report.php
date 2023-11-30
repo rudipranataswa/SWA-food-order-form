@@ -12,24 +12,24 @@
                             <strong>Report Detail</strong>
                         </div>
                         <div class="card-body card-block">
+                            <?php foreach ($detail_report as $drpt): ?>
                             <div class="row form-group">
                                 <div class="col col-sm-5">
                                     <label for="input-normal" class=" form-control-label">Customer Name</label>
                                 </div>
                                 <div class="col col-sm-6">
-                                    <label for="input-normal" class=" form-control-label">: Tomiko Gunkan</label>
-                                    <!-- <input type="text" id="input-normal" name="input-normal" placeholder="Indonesia Chinese Food" class="form-control" disabled> -->
+                                    <label for="input-normal" class=" form-control-label">: <?= $drpt['student'] ?></label>
                                 </div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-sm-5">
-                                    <label for="input-normal" class=" form-control-label">Begin Date</label>
+                                    <label for="input-normal" class=" form-control-label">Order Date</label>
                                 </div>
                                 <div class="col col-sm-6">
-                                    <label for="input-normal" class=" form-control-label">: 11 Nov 2023</label>
-                                    <!-- <input type="text" id="input-normal" name="input-normal" placeholder="12-12-2012" class="form-control" disabled> -->
+                                    <label for="input-normal" class=" form-control-label">: <?= $drpt['date_only'] ?></label>
                                 </div>
                             </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
@@ -40,63 +40,386 @@
                     <!-- DATA TABLE -->
                     <div class="table-responsive">
                         <table class="table table-data2">
-                        <thead>
-                            <tr>
-                            <th rowspan="2" class="align-middle">Week 1</th>
-                            <th>Monday</th>
-                            <th>Tuesday</th>
-                            <th>Wednesday</th>
-                            <th>Thrusday</th>
-                            <th>Friday</th>
-                            </tr>
-                            <tr>
-                            <th>6/11/2023</th>
-                            <th>7/11/2023</th>
-                            <th>8/11/2023</th>
-                            <th>9/11/2023</th>
-                            <th>10/11/2023</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($detail_report as $drpt) : ?>
+                            <!-- Week 1 -->
+                            <thead>
+                                <tr>
+                                <th rowspan="2" class="align-middle">Week 1</th>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thrusday</th>
+                                <th>Friday</th>
+                                </tr>
+                                <tr>
+                                    <?php foreach ($dates as $item) : ?>
+                                        <?php
+                                            $date = new DateTime($item['begin_date']);
+                                            $days_added = 0;
+
+                                            for ($i = 0; $days_added < 5; $i++) :
+                                                echo '<th>' . $date->format('j M Y') . '</th>';
+                                                $date->modify('+1 day');
+                                                $days_added++;
+                                            endfor;
+                                    endforeach; ?>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 <tr class="tr">
-                                    <td rowspan="2" class="align-middle">Daily Set</td>
-                                    <td>
-                                        <?= $drpt['name']; ?>
-                                    </td>
-                                    <td>
-                                        <?= $drpt['name']; ?>
-                                    </td>
-                                    <td>
-                                        <?= $drpt['name']; ?>
-                                    </td>
-                                    <td>
-                                        <?= $drpt['name']; ?>
-                                    </td>
-                                    <td>
-                                        <?= $drpt['name']; ?>
-                                    </td>
+                                    <td class="align-middle">Daily Set</td>
+                                    <?php foreach ($dates as $item) :
+                                        $begin_date = new DateTime($item['begin_date']);
+                                        $end_date = clone $begin_date;
+                                        $end_date->modify('+5 day');
+
+                                        for ($i = 0; $i < 5; $i++) :
+                                            $date_to_check = clone $begin_date;
+                                            $date_to_check->modify("+$i day");
+                                            // $menu_id = '';
+                                            $menu_name = '';
+                                            $menu_price = '';
+                                            $menu1_name = '';
+                                            $menu1_price = '';
+                                            $menu2_name = '';
+                                            $menu2_price = '';
+                                            $menu3_name = '';
+                                            $menu3_price = '';
+                                            $menu4_name = '';
+                                            $menu4_price = '';
+
+
+                                            foreach ($menu_daily_set as $menu) {
+                                                $menu_date = new DateTime($menu['date']);
+
+                                                if ($menu_date == $date_to_check) {
+                                                    $menu_id = $menu['id'];
+                                                    $menu_name = $menu['name'];
+                                                    $menu_price = $menu['price'];
+                                                    break;
+                                                }
+                                            }
+
+                                            foreach ($menu_soup as $menu1) {
+                                                $menu1_date = new DateTime($menu1['date']);
+
+                                                if ($menu1_date == $date_to_check) {
+                                                    $menu1_id = $menu1['id'];
+                                                    $menu1_name = $menu1['name'];
+                                                    $menu1_price = $menu1['price'];
+                                                    break;
+                                                }
+                                            }
+
+                                            foreach ($menu_protein as $menu2) {
+                                                $menu2_date = new DateTime($menu2['date']);
+
+                                                if ($menu2_date == $date_to_check) {
+                                                    $menu2_id = $menu2['id'];
+                                                    $menu2_name = $menu2['name'];
+                                                    $menu2_price = $menu2['price'];
+                                                    break;
+                                                }
+                                            }
+
+                                            foreach ($menu_rice as $menu3) {
+                                                $menu3_date = new DateTime($menu3['date']);
+
+                                                if ($menu3_date == $date_to_check) {
+                                                    $menu3_id = $menu3['id'];
+                                                    $menu3_name = $menu3['name'];
+                                                    $menu3_price = $menu3['price'];
+                                                    break;
+                                                }
+                                            }
+
+                                            foreach ($menu_fruit as $menu4) {
+                                                $menu4_date = new DateTime($menu4['date']);
+
+                                                if ($menu4_date == $date_to_check) {
+                                                    $menu4_id = $menu4['id'];
+                                                    $menu4_name = $menu4['name'];
+                                                    $menu4_price = $menu4['price'];
+                                                    break;
+                                                }
+                                            }
+                                        ?>
+                                            <td>
+                                                <?php echo $menu_name; ?><br>
+                                                <?php echo $menu_price; ?><br>
+                                                <hr>
+                                                <?php echo $menu1_name; ?><br>
+                                                <?php echo $menu1_price; ?><br>
+                                                <?php echo $menu2_name; ?><br>
+                                                <?php echo $menu2_price; ?><br>
+                                                <?php echo $menu3_name; ?><br>
+                                                <?php echo $menu3_price; ?><br>
+                                                <?php echo $menu4_name; ?><br>
+                                                <?php echo $menu4_price; ?><br>
+                                            </td>
+                                            
+                                        <?php
+                                            endfor;
+                                    endforeach; ?>
                                 </tr>
                                 <tr class="tr">
-                                    <td class="number">
-                                        <?= $drpt['price']; ?>
-                                    </td>
-                                    <td class="number">
-                                        <?= $drpt['price']; ?>
-                                    </td>
-                                    <td class="number">
-                                        <?= $drpt['price']; ?>
-                                    </td>
-                                    <td class="number">
-                                        <?= $drpt['price']; ?>
-                                    </td>
-                                    <td class="number">
-                                        <?= $drpt['price']; ?>
-                                    </td> 
+                                    <td class="align-middle">Pasta</td>
+                                    <?php foreach ($dates as $item) :
+                                        $begin_date = new DateTime($item['begin_date']);
+                                        $end_date = clone $begin_date;
+                                        $end_date->modify('+5 day');
+
+                                        for ($i = 0; $i < 5; $i++) :
+                                            $date_to_check = clone $begin_date;
+                                            $date_to_check->modify("+$i day");
+                                            $menu_id = '';
+                                            $menu_name = '';
+                                            $menu_price = '';
+
+                                            foreach ($menu_pasta as $menu) {
+                                                $menu_date = new DateTime($menu['date']);
+
+                                                if ($menu_date == $date_to_check) {
+                                                    $menu_id = $menu['id'];
+                                                    $menu_name = $menu['name'];
+                                                    $menu_price = $menu['price'];
+                                                    break;
+                                                }
+                                            }
+                                    ?>
+                                            <td>
+                                                <?php echo $menu_name; ?><br>
+                                                <?php echo $menu_price; ?>
+                                            </td>
+                                    <?php
+                                        endfor;
+                                    endforeach;
+                                    ?>
                                 </tr>
-                                <tr class="spacer"></tr>
-                            <?php endforeach; ?>
-                        </tbody>
+                                <tr class="tr">
+                                    <td class="align-middle">Breakfast & Stall</td>
+                                    <?php foreach ($dates as $item) :
+                                            $begin_date = new DateTime($item['begin_date']);
+                                            $end_date = clone $begin_date;
+                                            $end_date->modify('+5 day');
+
+                                            for ($i = 0; $i < 5; $i++) :
+                                                $date_to_check = clone $begin_date;
+                                                $date_to_check->modify("+$i day");
+                                                $menu_id = '';
+                                                $menu_name = '';
+                                                $menu_price = '';
+
+                                                foreach ($menu_breakfast as $menu) {
+                                                    $menu_date = new DateTime($menu['date']);
+
+                                                    if ($menu_date == $date_to_check) {
+                                                        $menu_id = $menu['id'];
+                                                        $menu_name = $menu['name'];
+                                                        $menu_price = $menu['price'];
+                                                        break;
+                                                    }
+                                                }
+                                        ?>
+                                                <td>
+                                                <?php echo $menu_name; ?><br>
+                                                <?php echo $menu_price; ?>                                                </td>
+                                        <?php
+                                            endfor;
+                                        endforeach;
+                                    ?>
+                                </tr>
+                            </tbody>
+                            <!-- Week 2 -->
+                            <thead>
+                                <tr>
+                                <th rowspan="2" class="align-middle">Week 2</th>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thrusday</th>
+                                <th>Friday</th>
+                                </tr>
+                                <tr>
+                                    <?php foreach ($dates as $item) : ?>
+                                        <?php
+                                            $date = new DateTime($item['begin_date']);
+                                            $date->modify('+7 day');
+                                            $days_added = 0;
+
+                                            for ($i = 0; $days_added < 5; $i++) :
+                                                echo '<th>' . $date->format('j M Y') . '</th>';
+                                                $date->modify('+1 day');
+                                                $days_added++;
+                                            endfor;
+                                        endforeach; 
+                                    ?>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="tr">
+                                    <td class="align-middle">Daily Set</td>
+                                    <?php foreach ($dates as $item) :
+                                        $begin_date = new DateTime($item['begin_date']);
+                                        $end_date = clone $begin_date;
+                                        $end_date->modify('+5 day');
+
+                                        for ($i = 7; $i < 12; $i++) :
+                                            $date_to_check = clone $begin_date;
+                                            $date_to_check->modify("+$i day");
+                                            // $menu_id = '';
+                                            $menu_name = '';
+                                            $menu_price = '';
+                                            $menu1_name = '';
+                                            $menu1_price = '';
+                                            $menu2_name = '';
+                                            $menu2_price = '';
+                                            $menu3_name = '';
+                                            $menu3_price = '';
+                                            $menu4_name = '';
+                                            $menu4_price = '';
+
+
+                                            foreach ($menu_daily_set as $menu) {
+                                                $menu_date = new DateTime($menu['date']);
+
+                                                if ($menu_date == $date_to_check) {
+                                                    $menu_id = $menu['id'];
+                                                    $menu_name = $menu['name'];
+                                                    $menu_price = $menu['price'];
+                                                    break;
+                                                }
+                                            }
+
+                                            foreach ($menu_soup as $menu1) {
+                                                $menu1_date = new DateTime($menu1['date']);
+
+                                                if ($menu1_date == $date_to_check) {
+                                                    $menu1_id = $menu1['id'];
+                                                    $menu1_name = $menu1['name'];
+                                                    $menu1_price = $menu1['price'];
+                                                    break;
+                                                }
+                                            }
+
+                                            foreach ($menu_protein as $menu2) {
+                                                $menu2_date = new DateTime($menu2['date']);
+
+                                                if ($menu2_date == $date_to_check) {
+                                                    $menu2_id = $menu2['id'];
+                                                    $menu2_name = $menu2['name'];
+                                                    $menu2_price = $menu2['price'];
+                                                    break;
+                                                }
+                                            }
+
+                                            foreach ($menu_rice as $menu3) {
+                                                $menu3_date = new DateTime($menu3['date']);
+
+                                                if ($menu3_date == $date_to_check) {
+                                                    $menu3_id = $menu3['id'];
+                                                    $menu3_name = $menu3['name'];
+                                                    $menu3_price = $menu3['price'];
+                                                    break;
+                                                }
+                                            }
+
+                                            foreach ($menu_fruit as $menu4) {
+                                                $menu4_date = new DateTime($menu4['date']);
+
+                                                if ($menu4_date == $date_to_check) {
+                                                    $menu4_id = $menu4['id'];
+                                                    $menu4_name = $menu4['name'];
+                                                    $menu4_price = $menu4['price'];
+                                                    break;
+                                                }
+                                            }
+                                        ?>
+                                            <td>
+                                                <?php echo $menu_name; ?><br>
+                                                <?php echo $menu_price; ?><br>
+                                                <hr>
+                                                <?php echo $menu1_name; ?><br>
+                                                <?php echo $menu1_price; ?><br>
+                                                <?php echo $menu2_name; ?><br>
+                                                <?php echo $menu2_price; ?><br>
+                                                <?php echo $menu3_name; ?><br>
+                                                <?php echo $menu3_price; ?><br>
+                                                <?php echo $menu4_name; ?><br>
+                                                <?php echo $menu4_price; ?><br>
+                                            </td>
+                                            
+                                        <?php
+                                            endfor;
+                                    endforeach; ?>
+                                </tr>
+                                <tr class="tr">
+                                    <td class="align-middle">Pasta</td>
+                                    <?php foreach ($dates as $item) :
+                                        $begin_date = new DateTime($item['begin_date']);
+                                        $end_date = clone $begin_date;
+                                        $end_date->modify('+5 day');
+
+                                        for ($i = 7; $i < 12; $i++) :
+                                            $date_to_check = clone $begin_date;
+                                            $date_to_check->modify("+$i day");
+                                            $menu_id = '';
+                                            $menu_name = '';
+                                            $menu_price = '';
+
+                                            foreach ($menu_pasta as $menu) {
+                                                $menu_date = new DateTime($menu['date']);
+
+                                                if ($menu_date == $date_to_check) {
+                                                    $menu_id = $menu['id'];
+                                                    $menu_name = $menu['name'];
+                                                    $menu_price = $menu['price'];
+                                                    break;
+                                                }
+                                            }
+                                    ?>
+                                            <td>
+                                                <?php echo $menu_name; ?><br>
+                                                <?php echo $menu_price; ?>
+                                            </td>
+                                    <?php
+                                        endfor;
+                                    endforeach;
+                                    ?>
+                                </tr>
+                                <tr class="tr">
+                                    <td class="align-middle">Breakfast & Stall</td>
+                                    <?php foreach ($dates as $item) :
+                                            $begin_date = new DateTime($item['begin_date']);
+                                            $end_date = clone $begin_date;
+                                            $end_date->modify('+5 day');
+
+                                            for ($i = 7; $i < 12; $i++) :
+                                                $date_to_check = clone $begin_date;
+                                                $date_to_check->modify("+$i day");
+                                                $menu_id = '';
+                                                $menu_name = '';
+                                                $menu_price = '';
+
+                                                foreach ($menu_breakfast as $menu) {
+                                                    $menu_date = new DateTime($menu['date']);
+
+                                                    if ($menu_date == $date_to_check) {
+                                                        $menu_id = $menu['id'];
+                                                        $menu_name = $menu['name'];
+                                                        $menu_price = $menu['price'];
+                                                        break;
+                                                    }
+                                                }
+                                        ?>
+                                                <td>
+                                                <?php echo $menu_name; ?><br>
+                                                <?php echo $menu_price; ?>                                                </td>
+                                        <?php
+                                            endfor;
+                                        endforeach;
+                                    ?>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                     <!-- END DATA TABLE -->

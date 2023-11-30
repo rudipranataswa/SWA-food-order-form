@@ -18,7 +18,7 @@ class Product_model extends CI_Model
                 return $query->row_array();
         }
 
-        public function get_by_id()
+        public function get_menu()
         {
                 $this->db->select('menu.id, menu.name, category.category');
                 $this->db->from('menu');
