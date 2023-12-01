@@ -9,6 +9,12 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-6">
+				<?php if ($this->session->flashdata('message')) { ?>
+					<div class="alert alert-info">
+						<?php echo $this->session->flashdata('message'); ?>
+					</div>
+				<?php } ?>
+
 				<div class="card">
 					<div class="card-header">
 						<strong>Create New Product</strong>
@@ -38,20 +44,16 @@
 									<input type="text" id="input-normal" name="Name" placeholder="Type here..." class="form-control" required>
 								</div>
 							</div>
-							<button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
 								<i class=""></i> Submit
 							</button>
-						</form>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-
-
-
 
 <!-- Modal Pop-up -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -68,8 +70,9 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-				<button type="button" class="btn btn-primary">Yes</button>
+				<button type="submit" class="btn btn-primary">Yes</button>
 			</div>
 		</div>
 	</div>
 </div>
+</form>

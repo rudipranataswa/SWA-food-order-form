@@ -9,6 +9,12 @@
      		<div class="container-fluid">
      			<div class="row">
      				<div class="col-md-12">
+     					<?php if ($this->session->flashdata('message')) { ?>
+     						<div class="alert alert-info">
+     							<?php echo $this->session->flashdata('message'); ?>
+     						</div>
+     					<?php } ?>
+
      					<div class="card">
      						<div class="card-body">
      							<h3 class="title-5 m-b-35">Product List</h3>
@@ -49,17 +55,15 @@
      													<div class="table-data-feature">
      														<form action="<?= base_url('Product/delete_product'); ?>" method="post" class="form-horizontal">
      															<input type="hidden" name="id" value="<?= $pro['id']; ?>">
-     															<button type="submit" class="btn item" data-toggle="modal" data-target="#exampleModalCenter" title="Delete">
+     															<button type="button" class="btn item" data-toggle="modal" data-target="#exampleModalCenter" title="Delete">
      																<i class="zmdi zmdi-delete"></i>
      															</button>
-     														</form>
      													</div>
      												</td>
      											</tr>
      											<tr class="spacer"></tr>
      										<?php endforeach; ?>
      									</tbody>
-
      								</table>
      							</div>
 
@@ -76,7 +80,7 @@
      </div>
 
      <!-- Modal Pop-up -->
-     <!--<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
      	<div class="modal-dialog modal-dialog-centered" role="document">
      		<div class="modal-content">
      			<div class="modal-header">
@@ -90,10 +94,9 @@
      				<button type="button" class="btn btn-secondary" data-dismiss="modal">
      					No
      				</button>
-     				<button type="button" class="btn btn-primary">Yes</button>
+     				<button type="submit" class="btn btn-primary">Yes</button>
      			</div>
      		</div>
      	</div>
      </div>
-     </div>
-     </div>-->
+     </form>

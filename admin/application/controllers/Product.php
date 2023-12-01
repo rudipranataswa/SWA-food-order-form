@@ -7,6 +7,7 @@ class Product extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('product_model');
+		$this->load->library('session');
 	}
 
 	public function index()
@@ -24,7 +25,6 @@ class Product extends CI_Controller
 		$this->load->view('product/index', $data);
 		$this->load->view('templates/footer');
 	}
-
 
 	public function add_product()
 	{
@@ -52,20 +52,32 @@ class Product extends CI_Controller
 		$category = $this->input->post('Category');
 		$name = $this->input->post('Name');
 		$result = $this->product_model->create_menu($category, $name);
+
 		if ($result) {
-			echo 'Insert New Product Succeed!';
+			$this->session->set_flashdata('message', 'Create New Menu Succeed!');
+			redirect('product/add_product');
 		} else {
-			echo 'Insert New Product Failed!';
+			$this->session->set_flashdata('message', 'Create New Menu Fail!');
+			redirect('product/add_product');
 		}
 	}
 
 	public function update_menu()
 	{
 		$id = $this->input->post('hf-id');
+		$this->db->where('id_menu', $id);
+		$query = $this->db->get('po_purchase_meal_dtl');
 		$category_id = $this->input->post('Category');
 		$name = $this->input->post('Name');
-		$this->product_model->update_product($id, $category_id, $name);
-		redirect('product');
+
+		if ($query->num_rows() > 0) {
+			$this->session->set_flashdata('message', 'Fail: Cannot edit product because it exists in po_purchase_meal_dtl');
+			redirect('product');
+		} else {
+			$this->product_model->update_product($id, $category_id, $name);
+			$this->session->set_flashdata('message', 'Success: Product edited!');
+			redirect('product');
+		}
 	}
 
 	public function delete_product()
@@ -75,10 +87,12 @@ class Product extends CI_Controller
 		$query = $this->db->get('po_purchase_meal_dtl');
 
 		if ($query->num_rows() > 0) {
-			echo "Cannot delete product because it exists in po_purchase_meal_dtl";
+			$this->session->set_flashdata('message', 'Fail: Cannot delete product because it exists in po_purchase_meal_dtl');
+			redirect('product');
 		} else {
 			$this->product_model->delete_product($id);
+			$this->session->set_flashdata('message', 'Success: Product deleted');
+			redirect('product');
 		}
-		redirect('product');
 	}
 }

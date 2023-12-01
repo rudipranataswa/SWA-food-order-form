@@ -40,22 +40,13 @@
 										<label for="hf-menu" class=" form-control-label">Menu name</label>
 									</div>
 									<div class="col-12 col-md-9">
-										<select name="Name" id="product" style="width: 373px;">
-											<?php
-											$selected_category = urldecode($_GET['name']);
-											$i = 1;
-											foreach ($products as $pro) : ?>
-												<option value="<?= $pro['name']; ?>" <?= $pro['name'] == $selected_category ? 'selected' : ''; ?>><?= $pro['name']; ?></option>
-											<?php endforeach; ?>
-										</select>
+										<input type="text" id="input-normal" name="Name" placeholder="Type here..." class="form-control" required>
 									</div>
 								</div>
-								<button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+
+								<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
 									<i class=""></i> Submit
 								</button>
-							</form>
-
-
 
 						</div>
 					</div>
@@ -81,8 +72,9 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-				<button type="button" class="btn btn-primary">Yes</button>
+				<button type="submit" class="btn btn-primary">Yes</button>
 			</div>
 		</div>
 	</div>
 </div>
+</form>
