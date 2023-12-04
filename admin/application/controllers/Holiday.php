@@ -18,7 +18,7 @@ class Holiday extends CI_Controller
 		$this->pagination->initialize($config);
 
         $data['judul'] = 'Holiday';
-        $data['holiday'] = $this->holiday_model->get_by_id($config['per_page'], $this->uri->segment(3));
+        $data['holiday'] = $this->holiday_model->paginate($config['per_page'], $this->uri->segment(3));
         $this->load->view('templates/header', $data);
         $this->load->view('holiday/index', $data);
         $this->load->view('templates/footer');
@@ -36,7 +36,6 @@ class Holiday extends CI_Controller
             $this->load->view('holiday/add_holiday');
             $this->load->view('templates/footer');
         } else {
-            // $holiday = $this->input->post('holiday');
             $this->holiday_model->add_holiday_data();
             $this->session->set_flashdata('flash', 'ditambahkan');
             redirect('holiday');
@@ -45,30 +44,41 @@ class Holiday extends CI_Controller
 
     public function edit_holiday($id)
     {
-        $data['judul'] = 'Edit Holiday#1';
+        $data['judul'] = 'Edit Holiday';
         $data['holiday'] = $this->holiday_model->get_by_id($id);
         
-        $this->form_validation->set_rules('date', 'date', 'required|date');
-        $this->form_validation->set_rules('description', 'description', 'required');
-
-        if($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('holiday/edit_holiday', $data);
-            $this->load->view('templates/footer');
-        } else {
-            // $holiday = $this->input->post('holiday');
-            $this->holiday_model->edit_holiday_data();
-            $this->session->set_flashdata('flash', 'diubah');
-            redirect('holiday');
-        }
+        $this->load->view('templates/header', $data);
+        $this->load->view('holiday/edit_holiday', $data);
+        $this->load->view('templates/footer');
         
+        
+        // $this->form_validation->set_rules('date', 'date', 'required|date');
+        // $this->form_validation->set_rules('description', 'description', 'required');
+
+        // if($this->form_validation->run() == false) {
+        //     $this->load->view('templates/header', $data);
+        //     $this->load->view('holiday/edit_holiday', $data);
+        //     $this->load->view('templates/footer');
+        // } else {
+        //     $this->holiday_model->edit_holiday_data();
+        //     $this->session->set_flashdata('flash', 'diubah');
+        //     redirect('holiday');
+        // } 
+    }
+
+    public function update_data($id)
+    {
+        $data = array(
+            'date' => $this->input->post('date'),
+            'description' => $this->input->post('description')
+        );
+
+        $this->holiday_model->edit_holiday_data($id, $data);
+        redirect('holiday');
     }
 
     public function delete_holiday()
     {
-        // $this->holiday_model->delete_holiday_data($id);
-        // $this->session->set_flashdata('flash', 'Dihapus');
-        // redirect('holiday');
         $id = $this->input->post('id_number');
         $result = $this->holiday_model->delete_holiday_data($id);
 

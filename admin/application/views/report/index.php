@@ -33,7 +33,7 @@
                                                         data-toggle="tooltip"
                                                         data-placement="top"
                                                         title="View"
-                                                        href="<?= base_url(); ?>report/view_report"
+                                                        href="<?= base_url(); ?>report/view_report/<?= $rpt['id']; ?>"
                                                         >
                                                         <i class="zmdi zmdi-eye"></i>
                                                         </a>

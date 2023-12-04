@@ -43,6 +43,52 @@
                             <tr class="spacer"></tr>
                         <?php endforeach; ?>
                     </tbody>
+                    <!-- <tbody>
+                        <?php foreach ($view_report as $vrpt) : ?>
+                            <tr class="tr-shadow">
+                                <td><?= $vrpt['id']; ?></td>
+                                <td><?= $vrpt['student_name']; ?></td>
+                                <td><?= $vrpt['date_only']; ?></td>
+                                <td><?= $vrpt['time_only']; ?></td>
+                                <td>
+                                <div class="table-data-feature">
+                                    <a
+                                    class="item"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="View"
+                                    href="<?= base_url(); ?>report/detail_report/<?= $vrpt['id']; ?>"
+                                    >
+                                    <i class="zmdi zmdi-eye"></i>
+                                    </a>
+                                </div>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
+                        <?php endforeach; ?>
+                        <?php foreach ($view_report as $vrpt) : ?>
+                            <tr class="tr-shadow">
+                                <td><?= $cd['id']; ?></td>
+                                <td><?= $cd['student_name']; ?></td>
+                                <td><?= $vrpt['date_only']; ?></td>
+                                <td><?= $vrpt['time_only']; ?></td>
+                                <td>
+                                <div class="table-data-feature">
+                                    <a
+                                    class="item"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="View"
+                                    href="<?= base_url(); ?>report/detail_report/<?= $vrpt['id_po_purchase_meal_hdr']; ?>"
+                                    >
+                                    <i class="zmdi zmdi-eye"></i>
+                                    </a>
+                                </div>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
+                        <?php endforeach; ?>
+                    </tbody> -->
                 </table>
                 </div>
                 <!-- END DATA TABLE -->

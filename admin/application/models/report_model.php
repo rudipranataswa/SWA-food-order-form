@@ -18,16 +18,15 @@ class Report_model extends CI_Model
         return $query->row_array();
     }
 
-    public function get_view_report($slug = FALSE)
-    {
-        if ($slug === FALSE) {
-            $query = $this->db->get('order_hdr');
-            return $query->result_array();
-        }
+    public function get_view_report($id)
+	{
+		$this->db->select('*');
+		$this->db->from('order_hdr');
+		$this->db->where('po_purchase_meal_hdr_id', $id);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 
-        $query = $this->db->get_where('order_hdr', array('id' => $slug));
-        return $query->row_array();
-    }
 
     public function get_product($slug = FALSE)
 	{
@@ -151,10 +150,9 @@ class Report_model extends CI_Model
             order_hdr.submitted_date as date,
             po_purchase_meal_dtl.date as week_date'
         );
-        $this->db->from('order_hdr');
-        $this->db->join('po_purchase_meal_dtl', 'order_hdr.po_purchase_meal_dtl_id = po_purchase_meal_dtl.id');
-        $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
-        $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
+        $this->db->from('po_purchase_meal_dtl');
+        $this->db->join('order_dtl', 'order_dtl.id_po_purchase_meal_dtl = po_purchase_meal_dtl.id');
+        $this->db->join('order_hdr', 'order_dtl.id_order = order_hdr.id');
         $query = $this->db->get();
         return $query->result_array();
     }

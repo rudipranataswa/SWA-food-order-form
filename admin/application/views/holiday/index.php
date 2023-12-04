@@ -60,8 +60,8 @@
                         </td>
                         <td>
                           <div class="table-data-feature">
-                            <form action="<?= base_url();?>holiday/delete_holiday/<?= $hdy['id']; ?>" method="post" id="deleteForm<?= $hdy['id']; ?>">
-                              <!-- <input type="hidden" name="id_number" value="<?= $hdy['id']; ?>">   -->
+                            <form action="<?= base_url();?>holiday/delete_holiday" method="post" id="deleteForm<?= $hdy['id']; ?>">
+                              <input type="hidden" name="id_number" value="<?= $hdy['id']; ?>">  
                               <button
                                 type="button"
                                 class="btn item"

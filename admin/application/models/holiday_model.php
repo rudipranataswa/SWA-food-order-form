@@ -18,7 +18,12 @@ class Holiday_model extends CI_Model
         return $query->row_array();
     }
 
-    public function get_by_id($limit, $start)
+    public function get_by_id($id)
+    {
+        return $this->db->get_where('holiday', ['id' => $id])->row_array();
+    }
+
+    public function paginate($limit, $start)
     {
         $this->db->limit($limit, $start);        
         $this->db->select('*');
@@ -42,12 +47,15 @@ class Holiday_model extends CI_Model
         $this->db->insert('holiday', $data);
     }
 
-    public function edit_holiday_data()
+    public function edit_holiday_data($id, $data)
     {
-        $data = array(
-            'date' => $this->input->post('date'),
-            'description' => $this->input->post('description')
-        );
+        $data = [
+            "date" => $this->input->post('date', true),
+            "description" => $this->input->post('description', true )
+        ];
+
+        $this->db->where('id', $id);
+        $this->db->update('holiday', $data);
     }
     
     public function delete_holiday_data($id)
