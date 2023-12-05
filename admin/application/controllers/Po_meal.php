@@ -25,6 +25,7 @@ class Po_meal extends CI_Controller
 		$data['dailyset'] = $this->po_meal_model->get_daily_set();
 		$data['pastas'] = $this->po_meal_model->get_pasta();
 		$data['breakfasts'] = $this->po_meal_model->get_breakfast();
+		$data['menus'] = $this->po_meal_model->get_menus();
 		$this->load->view('templates/header', $data);
 		$this->load->view('po_meal/add_po_meal', $data);
 		$this->load->view('templates/footer');
@@ -37,5 +38,16 @@ class Po_meal extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('po_meal/edit_po_meal');
 		$this->load->view('templates/footer');
+	}
+
+	public function submit()
+	{
+		$data = array(
+			'remark' => $this->input->post('Title'),
+			'begin_date' => $this->input->post('Begin'),
+			'end_date' => $this->input->post('End'),
+			'status' => $this->input->post('Status')
+		);
+		$this->po_meal_model->insert_data($data);
 	}
 }

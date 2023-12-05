@@ -2,310 +2,319 @@
 <div class="main-content">
 	<div class="section__content section__content--p30">
 		<div class="container-fluid">
-			<form>
-				<!-- Title -->
-				<div class="row form-group">
-					<div class="col-lg-6">
-						<h3 class="title-5 m-b-35">New PO Meal</h3>
-						<div class="card">
-							<div class="card-header">
-								<strong>PO Meal Detail</strong>
+			<!-- Title -->
+			<div class="row form-group">
+				<div class="col-lg-6">
+					<h3 class="title-5 m-b-35">New PO Meal</h3>
+					<div class="card">
+						<div class="card-header">
+							<strong>PO Meal Detail</strong>
+						</div>
+						<div class="card-body card-block">
+							<div class="row form-group">
+								<div class="col col-sm-5">
+									<label for="input-normal" class=" form-control-label">Title</label>
+								</div>
+								<div class="col col-sm-6">
+									<input type="text" id="input-normal" name="Title" placeholder="Type here..." class="form-control">
+								</div>
 							</div>
-							<div class="card-body card-block">
-								<form action="" method="post" class="form-horizontal">
-									<div class="row form-group">
-										<div class="col col-sm-5">
-											<label for="input-normal" class=" form-control-label">Title</label>
-										</div>
-										<div class="col col-sm-6">
-											<input type="text" id="input-normal" name="input-normal" placeholder="Type here..." class="form-control">
-										</div>
-									</div>
-									<div class="row form-group">
-										<div class="col col-sm-5">
-											<label for="input-normal" class=" form-control-label">Begin Date</label>
-										</div>
-										<div class="col col-sm-6">
-											<input type="date" id="input-normal" name="input-normal" placeholder="Type here..." class="form-control">
-										</div>
-									</div>
-									<div class="row form-group">
-										<div class="col col-sm-5">
-											<label for="input-normal" class=" form-control-label">End Date</label>
-										</div>
-										<div class="col col-sm-6">
-											<input type="date" id="input-normal" name="input-normal" placeholder="Type here..." class="form-control">
-										</div>
-									</div>
-									<div class="row form-group">
-										<div class="col col-sm-5">
-											<label for="input-normal" class=" form-control-label">Status</label>
-										</div>
-										<div class="col col-sm-6">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Please select</option>
-												<option value="1">Option #1</option>
-												<option value="2">Option #2</option>
-												<option value="3">Option #3</option>
-											</select>
-										</div>
-									</div>
-								</form>
+							<div class="row form-group">
+								<div class="col col-sm-5">
+									<label for="input-normal" class=" form-control-label">Begin Date</label>
+								</div>
+								<div class="col col-sm-6">
+									<input type="date" id="input-normal" name="Begin" placeholder="Type here..." class="form-control">
+								</div>
 							</div>
-							<div class="card-footer">
-								<button type="submit" class="btn btn-primary btn-sm">
-									<i class=""></i> Submit
-								</button>
-								<!-- <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-ban"></i> Reset
-                                </button> -->
+							<div class="row form-group">
+								<div class="col col-sm-5">
+									<label for="input-normal" class=" form-control-label">End Date</label>
+								</div>
+								<div class="col col-sm-6">
+									<input type="date" id="input-normal" name="End" placeholder="Type here..." class="form-control">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-5">
+									<label for="input-normal" class=" form-control-label">Status</label>
+								</div>
+								<div class="col col-sm-6">
+									<select name="Status" id="input-normal" class="form-control">
+										<option value="ACTIVE">Active</option>
+										<option value="INACTIVE">Inactive</option>
+									</select>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+			</div>
 
 
-				<!-- Table -->
-				<div class="row form-group">
-					<div class="col-md-12">
-						<!-- DATA TABLE -->
-						<div class="table-responsive">
-							<table class="table table-data2">
-								<thead>
-									<tr>
-										<th rowspan="2" class="align-middle">Week 1</th>
-										<th>Monday</th>
-										<th>Tuesday</th>
-										<th>Wednesday</th>
-										<th>Thrusday</th>
-										<th>Friday</th>
-									</tr>
-									<tr>
-										<th>6/11/2023</th>
-										<th>7/11/2023</th>
-										<th>8/11/2023</th>
-										<th>9/11/2023</th>
-										<th>10/11/2023</th>
-									</tr>
-								</thead>
+			<!-- Table -->
+			<div class="row form-group">
+				<div class="col-md-12">
+					<!-- DATA TABLE -->
+					<div class="table-responsive">
+						<table class="table table-data2">
+							<thead>
+								<tr>
+									<th rowspan="2" class="align-middle">Week 1</th>
+									<th>Monday</th>
+									<th>Tuesday</th>
+									<th>Wednesday</th>
+									<th>Thrusday</th>
+									<th>Friday</th>
+								</tr>
+								<tr>
+									<th>6/11/2023</th>
+									<th>7/11/2023</th>
+									<th>8/11/2023</th>
+									<th>9/11/2023</th>
+									<th>10/11/2023</th>
+								</tr>
+							</thead>
 
-								<!-- Daily Set -->
-								<tbody>
-									<tr class="tr">
-										<td rowspan="2" class="align-middle">Daily Set</td>
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($dailyset as $daily) : ?>
-													<option value="<?= $daily['id'] ?>"><?= $daily['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
-
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($dailyset as $daily) : ?>
-													<option value="<?= $daily['id'] ?>"><?= $daily['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
-
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($dailyset as $daily) : ?>
-													<option value="<?= $daily['id'] ?>"><?= $daily['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
-
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($dailyset as $daily) : ?>
-													<option value="<?= $daily['id'] ?>"><?= $daily['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
-
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($dailyset as $daily) : ?>
-													<option value="<?= $daily['id'] ?>"><?= $daily['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
-									</tr>
+							<!-- Daily Set -->
+							<tbody>
+								<tr class="tr">
+									<td rowspan="2" class="align-middle">Daily Set</td>
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($dailyset as $daily) : ?>
+												<option value="<?= $daily['id'] ?>"><?= $daily['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<br>
+										<?php foreach ($menus as $menu) : ?>
+											<li class="text-dark"><?= $menu['name'] ?><span style="display:inline-block; width: 7px;"></span><input id="" name="" value="" type="checkbox"></li>
+										<?php endforeach; ?>
+									</td>
 
 
-									<tr class="tr">
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-									</tr>
-									<tr class="spacer"></tr>
 
-									<!-- Pasta -->
-									<tr class="tr">
-										<td rowspan="2" class="align-middle">Pasta</td>
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($pastas as $pasta) : ?>
-													<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($dailyset as $daily) : ?>
+												<option value="<?= $daily['id'] ?>"><?= $daily['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<br>
+										<?php foreach ($menus as $menu) : ?>
+											<li class="text-dark"><?= $menu['name'] ?><span style="display:inline-block; width: 7px;"></span><input id="" name="" value="" type="checkbox"></li>
+										<?php endforeach; ?>
+									</td>
 
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($pastas as $pasta) : ?>
-													<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($dailyset as $daily) : ?>
+												<option value="<?= $daily['id'] ?>"><?= $daily['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<br>
+										<?php foreach ($menus as $menu) : ?>
+											<li class="text-dark"><?= $menu['name'] ?><span style="display:inline-block; width: 7px;"></span><input id="" name="" value="" type="checkbox"></li>
+										<?php endforeach; ?>
+									</td>
 
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($pastas as $pasta) : ?>
-													<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($dailyset as $daily) : ?>
+												<option value="<?= $daily['id'] ?>"><?= $daily['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<br>
+										<?php foreach ($menus as $menu) : ?>
+											<li class="text-dark"><?= $menu['name'] ?><span style="display:inline-block; width: 7px;"></span><input id="" name="" value="" type="checkbox"></li>
+										<?php endforeach; ?>
+									</td>
 
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($pastas as $pasta) : ?>
-													<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($dailyset as $daily) : ?>
+												<option value="<?= $daily['id'] ?>"><?= $daily['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<br>
+										<?php foreach ($menus as $menu) : ?>
+											<li class="text-dark"><?= $menu['name'] ?><span style="display:inline-block; width: 7px;"></span><input id="" name="" value="" type="checkbox"></li>
+										<?php endforeach; ?>
+									</td>
+								</tr>
 
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($pastas as $pasta) : ?>
-													<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
-									</tr>
-									<tr class="tr">
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-									</tr>
-									<tr class="spacer"></tr>
 
-									<!-- Breakfast and Stall -->
-									<tr class="tr">
-										<td rowspan="2" class="align-middle">Breakfast and Stall</td>
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($breakfasts as $breakfast) : ?>
-													<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
+								<tr class="tr">
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+								</tr>
+								<tr class="spacer"></tr>
 
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($breakfasts as $breakfast) : ?>
-													<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
+								<!-- Pasta -->
+								<tr class="tr">
+									<td rowspan="2" class="align-middle">Pasta</td>
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+									</td>
 
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($breakfasts as $breakfast) : ?>
-													<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+									</td>
 
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($breakfasts as $breakfast) : ?>
-													<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+									</td>
 
-										<td class="desc">
-											<select name="select" id="input-normal" class="form-control">
-												<option value="0">Select Menu..</option>
-												<?php foreach ($breakfasts as $breakfast) : ?>
-													<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-										</td>
-									</tr>
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+									</td>
 
-									<tr class="tr">
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-										<td>
-											<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<!-- END DATA TABLE -->
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+									</td>
+								</tr>
+
+								<tr class="tr">
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+								</tr>
+								<tr class="spacer"></tr>
+
+								<!-- Breakfast and Stall -->
+								<tr class="tr">
+									<td rowspan="2" class="align-middle">Breakfast and Stall</td>
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($breakfasts as $breakfast) : ?>
+												<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+									</td>
+
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($breakfasts as $breakfast) : ?>
+												<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+									</td>
+
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($breakfasts as $breakfast) : ?>
+												<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+									</td>
+
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($breakfasts as $breakfast) : ?>
+												<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+									</td>
+
+									<td class="desc">
+										<select name="select" id="input-normal" class="form-control">
+											<option value="0">Select Menu..</option>
+											<?php foreach ($breakfasts as $breakfast) : ?>
+												<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+									</td>
+								</tr>
+
+								<tr class="tr">
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+									<td>
+										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
+					<!-- END DATA TABLE -->
 				</div>
-				<div class="row form-group">
-					<div class="col-md-12">
-						<button class="btn btn-success btn-lg float-right" type="submit">
-							Submit
-						</button>
-					</div>
+			</div>
+			<div class="row form-group">
+				<div class="col-md-12">
+					<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+						Submit
+					</button>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 </div>
@@ -324,7 +333,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-				<button type="button" class="btn btn-primary">Yes</button>
+				<button type="submit" class="btn btn-primary">Yes</button>
 			</div>
 		</div>
 	</div>
