@@ -48,7 +48,7 @@ class Product_model extends CI_Model
 
         public function get_menu_daily_set()
         {
-                $this->db->select('menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price');
+                $this->db->select('menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price, menu.id');
                 $this->db->from('po_purchase_meal_dtl');
                 $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
                 $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
@@ -137,5 +137,34 @@ class Product_model extends CI_Model
                 $this->db->where('po_purchase_meal_hdr.status', 'active');
                 $query = $this->db->get();
                 return $query->result_array();
+        }
+
+        public function get_holidays()
+        {
+                $query = $this->db->get('holiday');
+                return $query->result_array();
+        }
+
+        public function get_child_menus()
+        {
+                $this->db->select('menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price, po_purchase_meal_dtl.parent');
+                $this->db->from('po_purchase_meal_dtl');
+                $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
+                $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
+                $this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
+                $this->db->where('parent !=', 0);
+                $this->db->where('po_purchase_meal_hdr.status', 'active');
+                $query = $this->db->get();
+                $result = $query->result_array();
+
+                // Group child menus by parent
+                $child_menus = [];
+                foreach ($result as $row) {
+                        $parent = $row['parent'];
+                        unset($row['parent']);  // remove parent from row
+                        $child_menus[$parent][] = $row;
+                }
+
+                return $child_menus;
         }
 }

@@ -39,12 +39,14 @@ class Welcome extends CI_Controller
 			'product_item' => $this->product_model->get_product(),
 			'dates' => $this->product_model->get_dates(),
 			'menu_daily_set' => $this->product_model->get_menu_daily_set(),
+			'holidays' => $this->product_model->get_holidays(),
 			'menu_soup' => $this->product_model->get_menu_soup(),
 			'menu_protein' => $this->product_model->get_menu_protein(),
 			'menu_rice' => $this->product_model->get_menu_rice(),
 			'menu_fruit' => $this->product_model->get_menu_fruit(),
 			'menu_pasta' => $this->product_model->get_menu_pasta(),
 			'menu_breakfast' => $this->product_model->get_menu_breakfast(),
+			'child_menus' => $this->product_model->get_child_menus(),
 			'csrf' => array(
 				'name' => $this->security->get_csrf_token_name(),
 				'hash' => $this->security->get_csrf_hash()
