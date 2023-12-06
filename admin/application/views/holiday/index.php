@@ -9,6 +9,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
+          <?php if ($this->session->tempdata('message')) ?>
+            <div class="alert alert-info" id="myAlert">
+              <?php echo $this->session->tempdata('message'); ?>
+            </div>
+          <?php ?>              
           <div class="card">
             <div class="card-body">
               <h3 class="title-5 m-b-35">Holiday List</h3>
@@ -23,7 +28,6 @@
                   </a>
                 </div>
               </div>
-              <div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
               <div class="table-responsive table-responsive-data2">
                 <table
                   id="zero_config"

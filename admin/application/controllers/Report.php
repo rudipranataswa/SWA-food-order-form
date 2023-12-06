@@ -40,21 +40,7 @@ class Report extends CI_Controller
         $this->load->view('report/view_report', $data);    
         $this->load->view('templates/footer');
     }
-
-        // $data['view_report'] = $this->report_model->get_view_report($id);
-
-        // // Add the following lines to separate the date and time components
-        // foreach ($data['view_report'] as &$vrpt) {
-        //     $datetime = $vrpt['submitted_date'];
-        //     $date = new DateTime($datetime);
-        //     $vrpt['date_only'] = $date->format('Y-m-d');
-        //     $vrpt['time_only'] = $date->format('H:i:s');
-        // }
-        // $this->load->view('templates/header', $data);
-        // $this->load->view('report/view_report', $data);    
-        // $this->load->view('templates/footer');
     
-
     public function detail_report() 
     {
         $data = array(

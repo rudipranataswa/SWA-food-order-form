@@ -146,10 +146,12 @@ class Report_model extends CI_Model
     public function get_detail_report()
     {
         $this->db->select(
-            'order_hdr.student_name as student, 
-            order_hdr.submitted_date as date,
-            po_purchase_meal_dtl.date as week_date'
-        );
+			'po_purchase_meal_dtl.id as id,
+			order_dtl.id_po_purchase_meal_dtl, 
+			order_dtl.id_order, 
+			order_hdr.student_name,
+			order_hdr.id as id_ord'
+		);
         $this->db->from('po_purchase_meal_dtl');
         $this->db->join('order_dtl', 'order_dtl.id_po_purchase_meal_dtl = po_purchase_meal_dtl.id');
         $this->db->join('order_hdr', 'order_dtl.id_order = order_hdr.id');

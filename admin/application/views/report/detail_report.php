@@ -12,24 +12,41 @@
                             <strong>Report Detail</strong>
                         </div>
                         <div class="card-body card-block">
-                            <?php foreach ($detail_report as $drpt): ?>
-                            <div class="row form-group">
-                                <div class="col col-sm-5">
-                                    <label for="input-normal" class=" form-control-label">Customer Name</label>
+                            <?php if (!empty($detail_report)) : ?>
+                                <div class="row form-group">
+                                    <div class="col col-sm-5">
+                                        <label for="input-normal" class=" form-control-label">Customer Name</label>
+                                    </div>
+                                    <div class="col col-sm-6">
+                                        <label for="input-normal" class=" form-control-label">: <?= $detail_report[0]['student_name'] ?></label>
+                                    </div>
                                 </div>
-                                <div class="col col-sm-6">
-                                    <label for="input-normal" class=" form-control-label">: <?= $drpt['student'] ?></label>
+                                <div class="row form-group">
+                                    <div class="col col-sm-5">
+                                        <label for="input-normal" class=" form-control-label">Order Date</label>
+                                    </div>
+                                    <div class="col col-sm-6">
+                                        <label for="input-normal" class=" form-control-label">: <?= $detail_report[0]['date_only'] ?></label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-sm-5">
-                                    <label for="input-normal" class=" form-control-label">Order Date</label>
+                            <?php else: ?>
+                                <div class="row form-group">
+                                    <div class="col col-sm-5">
+                                        <label for="input-normal" class=" form-control-label">Customer Name</label>
+                                    </div>
+                                    <div class="col col-sm-6">
+                                        <label for="input-normal" class=" form-control-label">: Not Found</label>
+                                    </div>
                                 </div>
-                                <div class="col col-sm-6">
-                                    <label for="input-normal" class=" form-control-label">: <?= $drpt['date_only'] ?></label>
+                                <div class="row form-group">
+                                    <div class="col col-sm-5">
+                                        <label for="input-normal" class=" form-control-label">Order Date</label>
+                                    </div>
+                                    <div class="col col-sm-6">
+                                        <label for="input-normal" class=" form-control-label">: Not Found</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -83,7 +100,7 @@
                                             $menu2_name = '';
                                             $menu2_price = '';
                                             $menu3_name = '';
-                                            $menu3_price = '';
+                                            $menu3_price = ''; 
                                             $menu4_name = '';
                                             $menu4_price = '';
 
@@ -92,10 +109,10 @@
                                                 $menu_date = new DateTime($menu['date']);
 
                                                 if ($menu_date == $date_to_check) {
-                                                    $menu_id = $menu['id'];
-                                                    $menu_name = $menu['name'];
-                                                    $menu_price = $menu['price'];
-                                                    break;
+                                                        $menu_id = $menu['id'];
+                                                        $menu_name = $menu['name'];
+                                                        $menu_price = $menu['price'] / 1000 . 'k';
+                                                        break;
                                                 }
                                             }
 
@@ -105,7 +122,7 @@
                                                 if ($menu1_date == $date_to_check) {
                                                     $menu1_id = $menu1['id'];
                                                     $menu1_name = $menu1['name'];
-                                                    $menu1_price = $menu1['price'];
+                                                    $menu1_price = $menu1['price'] / 1000 . 'k';
                                                     break;
                                                 }
                                             }
@@ -116,7 +133,7 @@
                                                 if ($menu2_date == $date_to_check) {
                                                     $menu2_id = $menu2['id'];
                                                     $menu2_name = $menu2['name'];
-                                                    $menu2_price = $menu2['price'];
+                                                    $menu2_price = $menu2['price'] / 1000 . 'k';
                                                     break;
                                                 }
                                             }
@@ -127,7 +144,7 @@
                                                 if ($menu3_date == $date_to_check) {
                                                     $menu3_id = $menu3['id'];
                                                     $menu3_name = $menu3['name'];
-                                                    $menu3_price = $menu3['price'];
+                                                    $menu3_price = $menu3['price'] / 1000 . 'k';
                                                     break;
                                                 }
                                             }
@@ -138,25 +155,24 @@
                                                 if ($menu4_date == $date_to_check) {
                                                     $menu4_id = $menu4['id'];
                                                     $menu4_name = $menu4['name'];
-                                                    $menu4_price = $menu4['price'];
+                                                    $menu4_price = $menu4['price'] / 1000 . 'k';
                                                     break;
                                                 }
                                             }
                                         ?>
                                             <td>
                                                 <?php echo $menu_name; ?><br>
-                                                <?php echo $menu_price; ?><br>
+                                                <?php echo "<b>".$menu_price."</b>"; ?><br>
                                                 <hr>
                                                 <?php echo $menu1_name; ?><br>
-                                                <?php echo $menu1_price; ?><br>
+                                                <?php echo "<b>".$menu1_price."</b>"; ?><br>
                                                 <?php echo $menu2_name; ?><br>
-                                                <?php echo $menu2_price; ?><br>
+                                                <?php echo "<b>".$menu2_price."</b>"; ?><br>
                                                 <?php echo $menu3_name; ?><br>
-                                                <?php echo $menu3_price; ?><br>
+                                                <?php echo "<b>".$menu3_price."</b>"; ?><br>
                                                 <?php echo $menu4_name; ?><br>
-                                                <?php echo $menu4_price; ?><br>
+                                                <?php echo "<b>".$menu4_price."</b>"; ?><br>
                                             </td>
-                                            
                                         <?php
                                             endfor;
                                     endforeach; ?>
@@ -181,14 +197,14 @@
                                                 if ($menu_date == $date_to_check) {
                                                     $menu_id = $menu['id'];
                                                     $menu_name = $menu['name'];
-                                                    $menu_price = $menu['price'];
+                                                    $menu_price = $menu['price'] / 1000 . 'k';
                                                     break;
                                                 }
                                             }
                                     ?>
                                             <td>
                                                 <?php echo $menu_name; ?><br>
-                                                <?php echo $menu_price; ?>
+                                                <?php echo "<b>".$menu_price."</b>"; ?>
                                             </td>
                                     <?php
                                         endfor;
@@ -215,14 +231,15 @@
                                                     if ($menu_date == $date_to_check) {
                                                         $menu_id = $menu['id'];
                                                         $menu_name = $menu['name'];
-                                                        $menu_price = $menu['price'];
+                                                        $menu_price = $menu['price'] / 1000 . 'k';
                                                         break;
                                                     }
                                                 }
                                         ?>
-                                                <td>
+                                            <td>
                                                 <?php echo $menu_name; ?><br>
-                                                <?php echo $menu_price; ?>                                                </td>
+                                                <?php echo $menu_price; ?>                                                \
+                                            </td>
                                         <?php
                                             endfor;
                                         endforeach;
@@ -285,7 +302,7 @@
                                                 if ($menu_date == $date_to_check) {
                                                     $menu_id = $menu['id'];
                                                     $menu_name = $menu['name'];
-                                                    $menu_price = $menu['price'];
+                                                    $menu_price = $menu['price'] / 1000 . 'k';
                                                     break;
                                                 }
                                             }
@@ -296,7 +313,7 @@
                                                 if ($menu1_date == $date_to_check) {
                                                     $menu1_id = $menu1['id'];
                                                     $menu1_name = $menu1['name'];
-                                                    $menu1_price = $menu1['price'];
+                                                    $menu1_price = $menu1['price'] / 1000 . 'k';
                                                     break;
                                                 }
                                             }
@@ -307,7 +324,7 @@
                                                 if ($menu2_date == $date_to_check) {
                                                     $menu2_id = $menu2['id'];
                                                     $menu2_name = $menu2['name'];
-                                                    $menu2_price = $menu2['price'];
+                                                    $menu2_price = $menu2['price'] / 1000 . 'k';
                                                     break;
                                                 }
                                             }
@@ -318,7 +335,7 @@
                                                 if ($menu3_date == $date_to_check) {
                                                     $menu3_id = $menu3['id'];
                                                     $menu3_name = $menu3['name'];
-                                                    $menu3_price = $menu3['price'];
+                                                    $menu3_price = $menu3['price'] / 1000 . 'k';
                                                     break;
                                                 }
                                             }
@@ -329,7 +346,7 @@
                                                 if ($menu4_date == $date_to_check) {
                                                     $menu4_id = $menu4['id'];
                                                     $menu4_name = $menu4['name'];
-                                                    $menu4_price = $menu4['price'];
+                                                    $menu4_price = $menu4['price'] / 1000 . 'k';
                                                     break;
                                                 }
                                             }
@@ -372,19 +389,18 @@
                                                 if ($menu_date == $date_to_check) {
                                                     $menu_id = $menu['id'];
                                                     $menu_name = $menu['name'];
-                                                    $menu_price = $menu['price'];
+                                                    $menu_price = $menu['price'] / 1000 . 'k';
                                                     break;
                                                 }
                                             }
-                                    ?>
+                                        ?>
                                             <td>
                                                 <?php echo $menu_name; ?><br>
                                                 <?php echo $menu_price; ?>
                                             </td>
-                                    <?php
-                                        endfor;
-                                    endforeach;
-                                    ?>
+                                        <?php
+                                            endfor;
+                                    endforeach; ?>
                                 </tr>
                                 <tr class="tr">
                                     <td class="align-middle">Breakfast & Stall</td>
@@ -406,7 +422,7 @@
                                                     if ($menu_date == $date_to_check) {
                                                         $menu_id = $menu['id'];
                                                         $menu_name = $menu['name'];
-                                                        $menu_price = $menu['price'];
+                                                        $menu_price = $menu['price'] / 1000 . 'k';
                                                         break;
                                                     }
                                                 }
@@ -416,8 +432,7 @@
                                                 <?php echo $menu_price; ?>                                                </td>
                                         <?php
                                             endfor;
-                                        endforeach;
-                                    ?>
+                                    endforeach; ?>
                                 </tr>
                             </tbody>
                         </table>
@@ -429,7 +444,7 @@
                 <div class="col-md-12">
                     <button class="btn btn-warning btn-lg float-right"
                             type="">
-                        Submit 
+                        Total : <?php $sum ?>
                     </button>
                 </div>
             </div>
