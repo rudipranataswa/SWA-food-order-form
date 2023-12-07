@@ -46,6 +46,7 @@ class Report extends CI_Controller
         $data = array(
             'product_item' => $this->report_model->get_product(),
 			'dates' => $this->report_model->get_dates(),
+            'holidays' => $this->report_model->get_holidays(),
 			'menu_daily_set' => $this->report_model->get_menu_daily_set(),
 			'menu_soup' => $this->report_model->get_menu_soup(),
 			'menu_protein' => $this->report_model->get_menu_protein(),
@@ -53,7 +54,8 @@ class Report extends CI_Controller
 			'menu_fruit' => $this->report_model->get_menu_fruit(),
 			'menu_pasta' => $this->report_model->get_menu_pasta(),
 			'menu_breakfast' => $this->report_model->get_menu_breakfast(),
-            'detail_report' => $this->report_model->get_detail_report()
+            'detail_report' => $this->report_model->get_detail_report(),
+			'child_menus' => $this->report_model->get_child_menus()
 		);
 
         $data['judul'] = 'Detail Report#1';
@@ -62,7 +64,15 @@ class Report extends CI_Controller
             $datetime = $drpt['date'];
             $date = new DateTime($datetime);
             $drpt['date_only'] = $date->format('Y-m-d');
+            if ($drpt['id_menu'] == $drpt['menu_id']){
+                $data['background'] = 'bg-success text-dark';
+                // $data['sum'] = 
+            } else {
+                $data['background'] = '';
+            }
         }
+
+        
         $this->load->view('templates/header', $data);
         $this->load->view('report/detail_report', $data);    
         $this->load->view('templates/footer');

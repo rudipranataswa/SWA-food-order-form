@@ -143,19 +143,52 @@ class Report_model extends CI_Model
 		return $query->result_array();
 	}
 
+	public function get_holidays()
+	{
+		$query = $this->db->get('holiday');
+		return $query->result_array();
+	}
+
     public function get_detail_report()
     {
         $this->db->select(
 			'po_purchase_meal_dtl.id as id,
+			po_purchase_meal_dtl.id_menu,
 			order_dtl.id_po_purchase_meal_dtl, 
 			order_dtl.id_order, 
 			order_hdr.student_name,
-			order_hdr.id as id_ord'
+			order_hdr.submitted_date as date,
+			order_hdr.id as id_ord,
+			menu.id as menu_id'
 		);
-        $this->db->from('po_purchase_meal_dtl');
-        $this->db->join('order_dtl', 'order_dtl.id_po_purchase_meal_dtl = po_purchase_meal_dtl.id');
+        $this->db->from('order_dtl');
+        $this->db->join('po_purchase_meal_dtl', 'order_dtl.id_po_purchase_meal_dtl = po_purchase_meal_dtl.id');
         $this->db->join('order_hdr', 'order_dtl.id_order = order_hdr.id');
+        $this->db->join('menu', 'menu.id = po_purchase_meal_dtl.id_menu');
         $query = $this->db->get();
         return $query->result_array();
     }
+
+	public function get_child_menus()
+	{
+		$this->db->select('menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price, po_purchase_meal_dtl.parent');
+		$this->db->from('po_purchase_meal_dtl');
+		$this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
+		$this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
+		$this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
+		$this->db->where('parent !=', 0);
+		$this->db->where('po_purchase_meal_hdr.status', 'active');
+		$query = $this->db->get();
+		$result = $query->result_array();
+
+		// Group child menus by parent
+		$child_menus = [];
+		foreach ($result as $row) {
+			$parent = $row['parent'];
+			unset($row['parent']);  // remove parent from row
+			$child_menus[$parent][] = $row;
+		}
+
+		return $child_menus;
+	}
 }

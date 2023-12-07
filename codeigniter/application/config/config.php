@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:80/SWA-food-order-form/codeigniter';
+$config['base_url'] = 'http://localhost:8080/SWA-food-order-form/codeigniter';
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +36,8 @@ $config['base_url'] = 'http://localhost:80/SWA-food-order-form/codeigniter';
 |
 */
 $config['index_page'] = 'index.php';
+$config['sess_expiration'] = 3600;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -441,7 +443,7 @@ $config['standardize_newlines'] = FALSE;
 |          for backwards compatibility purposes!
 |
 */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -462,7 +464,10 @@ $config['csrf_token_name'] = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = TRUE;
-$config['csrf_exclude_uris'] = array();
+$config['csrf_exclude_uris'] = array(
+    'api/record/[0-9]+',
+    'api/title/[a-z]+'
+);
 
 /*
 |--------------------------------------------------------------------------
