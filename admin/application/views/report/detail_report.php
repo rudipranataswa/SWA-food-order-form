@@ -29,12 +29,12 @@
                                         <label for="input-normal" class=" form-control-label">: <?= $detail_report[0]['date_only'] ?></label>
                                     </div>
                                 </div>
-                            <?php else: ?>
-                                <div class="row form-group">
-                                    <div class="col col-sm-5">
-                                        <label for="input-normal" class=" form-control-label">Customer Name</label>
-                                    </div>
-                                    <div class="col col-sm-6">
+                                <?php else: ?>
+                                    <div class="row form-group">
+                                        <div class="col col-sm-5">
+                                            <label for="input-normal" class=" form-control-label">Customer Name</label>
+                                        </div>
+                                        <div class="col col-sm-6">
                                         <label for="input-normal" class=" form-control-label">: Not Found</label>
                                     </div>
                                 </div>
@@ -71,7 +71,14 @@
                                     <?php foreach ($dates as $item) : ?>
                                         <?php
                                             $date = new DateTime($item['begin_date']);
+                                            $day_of_week = $date->format('N');
                                             $days_added = 0;
+
+                                            // If the date is not a Monday, adjust the date to the previous Monday
+                                            if ($day_of_week != 1) {
+                                                $days_to_subtract = $day_of_week - 1;
+                                                $date->modify("-$days_to_subtract day");
+                                            }
 
                                             for ($i = 0; $days_added < 5; $i++) :
                                                 echo '<th>' . $date->format('j M Y') . '</th>';
@@ -86,12 +93,13 @@
                                     <td class="align-middle">Daily Set</td>
                                     <?php foreach ($dates as $item) :
                                         $begin_date = new DateTime($item['begin_date']);
+                                        $day_of_week = $begin_date->format('N');
                                         $end_date = clone $begin_date;
                                         $end_date->modify('+5 day');
 
-                                        for ($i = 0; $i < 5; $i++) :
+                                        for ($i = 1; $i <= 5; $i++) :
                                             $date_to_check = clone $begin_date;
-                                            $date_to_check->modify("+$i day");
+                                            $date_to_check->modify('-' . ($day_of_week - $i) . ' day');
                                             $is_holiday = false;
                                             $holiday_description = '';
 
@@ -104,38 +112,47 @@
                                                     break;
                                                 }
                                             }
-                                            
-                                            if ($is_holiday) {
+
+                                            if ($is_holiday == true) {
                                                 echo '<td>' . $holiday_description . '</td>';
                                             } else {
                                                 $menu_found = false;
-                                                
-                                                foreach ($menu_daily_set as $menu) {
-                                                    $menu_date = new DateTime($menu['date']);
 
-                                                    if ($menu_date == $date_to_check) {
-                                                        echo '<td>';
-                                                        echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>';
-                                                        echo '<b class="' . $background . '">' . $menu['price'] / 1000 . 'k' . '</b><br>';
-                                                        
-                                                        if(isset($child_menus[$menu['id']])){
-                                                            foreach ($child_menus[$menu['id']] as $child_menu) {
-                                                                echo '<hr>';
-                                                                echo '<span class="' . $background . '">' . $child_menu['name'] . '</span><br>';
-                                                                echo '<b class="' . $background . '">' . $child_menu['price'] / 1000 . 'k' . '</b><br>';
+                                                if ($i >= $day_of_week) {
+                                                    foreach ($menu_daily_set as $menu) {
+                                                        $menu_date = new DateTime($menu['date']);
+
+                                                        if ($menu_date == $date_to_check) {
+                                                            $background = '';
+                                                            foreach ($detail_report as $report) {
+                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
+                                                                    $background = $report['background'];
+                                                                    break;
+                                                                }
                                                             }
+                                                            echo '<td>';
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>';    
+                                                            $price_in_k = $menu['price'] / 1000 . 'k';   
+                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
+                                                            if (isset($child_menus[$menu['id']])) {
+                                                                foreach ($child_menus as $child_menu) {
+                                                                    echo '<hr>';
+                                                                    echo '<span class="' . $background. '">' . $child_menu['name'] . '</span><br>';    
+                                                                    $price_in_k = $child_menu['price'] / 1000 . 'k';   
+                                                                    echo '<span class="' . $background. '">' . $price_in_k . '</span><br>';                                                        
+                                                                }
+                                                            }
+                                                            echo '</td>';
+                                                            $menu_found = true;
+                                                            break;
                                                         }
-                                                        echo '</td>';
-                                                        $menu_found = true;
-                                                        break;
                                                     }
                                                 }
+
                                                 if (!$menu_found) {
-                                                    echo '<td></td>';  // Display a blank cell if no menu found
+                                                    echo '<td>-</td>';  // Display a blank cell if no menu found
                                                 }
                                             }
-                                        ?>
-                                        <?php
                                         endfor;
                                     endforeach; ?>
                                 </tr>
@@ -143,69 +160,119 @@
                                     <td class="align-middle">Pasta</td>
                                     <?php foreach ($dates as $item) :
                                         $begin_date = new DateTime($item['begin_date']);
+                                        $day_of_week = $begin_date->format('N');
                                         $end_date = clone $begin_date;
                                         $end_date->modify('+5 day');
 
-                                        for ($i = 0; $i < 5; $i++) :
+                                        for ($i = 1; $i <= 5; $i++) :
                                             $date_to_check = clone $begin_date;
-                                            $date_to_check->modify("+$i day");
-                                            $menu_id = '';
-                                            $menu_name = '';
-                                            $menu_price = '';
+                                            $date_to_check->modify('-' . ($day_of_week - $i) . ' day');
+                                            $is_holiday = false;
+                                            $holiday_description = '';
 
-                                            foreach ($menu_pasta as $menu) {
-                                                $menu_date = new DateTime($menu['date']);
+                                            foreach ($holidays as $holiday) {
+                                                $holiday_date = new DateTime($holiday['date']);
 
-                                                if ($menu_date == $date_to_check) {
-                                                    $menu_id = $menu['id'];
-                                                    $menu_name = $menu['name'];
-                                                    $menu_price = $menu['price'] / 1000 . 'k';
+                                                if ($holiday_date == $date_to_check) {
+                                                    $is_holiday = true;
+                                                    $holiday_description = $holiday['description'];
                                                     break;
                                                 }
                                             }
-                                    ?>
-                                            <td>
-                                                <?php echo $menu_name; ?><br>
-                                                <?php echo "<b>".$menu_price."</b>"; ?>
-                                            </td>
-                                    <?php
+
+                                            if ($is_holiday == true) {
+                                                echo '<td>' . $holiday_description . '</td>';
+                                            } else {
+                                                $menu_found = false;
+
+                                                if ($i >= $day_of_week) {
+                                                    foreach ($menu_pasta as $menu) {
+                                                        $menu_date = new DateTime($menu['date']);
+
+                                                        if ($menu_date == $date_to_check) {
+                                                            $background = '';
+                                                            foreach ($detail_report as $report) {
+                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
+                                                                    $background = $report['background'];
+                                                                    break;
+                                                                }
+                                                            }
+                                                            echo '<td>';
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>';    
+                                                            $price_in_k = $menu['price'] / 1000 . 'k';   
+                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
+                                                            echo '</td>';
+                                                            $menu_found = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+
+                                                if (!$menu_found) {
+                                                    echo '<td>-</td>';  // Display a blank cell if no menu found
+                                                }
+                                            }
                                         endfor;
-                                    endforeach;
-                                    ?>
+                                    endforeach; ?>
                                 </tr>
                                 <tr class="tr">
                                     <td class="align-middle">Breakfast & Stall</td>
                                     <?php foreach ($dates as $item) :
-                                            $begin_date = new DateTime($item['begin_date']);
-                                            $end_date = clone $begin_date;
-                                            $end_date->modify('+5 day');
+                                        $begin_date = new DateTime($item['begin_date']);
+                                        $day_of_week = $begin_date->format('N');
+                                        $end_date = clone $begin_date;
+                                        $end_date->modify('+5 day');
 
-                                            for ($i = 0; $i < 5; $i++) :
-                                                $date_to_check = clone $begin_date;
-                                                $date_to_check->modify("+$i day");
-                                                $menu_id = '';
-                                                $menu_name = '';
-                                                $menu_price = '';
+                                        for ($i = 1; $i <= 5; $i++) :
+                                            $date_to_check = clone $begin_date;
+                                            $date_to_check->modify('-' . ($day_of_week - $i) . ' day');
+                                            $is_holiday = false;
+                                            $holiday_description = '';
 
-                                                foreach ($menu_breakfast as $menu) {
-                                                    $menu_date = new DateTime($menu['date']);
+                                            foreach ($holidays as $holiday) {
+                                                $holiday_date = new DateTime($holiday['date']);
 
-                                                    if ($menu_date == $date_to_check) {
-                                                        $menu_id = $menu['id'];
-                                                        $menu_name = $menu['name'];
-                                                        $menu_price = $menu['price'] / 1000 . 'k';
-                                                        break;
+                                                if ($holiday_date == $date_to_check) {
+                                                    $is_holiday = true;
+                                                    $holiday_description = $holiday['description'];
+                                                    break;
+                                                }
+                                            }
+
+                                            if ($is_holiday == true) {
+                                                echo '<td>' . $holiday_description . '</td>';
+                                            } else {
+                                                $menu_found = false;
+
+                                                if ($i >= $day_of_week) {
+                                                    foreach ($menu_breakfast as $menu) {
+                                                        $menu_date = new DateTime($menu['date']);
+
+                                                        if ($menu_date == $date_to_check) {
+                                                            $background = '';
+                                                            foreach ($detail_report as $report) {
+                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
+                                                                    $background = $report['background'];
+                                                                    break;
+                                                                }
+                                                            }
+                                                            echo '<td>';
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>';    
+                                                            $price_in_k = $menu['price'] / 1000 . 'k';   
+                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
+                                                            echo '</td>';
+                                                            $menu_found = true;
+                                                            break;
+                                                        }
                                                     }
                                                 }
-                                        ?>
-                                            <td>
-                                                <?php echo $menu_name; ?><br>
-                                                <?php echo $menu_price; ?>
-                                            </td>
-                                        <?php
-                                            endfor;
-                                        endforeach;
-                                    ?>
+
+                                                if (!$menu_found) {
+                                                    echo '<td>-</td>';  // Display a blank cell if no menu found
+                                                }
+                                            }
+                                        endfor;
+                                    endforeach; ?>
                                 </tr>
                             </tbody>
                             <!-- Week 2 -->
@@ -222,16 +289,22 @@
                                     <?php foreach ($dates as $item) : ?>
                                         <?php
                                             $date = new DateTime($item['begin_date']);
+                                            $day_of_week = $date->format('N');
                                             $date->modify('+7 day');
                                             $days_added = 0;
+
+                                            // If the date is not a Monday, adjust the date to the previous Monday
+                                            if ($day_of_week != 1) {
+                                                $days_to_subtract = $day_of_week - 1;
+                                                $date->modify("-$days_to_subtract day");
+                                            }
 
                                             for ($i = 0; $days_added < 5; $i++) :
                                                 echo '<th>' . $date->format('j M Y') . '</th>';
                                                 $date->modify('+1 day');
                                                 $days_added++;
                                             endfor;
-                                        endforeach; 
-                                    ?>
+                                    endforeach; ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -239,161 +312,184 @@
                                     <td class="align-middle">Daily Set</td>
                                     <?php foreach ($dates as $item) :
                                         $begin_date = new DateTime($item['begin_date']);
+                                        $day_of_week = $begin_date->format('N');
                                         $end_date = clone $begin_date;
                                         $end_date->modify('+5 day');
 
-                                        for ($i = 7; $i < 12; $i++) :
+                                        for ($i = 8; $i < 13; $i++) :
                                             $date_to_check = clone $begin_date;
-                                            $date_to_check->modify("+$i day");
-                                            // $menu_id = '';
-                                            $menu_name = '';
-                                            $menu_price = '';
-                                            $menu1_name = '';
-                                            $menu1_price = '';
-                                            $menu2_name = '';
-                                            $menu2_price = '';
-                                            $menu3_name = '';
-                                            $menu3_price = '';
-                                            $menu4_name = '';
-                                            $menu4_price = '';
+                                            $date_to_check->modify('-' . ($day_of_week - $i) . ' day');
+                                            $is_holiday = false;
+                                            $holiday_description = '';
 
+                                            foreach ($holidays as $holiday) {
+                                                $holiday_date = new DateTime($holiday['date']);
 
-                                            foreach ($menu_daily_set as $menu) {
-                                                $menu_date = new DateTime($menu['date']);
-
-                                                if ($menu_date == $date_to_check) {
-                                                    $menu_id = $menu['id'];
-                                                    $menu_name = $menu['name'];
-                                                    $menu_price = $menu['price'] / 1000 . 'k';
+                                                if ($holiday_date == $date_to_check) {
+                                                    $is_holiday = true;
+                                                    $holiday_description = $holiday['description'];
                                                     break;
                                                 }
                                             }
 
-                                            foreach ($menu_soup as $menu1) {
-                                                $menu1_date = new DateTime($menu1['date']);
+                                            if ($is_holiday == true) {
+                                                echo '<td>' . $holiday_description . '</td>';
+                                            } else {
+                                                $menu_found = false;
 
-                                                if ($menu1_date == $date_to_check) {
-                                                    $menu1_id = $menu1['id'];
-                                                    $menu1_name = $menu1['name'];
-                                                    $menu1_price = $menu1['price'] / 1000 . 'k';
-                                                    break;
+                                                if ($i >= $day_of_week) {
+                                                    foreach ($menu_daily_set as $menu) {
+                                                        $menu_date = new DateTime($menu['date']);
+
+                                                        if ($menu_date == $date_to_check) {
+                                                            $background = '';
+                                                            foreach ($detail_report as $report) {
+                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
+                                                                    $background = $report['background'];
+                                                                    break;
+                                                                }
+                                                            }
+                                                            echo '<td>';
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>'; 
+                                                            $price_in_k = $menu['price'] / 1000 . 'k';   
+                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
+                                                            if (isset($child_menus[$menu['id']])) {
+                                                                foreach ($child_menus[$menu['id']] as $child_menu) {
+                                                                    echo '<hr>';
+                                                                    echo '<span class="' . $background . '">' . $child_menu['name'] . '</span><br>';    
+                                                                    echo '<span class="' . $background . '">' . $child_menu['price'] . '</span><br>';    
+                                                                }
+                                                            } 
+                                                            echo '</td>';
+                                                            $menu_found = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+
+                                                if (!$menu_found) {
+                                                    echo '<td>-</td>';  // Display a blank cell if no menu found
                                                 }
                                             }
-
-                                            foreach ($menu_protein as $menu2) {
-                                                $menu2_date = new DateTime($menu2['date']);
-
-                                                if ($menu2_date == $date_to_check) {
-                                                    $menu2_id = $menu2['id'];
-                                                    $menu2_name = $menu2['name'];
-                                                    $menu2_price = $menu2['price'] / 1000 . 'k';
-                                                    break;
-                                                }
-                                            }
-
-                                            foreach ($menu_rice as $menu3) {
-                                                $menu3_date = new DateTime($menu3['date']);
-
-                                                if ($menu3_date == $date_to_check) {
-                                                    $menu3_id = $menu3['id'];
-                                                    $menu3_name = $menu3['name'];
-                                                    $menu3_price = $menu3['price'] / 1000 . 'k';
-                                                    break;
-                                                }
-                                            }
-
-                                            foreach ($menu_fruit as $menu4) {
-                                                $menu4_date = new DateTime($menu4['date']);
-
-                                                if ($menu4_date == $date_to_check) {
-                                                    $menu4_id = $menu4['id'];
-                                                    $menu4_name = $menu4['name'];
-                                                    $menu4_price = $menu4['price'] / 1000 . 'k';
-                                                    break;
-                                                }
-                                            }
-                                        ?>
-                                            <td>
-                                                <?php echo $menu_name; ?><br>
-                                                <?php echo $menu_price; ?><br>
-                                                <hr>
-                                                <?php echo $menu1_name; ?><br>
-                                                <?php echo $menu1_price; ?><br>
-                                                <?php echo $menu2_name; ?><br>
-                                                <?php echo $menu2_price; ?><br>
-                                                <?php echo $menu3_name; ?><br>
-                                                <?php echo $menu3_price; ?><br>
-                                                <?php echo $menu4_name; ?><br>
-                                                <?php echo $menu4_price; ?><br>
-                                            </td>
-                                            
-                                        <?php
-                                            endfor;
+                                        endfor;
                                     endforeach; ?>
                                 </tr>
                                 <tr class="tr">
                                     <td class="align-middle">Pasta</td>
                                     <?php foreach ($dates as $item) :
                                         $begin_date = new DateTime($item['begin_date']);
+                                        $day_of_week = $begin_date->format('N');
                                         $end_date = clone $begin_date;
                                         $end_date->modify('+5 day');
 
-                                        for ($i = 7; $i < 12; $i++) :
+                                        for ($i = 8; $i < 13; $i++) :
                                             $date_to_check = clone $begin_date;
-                                            $date_to_check->modify("+$i day");
-                                            $menu_id = '';
-                                            $menu_name = '';
-                                            $menu_price = '';
+                                            $date_to_check->modify('-' . ($day_of_week - $i) . ' day');
+                                            $is_holiday = false;
+                                            $holiday_description = '';
 
-                                            foreach ($menu_pasta as $menu) {
-                                                $menu_date = new DateTime($menu['date']);
+                                            foreach ($holidays as $holiday) {
+                                                $holiday_date = new DateTime($holiday['date']);
 
-                                                if ($menu_date == $date_to_check) {
-                                                    $menu_id = $menu['id'];
-                                                    $menu_name = $menu['name'];
-                                                    $menu_price = $menu['price'] / 1000 . 'k';
+                                                if ($holiday_date == $date_to_check) {
+                                                    $is_holiday = true;
+                                                    $holiday_description = $holiday['description'];
                                                     break;
                                                 }
                                             }
-                                        ?>
-                                            <td>
-                                                <?php echo $menu_name; ?><br>
-                                                <?php echo $menu_price; ?>
-                                            </td>
-                                        <?php
-                                            endfor;
+
+                                            if ($is_holiday == true) {
+                                                echo '<td>' . $holiday_description . '</td>';
+                                            } else {
+                                                $menu_found = false;
+
+                                                if ($i >= $day_of_week) {
+                                                    foreach ($menu_pasta as $menu) {
+                                                        $menu_date = new DateTime($menu['date']);
+
+                                                        if ($menu_date == $date_to_check) {
+                                                            $background = '';
+                                                            foreach ($detail_report as $report) {
+                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
+                                                                    $background = $report['background'];
+                                                                    break;
+                                                                }
+                                                            }
+                                                            echo '<td>';
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>';    
+                                                            $price_in_k = $menu['price'] / 1000 . 'k';   
+                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
+                                                            echo '</td>';
+                                                            $menu_found = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+
+                                                if (!$menu_found) {
+                                                    echo '<td>-</td>';  // Display a blank cell if no menu found
+                                                }
+                                            }
+                                        endfor;
                                     endforeach; ?>
                                 </tr>
                                 <tr class="tr">
                                     <td class="align-middle">Breakfast & Stall</td>
                                     <?php foreach ($dates as $item) :
-                                            $begin_date = new DateTime($item['begin_date']);
-                                            $end_date = clone $begin_date;
-                                            $end_date->modify('+5 day');
+                                        $begin_date = new DateTime($item['begin_date']);
+                                        $day_of_week = $begin_date->format('N');
+                                        $end_date = clone $begin_date;
+                                        $end_date->modify('+5 day');
 
-                                            for ($i = 7; $i < 12; $i++) :
-                                                $date_to_check = clone $begin_date;
-                                                $date_to_check->modify("+$i day");
-                                                $menu_id = '';
-                                                $menu_name = '';
-                                                $menu_price = '';
+                                        for ($i = 8; $i < 13; $i++) :
+                                            $date_to_check = clone $begin_date;
+                                            $date_to_check->modify('-' . ($day_of_week - $i) . ' day');
+                                            $is_holiday = false;
+                                            $holiday_description = '';
 
-                                                foreach ($menu_breakfast as $menu) {
-                                                    $menu_date = new DateTime($menu['date']);
+                                            foreach ($holidays as $holiday) {
+                                                $holiday_date = new DateTime($holiday['date']);
 
-                                                    if ($menu_date == $date_to_check) {
-                                                        $menu_id = $menu['id'];
-                                                        $menu_name = $menu['name'];
-                                                        $menu_price = $menu['price'] / 1000 . 'k';
-                                                        break;
+                                                if ($holiday_date == $date_to_check) {
+                                                    $is_holiday = true;
+                                                    $holiday_description = $holiday['description'];
+                                                    break;
+                                                }
+                                            }
+
+                                            if ($is_holiday == true) {
+                                                echo '<td>' . $holiday_description . '</td>';
+                                            } else {
+                                                $menu_found = false;
+
+                                                if ($i >= $day_of_week) {
+                                                    foreach ($menu_breakfast as $menu) {
+                                                        $menu_date = new DateTime($menu['date']);
+
+                                                        if ($menu_date == $date_to_check) {
+                                                            $background = '';
+                                                            foreach ($detail_report as $report) {
+                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
+                                                                    $background = $report['background'];
+                                                                    break;
+                                                                }
+                                                            }
+                                                            echo '<td>';
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>';    
+                                                            $price_in_k = $menu['price'] / 1000 . 'k';   
+                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
+                                                            echo '</td>';
+                                                            $menu_found = true;
+                                                            break;
+                                                        }
                                                     }
                                                 }
-                                        ?>
-                                                <td>
-                                                <?php echo $menu_name; ?><br>
-                                                <?php echo $menu_price; ?>                                                </td>
-                                        <?php
-                                            endfor;
+
+                                                if (!$menu_found) {
+                                                    echo '<td>-</td>';  // Display a blank cell if no menu found
+                                                }
+                                            }
+                                        endfor;
                                     endforeach; ?>
                                 </tr>
                             </tbody>
@@ -406,7 +502,7 @@
                 <div class="col-md-12">
                     <button class="btn btn-warning btn-lg float-right"
                             type="">
-                        Total : <?php $sum ?>
+                        Total Price: <?php echo $total_price / 1000 . 'k'; ?>
                     </button>
                 </div>
             </div>

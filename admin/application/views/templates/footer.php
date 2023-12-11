@@ -25,13 +25,6 @@
 
     <script>
       $("#zero_config").DataTable();
-
-      $(document).ready(function(){
-          console.log($); // Check if jQuery is loaded
-          setTimeout(function() {
-              $("#myAlert").remove();
-          }, 1000); // remove the alert after 1 second (1000 milliseconds)
-      });
     </script>
   </body>
 </html>

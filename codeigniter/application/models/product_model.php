@@ -1,6 +1,5 @@
 <?php
-class Product_model extends CI_Model
-{
+class Product_model extends CI_Model {
 
         public function __construct()
         {
@@ -168,3 +167,5 @@ class Product_model extends CI_Model
                 return $child_menus;
         }
 }
+
+?>

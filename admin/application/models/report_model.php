@@ -154,6 +154,7 @@ class Report_model extends CI_Model
         $this->db->select(
 			'po_purchase_meal_dtl.id as id,
 			po_purchase_meal_dtl.id_menu,
+			po_purchase_meal_dtl.price,
 			order_dtl.id_po_purchase_meal_dtl, 
 			order_dtl.id_order, 
 			order_hdr.student_name,
@@ -161,10 +162,11 @@ class Report_model extends CI_Model
 			order_hdr.id as id_ord,
 			menu.id as menu_id'
 		);
-        $this->db->from('order_dtl');
-        $this->db->join('po_purchase_meal_dtl', 'order_dtl.id_po_purchase_meal_dtl = po_purchase_meal_dtl.id');
+        $this->db->from('po_purchase_meal_dtl');
+        $this->db->join('order_dtl', 'order_dtl.id_po_purchase_meal_dtl = po_purchase_meal_dtl.id');
         $this->db->join('order_hdr', 'order_dtl.id_order = order_hdr.id');
         $this->db->join('menu', 'menu.id = po_purchase_meal_dtl.id_menu');
+		// $this->db->where('');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -184,9 +186,9 @@ class Report_model extends CI_Model
 		// Group child menus by parent
 		$child_menus = [];
 		foreach ($result as $row) {
-			$parent = $row['parent'];
-			unset($row['parent']);  // remove parent from row
-			$child_menus[$parent][] = $row;
+				$parent = $row['parent'];
+				unset($row['parent']);  // remove parent from row
+				$child_menus[$parent][] = $row;
 		}
 
 		return $child_menus;

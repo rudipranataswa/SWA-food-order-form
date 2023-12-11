@@ -37,7 +37,7 @@ class Holiday extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $this->holiday_model->add_holiday_data();
-            $this->session->set_flashdata('message', "Success: Holiday has been added!");
+            $this->session->set_flashdata('flash', 'ditambahkan');
             redirect('holiday');
         }
     }
@@ -50,15 +50,30 @@ class Holiday extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('holiday/edit_holiday', $data);
         $this->load->view('templates/footer');
+        
+        
+        // $this->form_validation->set_rules('date', 'date', 'required|date');
+        // $this->form_validation->set_rules('description', 'description', 'required');
+
+        // if($this->form_validation->run() == false) {
+        //     $this->load->view('templates/header', $data);
+        //     $this->load->view('holiday/edit_holiday', $data);
+        //     $this->load->view('templates/footer');
+        // } else {
+        //     $this->holiday_model->edit_holiday_data();
+        //     $this->session->set_flashdata('flash', 'diubah');
+        //     redirect('holiday');
+        // } 
     }
 
     public function update_data($id)
     {
-        $date = $this->input->post('date');
-		$description = $this->input->post('description');
-        
-        $this->holiday_model->edit_holiday_data($id, $date, $description);
-        $this->session->set_tempdata('message', "Success: {$description} edited!", 1);
+        $data = array(
+            'date' => $this->input->post('date'),
+            'description' => $this->input->post('description')
+        );
+
+        $this->holiday_model->edit_holiday_data($id, $data);
         redirect('holiday');
     }
 
@@ -68,12 +83,12 @@ class Holiday extends CI_Controller
         $result = $this->holiday_model->delete_holiday_data($id);
 
         if ($result === true) {
-            $this->session->set_flashdata('message', "Success: Holiday is deleted!");
             redirect('holiday');
         } else {
             // Store the error message in flashdata
-            $this->session->set_flashdata('message', "Failed: Holiday is not deleted!");
+            $this->session->set_flashdata('error_message', $result);
             redirect('holiday');
         }
     }
+
 }

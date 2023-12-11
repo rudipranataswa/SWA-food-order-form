@@ -208,22 +208,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</tr>
 				<tr>
 					<td rowspan="2">Week 1<br><input type="checkbox" id="checkboxweek1daily"></td>
-						<?php foreach ($dates as $item) : ?>
-						<?php
-							$date = new DateTime($item['begin_date']);
-							$days_added = 0;
+					<?php foreach ($dates as $item) : ?>
+					<?php
+						$previous_date = null;
+						$date = new DateTime($item['begin_date']);
+						$days_added = 0;
 
-							for ($i = 0; $days_added < 5; $i++) : // Add a day
-								// Print the date and increment the counter
-								echo '<td>' . $date->format('j M Y') . '</td>';
-								$date->modify('+1 day');
-								$days_added++;
-							endfor;
-						endforeach; ?>
+						for ($i = 0; $days_added < 5; $i++) : // Add a day
+							// Print the date and increment the counter
+							echo '<td>' . $date->format('j M Y') . '</td>';
+							$date->modify('+1 day');
+							$days_added++;
+						endfor;
+					endforeach; ?>
 				</tr>
 				<tr>
 					<?php
 					$counter = 1;
+					$previous_date = null; // Add this line
 					foreach ($dates as $item) :
 						$begin_date = new DateTime($item['begin_date']);
 						$end_date = clone $begin_date;
@@ -232,6 +234,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						for ($i = 0; $i < 5; $i++) :
 							$date_to_check = clone $begin_date;
 							$date_to_check->modify("+$i day");
+							if ($date_to_check == $previous_date) continue;
+							$previous_date = clone $date_to_check;
 							$is_holiday = false;
 							$holiday_description = '';
 
@@ -255,28 +259,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									if ($menu_date == $date_to_check) {
 										echo '<td>';
 										echo $menu['name'] . ' - ' . $menu['price'];
-										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily' . $date_to_check->format('Ymd') . '_' . 1 . '" value="' . '" value="' . $menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
+										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week1_day' . ($i + 1) . '_1" value="' . $menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
 										echo '<hr>';
 
 										if (isset($child_menus[$menu['id']])) {
 											$checkboxId = 2;
 											foreach ($child_menus[$menu['id']] as $child_menu) {
-												echo $child_menu['name'] . ' - ' . $child_menu['price'];
-												echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily' . $date_to_check->format('Ymd') . '_' . $checkboxId . '" value="' . $child_menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
-												$checkboxId++;
+												$child_menu_date = new DateTime($child_menu['date']);
+												if ($child_menu_date == $date_to_check) {
+													echo $child_menu['name'] . ' - ' . $child_menu['price'];
+													echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" value="' . $child_menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
+													$checkboxId++;
+												}
 											}
 										}
-										echo '</td>';
 										$menu_found = true;
 										break;
 									}
 								}
+
 								if (!$menu_found) {
 									echo '<td></td>';  // Display a blank cell if no menu found
 								}
 							}
 						endfor;
 					endforeach;
+
 					?>
 				</tr>
 
@@ -338,14 +346,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									if ($menu_date == $date_to_check) {
 										echo '<td>';
 										echo $menu['name'] . ' - ' . $menu['price'];
-										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily' . $date_to_check->format('Ymd') . '_' . 1 . '" value="' . $child_menu['name'] . '" value="' . $menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
+										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_1" value="' . $child_menu['name'] . '" value="' . $menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
 										echo '<hr>';
 
 										if (isset($child_menus[$menu['id']])) {
 											$checkboxId = 2;
 											foreach ($child_menus[$menu['id']] as $child_menu) {
 												echo $child_menu['name'] . ' - ' . $child_menu['price'];
-												echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily' . $date_to_check->format('Ymd') . '_' . $checkboxId . '" value="' . $child_menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
+												echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" value="' . $child_menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
 												$checkboxId++;
 											}
 										}
@@ -432,6 +440,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										break;
 									}
 								}
+
 								if ($menu_found) {
 									$checkboxIdPasta = 1;
 									echo '<td>';
@@ -447,6 +456,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					endforeach;
 					?>
 				</tr>
+
 
 
 
@@ -702,13 +712,69 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 	<script>
 		document.getElementById('checkboxall1').addEventListener('change', function() {
-			for (let i = 0; i <= 50; i++) {
-				let checkbox = document.getElementById('checkboxdaily' + i);
-				if (checkbox) {
-					checkbox.checked = this.checked;
-				}
-			}
+			let checkboxes = document.querySelectorAll('input[id^="checkboxdaily"]');
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = this.checked;
+			}, this);
 		});
+
+		document.getElementById('checkboxweek1daily').addEventListener('change', function() {
+			let checkboxes = document.querySelectorAll('input[id^="checkboxdaily_week1_"]');
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = this.checked;
+			}, this);
+		});
+
+		document.getElementById('checkboxweek2daily').addEventListener('change', function() {
+			let checkboxes = document.querySelectorAll('input[id^="checkboxdaily_week2_"]');
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = this.checked;
+			}, this);
+		});
+
+		for (let i = 1; i <= 5; i++) {
+			let parentCheckbox = document.getElementById('checkboxdaily_week1_day' + i + '_1');
+			if (parentCheckbox) {
+				parentCheckbox.addEventListener('change', function() {
+					let checkboxes = document.querySelectorAll('input[id^="checkboxdaily_week1_day' + i + '_"]');
+					checkboxes.forEach(function(checkbox) {
+						checkbox.checked = this.checked;
+					}, this);
+				});
+
+				// Add event listener to child checkboxes
+				let childCheckboxes = document.querySelectorAll('input[id^="checkboxdaily_week1_day' + i + '_"]');
+				childCheckboxes.forEach(function(childCheckbox) {
+					childCheckbox.addEventListener('change', function() {
+						if (!this.checked) {
+							parentCheckbox.checked = false;
+						}
+					});
+				});
+			}
+		}
+
+
+		for (let i = 7; i <= 12; i++) {
+			let parentCheckbox = document.getElementById('checkboxdaily_week2_day' + i + '_1');
+			if (parentCheckbox) {
+				parentCheckbox.addEventListener('change', function() {
+					let checkboxes = document.querySelectorAll('input[id^="checkboxdaily_week2_day' + i + '_"]');
+					checkboxes.forEach(function(checkbox) {
+						checkbox.checked = this.checked;
+					}, this);
+				});
+
+				let childCheckboxes = document.querySelectorAll('input[id^="checkboxdaily_week2_day' + i + '_"]');
+				childCheckboxes.forEach(function(childCheckbox) {
+					childCheckbox.addEventListener('change', function() {
+						if (!this.checked) {
+							parentCheckbox.checked = false;
+						}
+					});
+				});
+			}
+		}
 	</script>
 
 

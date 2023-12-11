@@ -1,8 +1,7 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller
-{
+class Welcome extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -23,14 +22,12 @@ class Welcome extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		date_default_timezone_set('Asia/Jakarta');
 		$this->load->model('product_model');
 		$this->load->helper('url_helper');
 		$this->load->database();
 		$this->load->helper('form');
 		$this->load->library('user_agent');
 		$this->load->library('session');
-		// $this->load->library('security');
 	}
 
 	public function index()
@@ -39,20 +36,13 @@ class Welcome extends CI_Controller
 			'product_item' => $this->product_model->get_product(),
 			'dates' => $this->product_model->get_dates(),
 			'menu_daily_set' => $this->product_model->get_menu_daily_set(),
-			'holidays' => $this->product_model->get_holidays(),
 			'menu_soup' => $this->product_model->get_menu_soup(),
 			'menu_protein' => $this->product_model->get_menu_protein(),
 			'menu_rice' => $this->product_model->get_menu_rice(),
 			'menu_fruit' => $this->product_model->get_menu_fruit(),
 			'menu_pasta' => $this->product_model->get_menu_pasta(),
 			'menu_breakfast' => $this->product_model->get_menu_breakfast(),
-			'child_menus' => $this->product_model->get_child_menus(),
-			'csrf' => array(
-				'name' => $this->security->get_csrf_token_name(),
-				'hash' => $this->security->get_csrf_hash()
-			)
 		);
-
 		$this->load->view('welcome_message', $data);
 	}
 

@@ -7,6 +7,7 @@ class Report extends CI_Controller
     {
         parent::__construct();
         $this->load->model('report_model');
+		$this->load->database();
     }
 
     public function index() 
@@ -40,7 +41,7 @@ class Report extends CI_Controller
         $this->load->view('report/view_report', $data);    
         $this->load->view('templates/footer');
     }
-    
+
     public function detail_report() 
     {
         $data = array(
@@ -54,24 +55,25 @@ class Report extends CI_Controller
 			'menu_fruit' => $this->report_model->get_menu_fruit(),
 			'menu_pasta' => $this->report_model->get_menu_pasta(),
 			'menu_breakfast' => $this->report_model->get_menu_breakfast(),
-            'detail_report' => $this->report_model->get_detail_report(),
-			'child_menus' => $this->report_model->get_child_menus()
+			'child_menus' => $this->report_model->get_child_menus(),
+            'detail_report' => $this->report_model->get_detail_report()
 		);
 
         $data['judul'] = 'Detail Report#1';
+        $total_price = 0;
         // Add the following lines to separate the date and time components
         foreach ($data['detail_report'] as &$drpt) {
             $datetime = $drpt['date'];
             $date = new DateTime($datetime);
             $drpt['date_only'] = $date->format('Y-m-d');
-            if ($drpt['id_menu'] == $drpt['menu_id']){
-                $data['background'] = 'bg-success text-dark';
-                // $data['sum'] = 
+            if ($drpt['id_order'] == $drpt['id_ord'] && $drpt['id_po_purchase_meal_dtl'] == $drpt['id']){
+                $drpt['background'] = 'bg-success text-dark';
+                $total_price += $drpt['price']; 
             } else {
-                $data['background'] = '';
-            }
+                $drpt['background'] = '';
+            } 
         }
-
+        $data['total_price'] = $total_price; 
         
         $this->load->view('templates/header', $data);
         $this->load->view('report/detail_report', $data);    

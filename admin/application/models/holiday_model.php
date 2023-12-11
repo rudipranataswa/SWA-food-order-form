@@ -47,12 +47,12 @@ class Holiday_model extends CI_Model
         $this->db->insert('holiday', $data);
     }
 
-    public function edit_holiday_data($id, $date, $description)
+    public function edit_holiday_data($id, $data)
     {
-        $data = array(
-            'date' => $date,
-            'description' => $description
-        );
+        $data = [
+            "date" => $this->input->post('date', true),
+            "description" => $this->input->post('description', true )
+        ];
 
         $this->db->where('id', $id);
         $this->db->update('holiday', $data);
