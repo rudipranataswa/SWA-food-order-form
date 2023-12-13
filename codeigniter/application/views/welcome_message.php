@@ -188,13 +188,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<label for="Parent's Phone Number">Parent's Phone Number:</label>
 				<input type="text" maxlength=50 name="Phone_Number" required>
 			</div>
-			<div>
-				<input class="submit-btn" type="Submit" value="Submit">
-			</div>
 			<?php if ($this->session->flashdata('thank_you_note')) : ?>
 				<p class="thanks_label"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
 			<?php endif; ?>
 
+			<div class="total-container">
+				<h3>Total: <span style="display:inline-block; width: 10px;"></span></h3>
+				<h3 id="totalPrice"></h3>
+			</div>
 
 			<h1>Daily Set</h1>
 			<table>
@@ -259,7 +260,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									if ($menu_date == $date_to_check) {
 										echo '<td>';
 										echo $menu['name'] . ' - ' . $menu['price'];
-										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week1_day' . ($i + 1) . '_1" value="' . $menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
+										echo '<input type="checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" onclick="addValue(this)">';
 										echo '<hr>';
 
 										if (isset($child_menus[$menu['id']])) {
@@ -268,7 +269,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 												$child_menu_date = new DateTime($child_menu['date']);
 												if ($child_menu_date == $date_to_check) {
 													echo $child_menu['name'] . ' - ' . $child_menu['price'];
-													echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" value="' . $child_menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
+													echo '<input type="checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]"  value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $child_menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br> ';
 													$checkboxId++;
 												}
 											}
@@ -281,6 +282,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 								if (!$menu_found) {
 									echo '<td></td>';  // Display a blank cell if no menu found
 								}
+								echo '<input type="hidden" id="hiddenInput" name="date">';
 							}
 						endfor;
 					endforeach;
@@ -346,14 +348,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									if ($menu_date == $date_to_check) {
 										echo '<td>';
 										echo $menu['name'] . ' - ' . $menu['price'];
-										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_1" value="' . $child_menu['name'] . '" value="' . $menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
+										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" onclick="addValue(this)"><br>';
 										echo '<hr>';
 
 										if (isset($child_menus[$menu['id']])) {
 											$checkboxId = 2;
 											foreach ($child_menus[$menu['id']] as $child_menu) {
 												echo $child_menu['name'] . ' - ' . $child_menu['price'];
-												echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" value="' . $child_menu['name'] . '" type="checkbox" onclick="addValue(this)"><br>';
+												echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]" value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $child_menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br>';
 												$checkboxId++;
 											}
 										}
@@ -437,6 +439,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										$menu_name = $menu['name'];
 										$menu_price = $menu['price'];
 										$menu_found = true;
+										$menu_id = $menu['id'];
 										break;
 									}
 								}
@@ -445,7 +448,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									$checkboxIdPasta = 1;
 									echo '<td>';
 									echo $menu_name . ' - ' . $menu_price;
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkbox' . $checkboxIdPasta . '" value="' . $menu_price . '" type="checkbox" onclick="addValue(this)"><br>';
+									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week1_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br>';
 									echo '</td>';
 									$checkboxIdPasta++;
 								} else {
@@ -514,14 +517,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										$menu_name = $menu['name'];
 										$menu_price = $menu['price'];
 										$menu_found = true;
+										$menu_id = $menu['id'];
 										break;
 									}
 								}
 								if ($menu_found) {
-									$checkboxIdPasta = 25;
+
+									$checkboxIdPasta = 1;
 									echo '<td>';
 									echo $menu_name . ' - ' . $menu_price;
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkbox' . $checkboxIdPasta . '" value="' . $menu_price . '" type="checkbox" onclick="addValue(this)"><br>';
+									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week2_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br>';
 									echo '</td>';
 									$checkboxIdPasta++;
 								} else {
@@ -598,6 +603,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										$menu_name = $menu['name'];
 										$menu_price = $menu['price'];
 										$menu_found = true;
+										$menu_id = $menu['id'];
 										break;
 									}
 								}
@@ -605,7 +611,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									$checkboxIdBreakfast = 1;
 									echo '<td>';
 									echo $menu_name . ' - ' . $menu_price;
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkbox' . $checkboxIdBreakfast . '" value="' . $menu_price . '" type="checkbox" onclick="addValue(this)"><br>';
+									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week1_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br>';
 									echo '</td>';
 									$checkboxIdBreakfast++;
 								} else {
@@ -674,14 +680,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										$menu_name = $menu['name'];
 										$menu_price = $menu['price'];
 										$menu_found = true;
+										$menu_id = $menu['id'];
 										break;
 									}
 								}
 								if ($menu_found) {
-									$checkboxIdBreakfast = 25;
+									$checkboxIdBreakfast = 1;
 									echo '<td>';
 									echo $menu_name . ' - ' . $menu_price;
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkbox' . $checkboxIdBreakfast . '" value="' . $menu_price . '" type="checkbox" onclick="addValue(this)"><br>';
+									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week2_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br>';
 									echo '</td>';
 									$checkboxIdBreakfast++;
 								} else {
@@ -699,6 +706,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 			<input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
 
+			<div>
+				<input class="submit-btn" type="Submit" value="Submit">
+			</div>
 			<!-- <div>
 				<input class="submit-btn" type="Submit" value="Submit">
 			</div> -->
@@ -709,8 +719,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
 	</div>
 
+	script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 	<script>
+		// Daily Set
 		document.getElementById('checkboxall1').addEventListener('change', function() {
 			let checkboxes = document.querySelectorAll('input[id^="checkboxdaily"]');
 			checkboxes.forEach(function(checkbox) {
@@ -775,7 +788,103 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				});
 			}
 		}
+
+		//Pasta
+		document.getElementById('checkboxall2').addEventListener('change', function() {
+			let checkboxes = document.querySelectorAll('input[id^="checkboxpasta"]');
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = this.checked;
+			}, this);
+		});
+
+
+
+		document.getElementById('checkboxweek1pasta').addEventListener('change', function() {
+			let checkboxes = document.querySelectorAll('input[id^="checkboxpasta_week1_"]');
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = this.checked;
+			}, this);
+		});
+
+		document.getElementById('checkboxweek2pasta').addEventListener('change', function() {
+			let checkboxes = document.querySelectorAll('input[id^="checkboxpasta_week2_"]');
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = this.checked;
+			}, this);
+		});
+
+		//Breakfast
+		document.getElementById('checkboxall3').addEventListener('change', function() {
+			let checkboxes = document.querySelectorAll('input[id^="checkboxbreakfast"]');
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = this.checked;
+			}, this);
+		});
+
+		document.getElementById('checkboxweek1breakfast').addEventListener('change', function() {
+			let checkboxes = document.querySelectorAll('input[id^="checkboxbreakfast_week1_"]');
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = this.checked;
+			}, this);
+		});
+
+		document.getElementById('checkboxweek2breakfast').addEventListener('change', function() {
+			let checkboxes = document.querySelectorAll('input[id^="checkboxbreakfast_week2_"]');
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = this.checked;
+			}, this);
+		});
+
+		// Get all checkboxes
+		let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+		// Listen for changes on each checkbox
+		checkboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				calculateTotal();
+			});
+		});
+
+		// Function to calculate total
+		// Function to calculate total
+		// Function to calculate total
+		// Function to calculate total
+		function calculateTotal() {
+			let total = 0;
+
+			// Loop through checkboxes
+			checkboxes.forEach(function(checkbox) {
+				// If checkbox is checked
+				if (checkbox.checked) {
+					// If it's a parent checkbox
+					if (checkbox.id.endsWith('_1')) {
+						// Add its price to the total
+						total += parseFloat(checkbox.getAttribute('data-price'));
+					} else {
+						// If it's a child checkbox, check if the corresponding parent checkbox is not checked
+						let parentId = checkbox.id.substring(0, checkbox.id.lastIndexOf('_')) + '_1';
+						let parentCheckbox = document.getElementById(parentId);
+						if (parentCheckbox && !parentCheckbox.checked) {
+							// If the parent checkbox exists and is not checked, add the child checkbox's price to the total
+							total += parseFloat(checkbox.getAttribute('data-price'));
+						}
+					}
+				}
+			});
+
+			// Display the total
+			let totalPriceElement = document.getElementById('totalPrice');
+			totalPriceElement.textContent = total.toFixed(0); // Use toFixed(2) to round to 2 decimal places
+
+			$(document).ready(function() {
+				$("input[type='checkbox']").click(function() {
+					var date = $(this).data('date');
+					$('#hiddenInput').val(date);
+				});
+			});
+		}
 	</script>
+
 
 
 </body>

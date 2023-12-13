@@ -30,6 +30,8 @@ class Welcome extends CI_Controller
 		$this->load->helper('form');
 		$this->load->library('user_agent');
 		$this->load->library('session');
+		$this->load->helper(array('form', 'url'));
+
 		// $this->load->library('security');
 	}
 
@@ -40,10 +42,10 @@ class Welcome extends CI_Controller
 			'dates' => $this->product_model->get_dates(),
 			'menu_daily_set' => $this->product_model->get_menu_daily_set(),
 			'holidays' => $this->product_model->get_holidays(),
-			'menu_soup' => $this->product_model->get_menu_soup(),
-			'menu_protein' => $this->product_model->get_menu_protein(),
-			'menu_rice' => $this->product_model->get_menu_rice(),
-			'menu_fruit' => $this->product_model->get_menu_fruit(),
+			// 'menu_soup' => $this->product_model->get_menu_soup(),
+			// 'menu_protein' => $this->product_model->get_menu_protein(),
+			// 'menu_rice' => $this->product_model->get_menu_rice(),
+			// 'menu_fruit' => $this->product_model->get_menu_fruit(),
 			'menu_pasta' => $this->product_model->get_menu_pasta(),
 			'menu_breakfast' => $this->product_model->get_menu_breakfast(),
 			'child_menus' => $this->product_model->get_child_menus(),
@@ -59,7 +61,7 @@ class Welcome extends CI_Controller
 	public function submit_order()
 	{
 		$this->load->model('product_model');
-		$this->product_model->insert_data();
+		$this->product_model->submit_order1();
 		$this->session->set_flashdata('thank_you_note', 'Thank you for ordering from us!!');
 		redirect($this->agent->referrer());
 	}
