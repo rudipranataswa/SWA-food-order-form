@@ -91,7 +91,9 @@
                             <tbody>
                                 <tr class="tr">
                                     <td class="align-middle">Daily Set</td>
-                                    <?php foreach ($dates as $item) :
+                                    <?php 
+                                    $counter = 1;
+                                    foreach ($dates as $item) :
                                         $begin_date = new DateTime($item['begin_date']);
                                         $day_of_week = $begin_date->format('N');
                                         $end_date = clone $begin_date;
@@ -125,21 +127,23 @@
                                                         if ($menu_date == $date_to_check) {
                                                             $background = '';
                                                             foreach ($detail_report as $report) {
-                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
+                                                                if ($report['id_po_purchase_meal_dtl'] == $report['menu_id']) {
                                                                     $background = $report['background'];
                                                                     break;
                                                                 }
                                                             }
                                                             echo '<td>';
-                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>';    
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>'; 
                                                             $price_in_k = $menu['price'] / 1000 . 'k';   
-                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
-                                                            if (isset($child_menus[$menu['id']])) {
-                                                                foreach ($child_menus as $child_menu) {
-                                                                    echo '<hr>';
-                                                                    echo '<span class="' . $background. '">' . $child_menu['name'] . '</span><br>';    
-                                                                    $price_in_k = $child_menu['price'] / 1000 . 'k';   
-                                                                    echo '<span class="' . $background. '">' . $price_in_k . '</span><br>';                                                        
+                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                 
+                                                            if (isset($child_menus[$menu['id_menu']])) { 
+                                                                echo '<hr>';
+                                                                foreach ($child_menus[$menu['id_menu']] as $child_menu) { 
+                                                                    $c_menu_date = new DateTime($child_menu['date']);
+                                                                    if($c_menu_date == $date_to_check) {
+                                                                        echo '<span class="' . $background . '">' . $child_menu['name'] . '</span><br>';    
+                                                                        echo '<span class="' . $background . '">' . $child_menu['price'] . '</span><br>';    
+                                                                    }
                                                                 }
                                                             }
                                                             echo '</td>';
@@ -340,11 +344,11 @@
                                                 if ($i >= $day_of_week) {
                                                     foreach ($menu_daily_set as $menu) {
                                                         $menu_date = new DateTime($menu['date']);
-
+                                                        
                                                         if ($menu_date == $date_to_check) {
                                                             $background = '';
                                                             foreach ($detail_report as $report) {
-                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
+                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id_menu']) {
                                                                     $background = $report['background'];
                                                                     break;
                                                                 }
@@ -352,12 +356,15 @@
                                                             echo '<td>';
                                                             echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>'; 
                                                             $price_in_k = $menu['price'] / 1000 . 'k';   
-                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
-                                                            if (isset($child_menus[$menu['id']])) {
-                                                                foreach ($child_menus[$menu['id']] as $child_menu) {
-                                                                    echo '<hr>';
-                                                                    echo '<span class="' . $background . '">' . $child_menu['name'] . '</span><br>';    
-                                                                    echo '<span class="' . $background . '">' . $child_menu['price'] . '</span><br>';    
+                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                 
+                                                            if (isset($child_menus[$menu['id_menu']])) { 
+                                                                echo '<hr>';
+                                                                foreach ($child_menus[$menu['id_menu']] as $child_menu) { 
+                                                                    $c_menu_date = new DateTime($child_menu['date']);
+                                                                    if($c_menu_date == $date_to_check) {
+                                                                        echo '<span class="' . $background . '">' . $child_menu['name'] . '</span><br>';    
+                                                                        echo '<span class="' . $background . '">' . $child_menu['price'] . '</span><br>';    
+                                                                    }
                                                                 }
                                                             } 
                                                             echo '</td>';
@@ -366,7 +373,6 @@
                                                         }
                                                     }
                                                 }
-
                                                 if (!$menu_found) {
                                                     echo '<td>-</td>';  // Display a blank cell if no menu found
                                                 }

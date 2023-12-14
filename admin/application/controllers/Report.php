@@ -42,7 +42,7 @@ class Report extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function detail_report() 
+    public function detail_report($id) 
     {
         $data = array(
             'product_item' => $this->report_model->get_product(),
@@ -55,18 +55,19 @@ class Report extends CI_Controller
 			'menu_fruit' => $this->report_model->get_menu_fruit(),
 			'menu_pasta' => $this->report_model->get_menu_pasta(),
 			'menu_breakfast' => $this->report_model->get_menu_breakfast(),
-			'child_menus' => $this->report_model->get_child_menus(),
-            'detail_report' => $this->report_model->get_detail_report()
+			'child_menus' => $this->report_model->get_child_menus($id),
+            'detail_report' => $this->report_model->get_detail_report($id)
 		);
 
         $data['judul'] = 'Detail Report#1';
         $total_price = 0;
+
         // Add the following lines to separate the date and time components
         foreach ($data['detail_report'] as &$drpt) {
             $datetime = $drpt['date'];
             $date = new DateTime($datetime);
             $drpt['date_only'] = $date->format('Y-m-d');
-            if ($drpt['id_order'] == $drpt['id_ord'] && $drpt['id_po_purchase_meal_dtl'] == $drpt['id']){
+            if ($drpt['id_order'] == $drpt['id_ord'] && $drpt['id_po_purchase_meal_dtl'] == $drpt['id_menu']){
                 $drpt['background'] = 'bg-success text-dark';
                 $total_price += $drpt['price']; 
             } else {
