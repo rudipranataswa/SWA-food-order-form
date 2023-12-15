@@ -122,8 +122,10 @@ class Product_model extends CI_Model
 
         public function submit_order1()
         {
-                // Load the database library
                 $this->load->database();
+
+                // Load the database library
+                $this->db->trans_start();
 
                 // Get form data
                 $data = array(
@@ -148,14 +150,13 @@ class Product_model extends CI_Model
                         list($checkbox_value, $checkbox_date) = explode('|', $selected_checkboxes[$i]);
 
 
-
-
                         // Fetch the id from po_purchase_meal_dtl where status is 'ACTIVE' and date equals to the checkbox date
                         $this->db->select('po_purchase_meal_dtl.id');
                         $this->db->from('po_purchase_meal_dtl');
                         $this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
+                        $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
                         $this->db->where('po_purchase_meal_hdr.status', 'ACTIVE');
-                        $this->db->where('po_purchase_meal_dtl.id', $checkbox_value);
+                        $this->db->where('menu.id', $checkbox_value);
                         $this->db->where('po_purchase_meal_dtl.date', $checkbox_date);
                         $query = $this->db->get();
                         $result = $query->row_array();
@@ -167,10 +168,22 @@ class Product_model extends CI_Model
                                 $data = array(
                                         'id_order' => $order_hdr_id,
                                         'id_po_purchase_meal_dtl' => $id_po_purchase_meal_dtl,
-                                        'cancel' => $checkbox_date // Assuming 0 means not cancelled
+                                        'cancel' => '0' // Assuming 0 means not cancelled
                                 );
                                 $this->db->insert('order_dtl', $data);
                         }
+                }
+
+                $this->db->trans_complete();
+
+                if ($this->db->trans_status() === FALSE) {
+                        $this->db->trans_rollback();
+                        // Transaction failed
+                        return FALSE;
+                } else {
+                        // Transaction successful
+                        $this->db->trans_commit();
+                        return TRUE;
                 }
         }
 }

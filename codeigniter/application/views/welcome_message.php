@@ -5,7 +5,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Food Order</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>/css/main.css">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Viga&display=swap" rel="stylesheet">
 	<title>Welcome to CodeIgniter</title>
 
 	<style type="text/css">
@@ -136,7 +141,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body>
 
 	<div id="container">
-		<h1>Welcome to CodeIgniter! Hello World</h1>
+		<h1>Bamboo Kitchen</h1>
 
 		<!-- <div id="body">
 			<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
@@ -171,7 +176,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<?php endforeach; ?>
 		</h3>
 
-		<form method="post" action="<?php echo site_url('Welcome/submit_order'); ?>">
+		<form method="post" action="<?php echo site_url('Welcome/submit_order'); ?>" onsubmit="return confirm('Are you sure you want to submit?')">
 			<div>
 				<label for=" Email">Email:</label>
 				<input type="email" name="Email" required>
@@ -192,9 +197,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<p class="thanks_label"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
 			<?php endif; ?>
 
+			<?php if ($this->session->flashdata('error_message')) : ?>
+				<p class="thanks_label"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
+			<?php endif; ?>
+
 			<div class="total-container">
-				<h3>Total: <span style="display:inline-block; width: 10px;"></span></h3>
-				<h3 id="totalPrice"></h3>
+				<h3 style="color: white !important;">Total: <span style="display:inline-block; width: 10px;"></span></h3>
+				<h3 id="totalPrice" style="color: white !important;">Rp. 0</h3>
 			</div>
 
 			<h1>Daily Set</h1>
@@ -260,7 +269,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									if ($menu_date == $date_to_check) {
 										echo '<td>';
 										echo $menu['name'] . ' - ' . $menu['price'];
-										echo '<input type="checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" onclick="addValue(this)">';
+										echo '<input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)">';
 										echo '<hr>';
 
 										if (isset($child_menus[$menu['id']])) {
@@ -269,7 +278,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 												$child_menu_date = new DateTime($child_menu['date']);
 												if ($child_menu_date == $date_to_check) {
 													echo $child_menu['name'] . ' - ' . $child_menu['price'];
-													echo '<input type="checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]"  value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $child_menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br> ';
+													echo '<input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]"  value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $child_menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br> ';
 													$checkboxId++;
 												}
 											}
@@ -348,14 +357,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									if ($menu_date == $date_to_check) {
 										echo '<td>';
 										echo $menu['name'] . ' - ' . $menu['price'];
-										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" onclick="addValue(this)"><br>';
+										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)"><br>';
 										echo '<hr>';
 
 										if (isset($child_menus[$menu['id']])) {
 											$checkboxId = 2;
 											foreach ($child_menus[$menu['id']] as $child_menu) {
 												echo $child_menu['name'] . ' - ' . $child_menu['price'];
-												echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]" value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $child_menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br>';
+												echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]" value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $child_menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 												$checkboxId++;
 											}
 										}
@@ -448,7 +457,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									$checkboxIdPasta = 1;
 									echo '<td>';
 									echo $menu_name . ' - ' . $menu_price;
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week1_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br>';
+									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week1_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									echo '</td>';
 									$checkboxIdPasta++;
 								} else {
@@ -526,7 +535,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									$checkboxIdPasta = 1;
 									echo '<td>';
 									echo $menu_name . ' - ' . $menu_price;
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week2_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br>';
+									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week2_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									echo '</td>';
 									$checkboxIdPasta++;
 								} else {
@@ -611,7 +620,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									$checkboxIdBreakfast = 1;
 									echo '<td>';
 									echo $menu_name . ' - ' . $menu_price;
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week1_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br>';
+									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week1_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									echo '</td>';
 									$checkboxIdBreakfast++;
 								} else {
@@ -688,7 +697,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									$checkboxIdBreakfast = 1;
 									echo '<td>';
 									echo $menu_name . ' - ' . $menu_price;
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week2_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '"  onclick="addValue(this)"><br>';
+									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week2_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									echo '</td>';
 									$checkboxIdBreakfast++;
 								} else {
@@ -706,7 +715,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 			<input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
 
-			<div>
+			<div class="d-flex justify-content-center ">
 				<input class="submit-btn" type="Submit" value="Submit">
 			</div>
 			<!-- <div>
@@ -729,13 +738,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			checkboxes.forEach(function(checkbox) {
 				checkbox.checked = this.checked;
 			}, this);
+
+			// Check or uncheck 'week1daily' and 'week2daily' checkboxes based on 'checkboxall1'
+			document.getElementById('checkboxweek1daily').checked = this.checked;
+			document.getElementById('checkboxweek2daily').checked = this.checked;
 		});
+
 
 		document.getElementById('checkboxweek1daily').addEventListener('change', function() {
 			let checkboxes = document.querySelectorAll('input[id^="checkboxdaily_week1_"]');
 			checkboxes.forEach(function(checkbox) {
 				checkbox.checked = this.checked;
 			}, this);
+
+			if (!this.checked) {
+				document.getElementById('checkboxall1').checked = false;
+			}
 		});
 
 		document.getElementById('checkboxweek2daily').addEventListener('change', function() {
@@ -743,6 +761,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			checkboxes.forEach(function(checkbox) {
 				checkbox.checked = this.checked;
 			}, this);
+
+			if (!this.checked) {
+				document.getElementById('checkboxall1').checked = false;
+			}
 		});
 
 		for (let i = 1; i <= 5; i++) {
@@ -795,6 +817,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			checkboxes.forEach(function(checkbox) {
 				checkbox.checked = this.checked;
 			}, this);
+
+			// Check or uncheck 'week1pasta' and 'week2pasta' checkboxes based on 'checkboxall2'
+			document.getElementById('checkboxweek1pasta').checked = this.checked;
+			document.getElementById('checkboxweek2pasta').checked = this.checked;
 		});
 
 
@@ -804,6 +830,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			checkboxes.forEach(function(checkbox) {
 				checkbox.checked = this.checked;
 			}, this);
+
+			if (!this.checked) {
+				document.getElementById('checkboxall2').checked = false;
+			}
 		});
 
 		document.getElementById('checkboxweek2pasta').addEventListener('change', function() {
@@ -811,6 +841,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			checkboxes.forEach(function(checkbox) {
 				checkbox.checked = this.checked;
 			}, this);
+
+			if (!this.checked) {
+				document.getElementById('checkboxall2').checked = false;
+			}
 		});
 
 		//Breakfast
@@ -819,6 +853,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			checkboxes.forEach(function(checkbox) {
 				checkbox.checked = this.checked;
 			}, this);
+
+			// Check or uncheck 'week1breakfast' and 'week2breakfast' checkboxes based on 'checkboxall3'
+			document.getElementById('checkboxweek1breakfast').checked = this.checked;
+			document.getElementById('checkboxweek2breakfast').checked = this.checked;
 		});
 
 		document.getElementById('checkboxweek1breakfast').addEventListener('change', function() {
@@ -826,6 +864,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			checkboxes.forEach(function(checkbox) {
 				checkbox.checked = this.checked;
 			}, this);
+
+			// If 'week1breakfast' is unchecked, also uncheck 'checkboxall3'
+			if (!this.checked) {
+				document.getElementById('checkboxall3').checked = false;
+			}
 		});
 
 		document.getElementById('checkboxweek2breakfast').addEventListener('change', function() {
@@ -833,7 +876,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			checkboxes.forEach(function(checkbox) {
 				checkbox.checked = this.checked;
 			}, this);
+
+			// If 'week2breakfast' is unchecked, also uncheck 'checkboxall3'
+			if (!this.checked) {
+				document.getElementById('checkboxall3').checked = false;
+			}
 		});
+
 
 		// Get all checkboxes
 		let checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -845,9 +894,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			});
 		});
 
-		// Function to calculate total
-		// Function to calculate total
-		// Function to calculate total
+
+
 		// Function to calculate total
 		function calculateTotal() {
 			let total = 0;
@@ -874,18 +922,183 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 			// Display the total
 			let totalPriceElement = document.getElementById('totalPrice');
-			totalPriceElement.textContent = total.toFixed(0); // Use toFixed(2) to round to 2 decimal places
-
-			$(document).ready(function() {
-				$("input[type='checkbox']").click(function() {
-					var date = $(this).data('date');
-					$('#hiddenInput').val(date);
-				});
-			});
+			totalPriceElement.textContent = 'Rp. ' + total.toLocaleString('id-ID'); // Use toLocaleString to format the number with a thousands separator
 		}
+
+		//For Daily Set
+		let week1Checkboxes = document.querySelectorAll('input[id^="checkboxdaily_week1_"]');
+		let week2Checkboxes = document.querySelectorAll('input[id^="checkboxdaily_week2_"]');
+
+
+		// Listen for changes on each checkbox
+		week1Checkboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If any checkbox is unchecked, uncheck 'week 1' and 'ALL'
+				if (!this.checked) {
+					document.getElementById('checkboxweek1daily').checked = false;
+					document.getElementById('checkboxall1').checked = false;
+				} else {
+					// If all checkboxes are checked, check 'week 1'
+					let allChecked = Array.from(week1Checkboxes).every(c => c.checked);
+					if (allChecked) {
+						document.getElementById('checkboxweek1daily').checked = true;
+					}
+				}
+			});
+		});
+
+		week1Checkboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If all checkboxes are unchecked, uncheck 'week 1'
+				let allUnchecked = Array.from(week1Checkboxes).every(c => !c.checked);
+				if (allUnchecked) {
+					document.getElementById('checkboxweek1daily').checked = false;
+				} else {
+					// If any checkbox is checked, check 'week 1'
+					document.getElementById('checkboxweek1daily').checked = true;
+				}
+			});
+		});
+
+		week2Checkboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If any checkbox is unchecked, uncheck 'week 1' and 'ALL'
+				if (!this.checked) {
+					document.getElementById('checkboxweek2daily').checked = false;
+					document.getElementById('checkboxall1').checked = false;
+				} else {
+					// If all checkboxes are checked, check 'week 1'
+					let allChecked = Array.from(week2Checkboxes).every(c => c.checked);
+					if (allChecked) {
+						document.getElementById('checkboxweek2daily').checked = true;
+					}
+				}
+			});
+		});
+
+		week2Checkboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If all checkboxes are unchecked, uncheck 'week 1'
+				let allUnchecked = Array.from(week2Checkboxes).every(c => !c.checked);
+				if (allUnchecked) {
+					document.getElementById('checkboxweek2daily').checked = false;
+				} else {
+					// If any checkbox is checked, check 'week 1'
+					document.getElementById('checkboxweek2daily').checked = true;
+				}
+			});
+		});
+
+		let dailyCheckboxes = document.querySelectorAll('input[id^="checkboxdaily"]');
+
+		dailyCheckboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If any checkbox is unchecked, uncheck 'ALL'
+				if (!this.checked) {
+					document.getElementById('checkboxall1').checked = false;
+				} else {
+					// If all checkboxes are checked, check 'ALL'
+					let allChecked = Array.from(dailyCheckboxes).every(c => c.checked);
+					if (allChecked) {
+						document.getElementById('checkboxall1').checked = true;
+					}
+				}
+			});
+		});
+
+		// For breakfast
+		let week1BreakfastCheckboxes = document.querySelectorAll('input[id^="checkboxbreakfast_week1_"]');
+		let week2BreakfastCheckboxes = document.querySelectorAll('input[id^="checkboxbreakfast_week2_"]');
+
+		week1BreakfastCheckboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				let allUnchecked = Array.from(week1BreakfastCheckboxes).every(c => !c.checked);
+				if (allUnchecked) {
+					document.getElementById('checkboxweek1breakfast').checked = false;
+				} else {
+					document.getElementById('checkboxweek1breakfast').checked = true;
+				}
+			});
+		});
+
+		week2BreakfastCheckboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				let allUnchecked = Array.from(week2BreakfastCheckboxes).every(c => !c.checked);
+				if (allUnchecked) {
+					document.getElementById('checkboxweek2breakfast').checked = false;
+
+				} else {
+					document.getElementById('checkboxweek2breakfast').checked = true;
+				}
+			});
+		});
+
+
+
+		let breakfastCheckboxes = document.querySelectorAll('input[id^="checkboxbreakfast"]');
+
+		breakfastCheckboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If any checkbox is unchecked, uncheck 'ALL'
+				if (!this.checked) {
+					document.getElementById('checkboxall3').checked = false;
+				} else {
+					// If all checkboxes are checked, check 'ALL'
+					let allChecked = Array.from(breakfastCheckboxes).every(c => c.checked);
+					if (allChecked) {
+						document.getElementById('checkboxall3').checked = true;
+					}
+				}
+			});
+		});
+
+
+
+		// For pasta
+		let week1PastaCheckboxes = document.querySelectorAll('input[id^="checkboxpasta_week1_"]');
+		let week2PastaCheckboxes = document.querySelectorAll('input[id^="checkboxpasta_week2_"]');
+
+		week1PastaCheckboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				let allUnchecked = Array.from(week1PastaCheckboxes).every(c => !c.checked);
+				if (allUnchecked) {
+					document.getElementById('checkboxweek1pasta').checked = false;
+				} else {
+					document.getElementById('checkboxweek1pasta').checked = true;
+				}
+			});
+		});
+
+		week2PastaCheckboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				let allUnchecked = Array.from(week2PastaCheckboxes).every(c => !c.checked);
+				if (allUnchecked) {
+					document.getElementById('checkboxweek2pasta').checked = false;
+				} else {
+					document.getElementById('checkboxweek2pasta').checked = true;
+				}
+			});
+		});
+
+		let pastaCheckboxes = document.querySelectorAll('input[id^="checkboxpasta"]');
+
+		pastaCheckboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If any checkbox is unchecked, uncheck 'ALL'
+				if (!this.checked) {
+					document.getElementById('checkboxall2').checked = false;
+				} else {
+					// If all checkboxes are checked, check 'ALL'
+					let allChecked = Array.from(pastaCheckboxes).every(c => c.checked);
+					if (allChecked) {
+						document.getElementById('checkboxall2').checked = true;
+					}
+				}
+			});
+		});
 	</script>
 
-
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </body>
 

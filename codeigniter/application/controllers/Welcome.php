@@ -61,8 +61,15 @@ class Welcome extends CI_Controller
 	public function submit_order()
 	{
 		$this->load->model('product_model');
-		$this->product_model->submit_order1();
-		$this->session->set_flashdata('thank_you_note', 'Thank you for ordering from us!!');
+		// $this->product_model->submit_order1();
+		$result = $this->product_model->submit_order1();
+		if ($result === TRUE) {
+			// Transaction was successful
+			$this->session->set_flashdata('thank_you_note', 'Thank you for ordering from us!!');
+		} else {
+			// Transaction failed
+			$this->session->set_flashdata('error_message', 'Ordering menu failed');
+		}
 		redirect($this->agent->referrer());
 	}
 }
