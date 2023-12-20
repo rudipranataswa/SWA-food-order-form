@@ -67,7 +67,7 @@
      								</table>
      							</div>
 
-     							<div class="pagination-link">
+     							<div class="pagination-link text-center">
      								<?php echo $this->pagination->create_links(); ?>
      							</div>
 

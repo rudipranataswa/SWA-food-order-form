@@ -40,7 +40,7 @@ class Po_meal extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
-	public function submit()
+	public function submitHdr()
 	{
 		$data = array(
 			'remark' => $this->input->post('Title'),
@@ -48,6 +48,91 @@ class Po_meal extends CI_Controller
 			'end_date' => $this->input->post('End'),
 			'status' => $this->input->post('Status')
 		);
-		$this->po_meal_model->insert_data($data);
+		return $this->po_meal_model->insertData($data);
+	}
+
+	public function submitForm()
+	{
+		$id_po_purchase_meal_hdr = $this->submitHdr();
+
+		$dailyset_parent = $this->input->post('Dailyset_parent');
+		$dailyset_price = $this->input->post('Dailyset_price');
+		$dailyset_dates = $this->input->post('Dates');
+		$id_menu = $this->input->post('Id_menu');
+		$price = $this->input->post('Price');
+
+		for ($i = 0; $i < count($dailyset_parent); $i++) {
+			if (!empty($dailyset_parent[$i]) && !empty($dailyset_price[$i])) {
+
+				$data = array(
+					'id_menu' => $dailyset_parent[$i],
+					'price' => $dailyset_price[$i],
+					'parent' => 0,
+					'id_category' => 1,
+					'date' => $dailyset_dates,
+					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
+				);
+				$this->po_meal_model->insertMeal($data);
+			}
+
+			if (isset($id_menu[$i]) && is_array($id_menu[$i])) {
+				foreach ($id_menu[$i] as $key => $value) {
+					if (!empty($value) && !empty($price[$i][$key])) {
+						list($menu_id, $category_id) = explode("-", $value);
+						$data = array(
+							'id_menu' => $menu_id,
+							'price' => $price[$i][$key],
+							'parent' => $dailyset_parent[$i],
+							'id_category' => $category_id,
+							'date' => $dailyset_dates,
+							'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
+						);
+						$this->po_meal_model->insertMeal($data);
+					}
+				}
+			}
+		}
+
+		$pasta_parent = $this->input->post('Pasta_parent');
+		$pasta_price = $this->input->post('Pasta_price');
+		$pasta_dates = $this->input->post('Dates');
+
+		for ($i = 0; $i < count($pasta_parent); $i++) {
+			if (!empty($pasta_parent[$i]) && !empty($pasta_price[$i])) {
+				$data = array(
+					'id_menu' => $pasta_parent[$i],
+					'price' => $pasta_price[$i],
+					'parent' => 0,
+					'id_category' => 3,
+					'date' => $pasta_dates,
+					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
+				);
+				$this->po_meal_model->insertMeal($data);
+			}
+		}
+
+		$breakfast_parent = $this->input->post('Breakfast_parent');
+		$breakfast_price = $this->input->post('Breakfast_price');
+		$breakfast_dates = $this->input->post('Dates');
+
+		for ($i = 0; $i < count($breakfast_parent); $i++) {
+			if (!empty($breakfast_parent[$i]) && !empty($breakfast_price[$i])) {
+				$data = array(
+					'id_menu' => $breakfast_parent[$i],
+					'price' => $breakfast_price[$i],
+					'parent' => 0,
+					'id_category' => 4,
+					'date' => $breakfast_dates,
+					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
+				);
+				$this->po_meal_model->insertMeal($data);
+			}
+		}
+	}
+
+	public function submit()
+	{
+		$this->submitForm();
+		redirect('po_meal/add_po_meal');
 	}
 }

@@ -41,15 +41,21 @@ class Po_meal_model extends CI_Model
 
 	public function get_menus()
 	{
-		$this->db->select('name');
+		$this->db->select('id, name, category_id');
 		$this->db->from('menu');
 		$this->db->where_in('category_id', array(2, 5, 7, 8));
 		$query = $this->db->get();
 		return $query->result_array();
 	}
 
-	public function insert_data($data)
+	public function insertData($data)
 	{
 		$this->db->insert('po_purchase_meal_hdr', $data);
+		return $this->db->insert_id();
+	}
+
+	public function insertMeal($data)
+	{
+		$this->db->insert('po_purchase_meal_dtl', $data);
 	}
 }
