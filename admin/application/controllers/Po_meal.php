@@ -61,15 +61,18 @@ class Po_meal extends CI_Controller
 		$id_menu = $this->input->post('Id_menu');
 		$price = $this->input->post('Price');
 
+
+
 		for ($i = 0; $i < count($dailyset_parent); $i++) {
 			if (!empty($dailyset_parent[$i]) && !empty($dailyset_price[$i])) {
+
 
 				$data = array(
 					'id_menu' => $dailyset_parent[$i],
 					'price' => $dailyset_price[$i],
 					'parent' => 0,
 					'id_category' => 1,
-					'date' => $dailyset_dates,
+					'date' => $dailyset_dates[$i][0],
 					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
 				);
 				$this->po_meal_model->insertMeal($data);
@@ -84,7 +87,7 @@ class Po_meal extends CI_Controller
 							'price' => $price[$i][$key],
 							'parent' => $dailyset_parent[$i],
 							'id_category' => $category_id,
-							'date' => $dailyset_dates,
+							'date' => $dailyset_dates[$i][0],
 							'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
 						);
 						$this->po_meal_model->insertMeal($data);
@@ -104,7 +107,7 @@ class Po_meal extends CI_Controller
 					'price' => $pasta_price[$i],
 					'parent' => 0,
 					'id_category' => 3,
-					'date' => $pasta_dates,
+					'date' => $pasta_dates[$i][0],
 					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
 				);
 				$this->po_meal_model->insertMeal($data);
@@ -122,7 +125,7 @@ class Po_meal extends CI_Controller
 					'price' => $breakfast_price[$i],
 					'parent' => 0,
 					'id_category' => 4,
-					'date' => $breakfast_dates,
+					'date' => $breakfast_dates[$i][0],
 					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
 				);
 				$this->po_meal_model->insertMeal($data);
