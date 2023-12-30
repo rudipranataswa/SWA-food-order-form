@@ -29,12 +29,12 @@
                                         <label for="input-normal" class=" form-control-label">: <?= $detail_report[0]['date_only'] ?></label>
                                     </div>
                                 </div>
-                                <?php else: ?>
-                                    <div class="row form-group">
-                                        <div class="col col-sm-5">
-                                            <label for="input-normal" class=" form-control-label">Customer Name</label>
-                                        </div>
-                                        <div class="col col-sm-6">
+                            <?php else: ?>
+                                <div class="row form-group">
+                                    <div class="col col-sm-5">
+                                        <label for="input-normal" class=" form-control-label">Customer Name</label>
+                                    </div>
+                                    <div class="col col-sm-6">
                                         <label for="input-normal" class=" form-control-label">: Not Found</label>
                                     </div>
                                 </div>
@@ -116,33 +116,46 @@
                                             }
 
                                             if ($is_holiday == true) {
-                                                echo '<td>' . $holiday_description . '</td>';
+                                                echo '<td class="t-2">' . $holiday_description . '</td>';
                                             } else {
                                                 $menu_found = false;
+                                                $total_price = '';
 
                                                 if ($i >= $day_of_week) {
                                                     foreach ($menu_daily_set as $menu) {
+                                                        // print_r($menu); exit;
                                                         $menu_date = new DateTime($menu['date']);
-
                                                         if ($menu_date == $date_to_check) {
                                                             $background = '';
                                                             foreach ($detail_report as $report) {
-                                                                if ($report['id_po_purchase_meal_dtl'] == $report['menu_id']) {
-                                                                    $background = $report['background'];
+                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
+                                                                    $background = 'bg-success text-white px-1';
+                                                                    $total_price += $menu['price'];
                                                                     break;
+                                                                } else {
+                                                                    $background = '';
                                                                 }
                                                             }
-                                                            echo '<td>';
-                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>'; 
+                                                            echo '<td class="t-2">';
                                                             $price_in_k = $menu['price'] / 1000 . 'k';   
-                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                 
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . ' - ' . $price_in_k . '</span><br>'; 
                                                             if (isset($child_menus[$menu['id_menu']])) { 
                                                                 echo '<hr>';
                                                                 foreach ($child_menus[$menu['id_menu']] as $child_menu) { 
                                                                     $c_menu_date = new DateTime($child_menu['date']);
                                                                     if($c_menu_date == $date_to_check) {
-                                                                        echo '<span class="' . $background . '">' . $child_menu['name'] . '</span><br>';    
-                                                                        echo '<span class="' . $background . '">' . $child_menu['price'] . '</span><br>';    
+                                                                        $child_found = false;
+                                                                        foreach ($detail_report as $report) {
+                                                                            if ($report['id'] == $child_menu['id']) {
+                                                                                $total_price += $child_menu['price'];
+                                                                                $background = 'bg-success text-white px-1';
+                                                                                break;
+                                                                            } else {
+                                                                                $background = '';
+                                                                            }
+                                                                        }
+                                                                        $price_in_k = $child_menu['price'] / 1000 . 'k';   
+                                                                        echo '<span class="' . $background . '">' . $child_menu['name'] . ' - ' . $price_in_k . '</span><br>';    
                                                                     }
                                                                 }
                                                             }
@@ -196,15 +209,17 @@
                                                         if ($menu_date == $date_to_check) {
                                                             $background = '';
                                                             foreach ($detail_report as $report) {
-                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
-                                                                    $background = $report['background'];
+                                                                if ($report['id_po_purchase_meal_dtl'] == $report['id']) {
+                                                                    $background = 'bg-success text-white px-1';
+                                                                    $total_price += $menu['price'];
                                                                     break;
+                                                                } else {
+                                                                    $background = '';
                                                                 }
                                                             }
                                                             echo '<td>';
-                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>';    
                                                             $price_in_k = $menu['price'] / 1000 . 'k';   
-                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . ' - ' . $price_in_k . '</span><br>';    
                                                             echo '</td>';
                                                             $menu_found = true;
                                                             break;
@@ -257,13 +272,15 @@
                                                             foreach ($detail_report as $report) {
                                                                 if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
                                                                     $background = $report['background'];
+                                                                    $total_price += $menu['price'];
                                                                     break;
+                                                                } else {
+                                                                    $background = '';
                                                                 }
                                                             }
                                                             echo '<td>';
-                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>';    
                                                             $price_in_k = $menu['price'] / 1000 . 'k';   
-                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . ' - ' . $price_in_k . '</span><br>';    
                                                             echo '</td>';
                                                             $menu_found = true;
                                                             break;
@@ -344,29 +361,40 @@
                                                 if ($i >= $day_of_week) {
                                                     foreach ($menu_daily_set as $menu) {
                                                         $menu_date = new DateTime($menu['date']);
-                                                        
+
                                                         if ($menu_date == $date_to_check) {
                                                             $background = '';
                                                             foreach ($detail_report as $report) {
-                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id_menu']) {
-                                                                    $background = $report['background'];
+                                                                if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
+                                                                    $background = 'bg-success text-white px-1';
+                                                                    $total_price += $menu['price'];
                                                                     break;
+                                                                } else {
+                                                                    $background = '';
                                                                 }
                                                             }
                                                             echo '<td>';
-                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>'; 
                                                             $price_in_k = $menu['price'] / 1000 . 'k';   
-                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                 
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . ' - ' . $price_in_k . '</span><br>'; 
                                                             if (isset($child_menus[$menu['id_menu']])) { 
                                                                 echo '<hr>';
                                                                 foreach ($child_menus[$menu['id_menu']] as $child_menu) { 
                                                                     $c_menu_date = new DateTime($child_menu['date']);
                                                                     if($c_menu_date == $date_to_check) {
-                                                                        echo '<span class="' . $background . '">' . $child_menu['name'] . '</span><br>';    
-                                                                        echo '<span class="' . $background . '">' . $child_menu['price'] . '</span><br>';    
+                                                                        foreach ($detail_report as $report) {
+                                                                            if ($report['id'] == $child_menu['id']) {
+                                                                                $background = 'bg-success text-white px-1';
+                                                                                $total_price += $child_menu['price'];
+                                                                                break;
+                                                                            } else {
+                                                                                $background = '';
+                                                                            }
+                                                                        }
+                                                                        $price_in_k = $child_menu['price'] / 1000 . 'k';   
+                                                                        echo '<span class="' . $background . '">' . $child_menu['name'] . ' - ' . $price_in_k . '</span><br>';    
                                                                     }
                                                                 }
-                                                            } 
+                                                            }
                                                             echo '</td>';
                                                             $menu_found = true;
                                                             break;
@@ -417,14 +445,16 @@
                                                             $background = '';
                                                             foreach ($detail_report as $report) {
                                                                 if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
-                                                                    $background = $report['background'];
+                                                                    $background = 'bg-success text-white px-1';
+                                                                    $total_price += $menu['price'];
                                                                     break;
+                                                                } else {
+                                                                    $background = '';
                                                                 }
                                                             }
                                                             echo '<td>';
-                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>';    
                                                             $price_in_k = $menu['price'] / 1000 . 'k';   
-                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . ' - ' . $price_in_k . '</span><br>'; 
                                                             echo '</td>';
                                                             $menu_found = true;
                                                             break;
@@ -476,14 +506,16 @@
                                                             $background = '';
                                                             foreach ($detail_report as $report) {
                                                                 if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
-                                                                    $background = $report['background'];
+                                                                    $background = 'bg-success text-white px-1';
+                                                                    $total_price += $menu['price'];
                                                                     break;
+                                                                } else {
+                                                                    $background = '';
                                                                 }
                                                             }
                                                             echo '<td>';
-                                                            echo '<span class="' . $background . '">' . $menu['name'] . '</span><br>';    
                                                             $price_in_k = $menu['price'] / 1000 . 'k';   
-                                                            echo '<span class="' . $background . '">' . $price_in_k . '</span><br>';                                                        
+                                                            echo '<span class="' . $background . '">' . $menu['name'] . ' - ' . $price_in_k . '</span><br>'; 
                                                             echo '</td>';
                                                             $menu_found = true;
                                                             break;

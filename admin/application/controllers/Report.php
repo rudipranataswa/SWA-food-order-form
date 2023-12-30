@@ -44,40 +44,34 @@ class Report extends CI_Controller
 
     public function detail_report($id) 
     {
+
         $data = array(
             'product_item' => $this->report_model->get_product(),
-			'dates' => $this->report_model->get_dates(),
+            'dates' => $this->report_model->get_dates($id),
             'holidays' => $this->report_model->get_holidays(),
-			'menu_daily_set' => $this->report_model->get_menu_daily_set(),
-			'menu_soup' => $this->report_model->get_menu_soup(),
-			'menu_protein' => $this->report_model->get_menu_protein(),
-			'menu_rice' => $this->report_model->get_menu_rice(),
-			'menu_fruit' => $this->report_model->get_menu_fruit(),
-			'menu_pasta' => $this->report_model->get_menu_pasta(),
-			'menu_breakfast' => $this->report_model->get_menu_breakfast(),
-			'child_menus' => $this->report_model->get_child_menus($id),
+            'menu_daily_set' => $this->report_model->get_menu_daily_set($id),
+            'menu_soup' => $this->report_model->get_menu_soup(),
+            'menu_protein' => $this->report_model->get_menu_protein(),
+            'menu_rice' => $this->report_model->get_menu_rice(),
+            'menu_fruit' => $this->report_model->get_menu_fruit(),
+            'menu_pasta' => $this->report_model->get_menu_pasta(),
+            'menu_breakfast' => $this->report_model->get_menu_breakfast(),
+            'child_menus' => $this->report_model->get_child_menus($id),
             'detail_report' => $this->report_model->get_detail_report($id)
-		);
+        );
 
         $data['judul'] = 'Detail Report#1';
-        $total_price = 0;
-
-        // Add the following lines to separate the date and time components
+        // Add the condition to the detail_report
         foreach ($data['detail_report'] as &$drpt) {
             $datetime = $drpt['date'];
             $date = new DateTime($datetime);
-            $drpt['date_only'] = $date->format('Y-m-d');
-            if ($drpt['id_order'] == $drpt['id_ord'] && $drpt['id_po_purchase_meal_dtl'] == $drpt['id_menu']){
-                $drpt['background'] = 'bg-success text-dark';
-                $total_price += $drpt['price']; 
-            } else {
-                $drpt['background'] = '';
-            } 
+            $drpt['date_only'] = $date->format('Y-m-d'); 
         }
-        $data['total_price'] = $total_price; 
-        
+
         $this->load->view('templates/header', $data);
         $this->load->view('report/detail_report', $data);    
         $this->load->view('templates/footer');
     }
 }
+
+// $drpt['id_order'] == $drpt['id_ord'] && 

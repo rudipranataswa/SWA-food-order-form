@@ -20,9 +20,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($report as $rpt) : ?>
+                                        <?php
+                                            $no = 1; // Initialize $no variable
+                                            foreach ($report as $rpt) : 
+                                                if($rpt != null) { // Check if $vrpt is not null
+                                            ?>
                                             <tr class="tr-shadow">
-                                                <td><?= $rpt['id']; ?></td>
+                                                <td><?= $no ?></td>
                                                 <td><?= $rpt['remark']; ?></td>
                                                 <td><?= $rpt['begin_date']; ?></td>
                                                 <td><?= $rpt['end_date']; ?></td>
@@ -41,7 +45,10 @@
                                                 </td>
                                             </tr>
                                             <tr class="spacer"></tr>
-                                        <?php endforeach; ?>
+                                            <?php 
+                                                $no++; // Increment $no variable
+                                            }
+                                        endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
