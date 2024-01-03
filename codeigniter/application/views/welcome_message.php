@@ -107,7 +107,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		}
 
 		p.thanks_label {
-			font-size: 36px;
+			font-size: 34px;
 			text-align: center;
 		}
 	</style>
@@ -197,7 +197,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div style="display: block;"><input type="text" maxlength=50 name="Phone_Number" required></div>
 		</div>
 		<?php if ($this->session->flashdata('thank_you_note')) : ?>
-			<p class="thanks_label"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
+			<p class="thanks_label alert alert-success"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
 		<?php endif; ?>
 
 		<?php if ($this->session->flashdata('error_message')) : ?>
@@ -711,6 +711,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div style="display: flex; justify-content: center;">
 			<button class="btn btn-danger btn-lg" style="background-color:#b21628; font-size: 30px; padding: 10px 20px; width : auto;">Submit</button>
 		</div>
+		<br>
 
 
 
