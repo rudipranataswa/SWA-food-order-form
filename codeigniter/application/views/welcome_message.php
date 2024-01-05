@@ -14,6 +14,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<title>Welcome to CodeIgniter</title>
 
 	<style type="text/css">
+		body {
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
+
 		::selection {
 			background-color: #E13300;
 			color: white;
@@ -102,7 +107,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		}
 
 		p.thanks_label {
-			font-size: 36px;
+			font-size: 34px;
 			text-align: center;
 		}
 	</style>
@@ -169,30 +174,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<?php endforeach; ?>
 	</h1>
 
-	<h3><?php foreach ($dates as $item) : ?>
+	<!-- <h3><?php foreach ($dates as $item) : ?>
 			<?php echo $item['remark']; ?>
 		<?php endforeach; ?>
-	</h3>
+	</h3> -->
 
 	<form method="post" action="<?php echo site_url('Welcome/submit_order'); ?>" onsubmit="return confirm('Are you sure you want to submit?')">
 		<div>
-			<label for=" Email">Email:</label>
-			<input type="email" name="Email" required>
+			<label for="Email">Email: <span style="color: red;">*</span></label>
+			<div style="display: block;"><input type="email" name="Email" required></div>
 		</div>
 		<div>
-			<label for="Student's Complete Name">Student's Complete Name:</label>
-			<input type="text" maxlength=100 name="Name" required>
+			<label for="Name">Student's Complete Name: <span style="color: red;">*</span></label>
+			<div style="display: block;"><input type="text" maxlength=100 name="Name" required></div>
 		</div>
 		<div>
-			<label for="Grade Level">Grade Level:</label>
-			<input type="text" maxlength=50 name="Grade" required>
+			<label for="Grade">Grade Level: <span style="color: red;">*</span></label>
+			<div style="display: block;"><input type="text" maxlength=50 name="Grade" required></div>
 		</div>
 		<div>
-			<label for="Parent's Phone Number">Parent's Phone Number:</label>
-			<input type="text" maxlength=50 name="Phone_Number" required>
+			<label for="Phone_Number">Parent's Phone Number: <span style="color: red;">*</span></label>
+			<div style="display: block;"><input type="text" maxlength=50 name="Phone_Number" required></div>
 		</div>
 		<?php if ($this->session->flashdata('thank_you_note')) : ?>
-			<p class="thanks_label"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
+			<p class="thanks_label alert alert-success"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
 		<?php endif; ?>
 
 		<?php if ($this->session->flashdata('error_message')) : ?>
@@ -205,194 +210,196 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 
 		<h1>Daily Set</h1>
-		<table>
-			<tr>
-				<th>All <br><input type="checkbox" id="checkboxall1"></th>
-				<th>Monday<br>
-				<th>Tuesday<br>
-				<th>Wednesday<br>
-				<th>Thursday<br>
-				<th>Friday<br>
-			</tr>
-			<tr>
-				<td rowspan="2">Week 1<br><input type="checkbox" id="checkboxweek1daily"></td>
-				<?php foreach ($dates as $item) : ?>
-				<?php
-					$previous_date = null;
-					$date = new DateTime($item['begin_date']);
-					$days_added = 0;
+		<div class="table-responsive">
+			<table>
+				<tr>
+					<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall1"></th>
+					<th style="width: 19%;">Monday<br>
+					<th style="width: 19%;">Tuesday<br>
+					<th style="width: 19%;">Wednesday<br>
+					<th style="width: 19%;">Thursday<br>
+					<th style="width: 19%;">Friday<br>
+				</tr>
+				<tr>
+					<td rowspan="2">Week 1<br><input type="checkbox" id="checkboxweek1daily"></td>
+					<?php foreach ($dates as $item) : ?>
+					<?php
+						$previous_date = null;
+						$date = new DateTime($item['begin_date']);
+						$days_added = 0;
 
-					for ($i = 0; $days_added < 5; $i++) : // Add a day
-						// Print the date and increment the counter
-						echo '<td>' . $date->format('j M Y') . '</td>';
-						$date->modify('+1 day');
-						$days_added++;
-					endfor;
-				endforeach; ?>
-			</tr>
-			<tr>
-				<?php
-				$counter = 1;
-				$previous_date = null; // Add this line
-				foreach ($dates as $item) :
-					$begin_date = new DateTime($item['begin_date']);
-					$end_date = clone $begin_date;
-					$end_date->modify('+5 day');
+						for ($i = 0; $days_added < 5; $i++) : // Add a day
+							// Print the date and increment the counter
+							echo '<td>' . $date->format('j M Y') . '</td>';
+							$date->modify('+1 day');
+							$days_added++;
+						endfor;
+					endforeach; ?>
+				</tr>
+				<tr>
+					<?php
+					$counter = 1;
+					$previous_date = null; // Add this line
+					foreach ($dates as $item) :
+						$begin_date = new DateTime($item['begin_date']);
+						$end_date = clone $begin_date;
+						$end_date->modify('+5 day');
 
-					for ($i = 0; $i < 5; $i++) :
-						$date_to_check = clone $begin_date;
-						$date_to_check->modify("+$i day");
-						if ($date_to_check == $previous_date) continue;
-						$previous_date = clone $date_to_check;
-						$is_holiday = false;
-						$holiday_description = '';
+						for ($i = 0; $i < 5; $i++) :
+							$date_to_check = clone $begin_date;
+							$date_to_check->modify("+$i day");
+							if ($date_to_check == $previous_date) continue;
+							$previous_date = clone $date_to_check;
+							$is_holiday = false;
+							$holiday_description = '';
 
-						foreach ($holidays as $holiday) {
-							$holiday_date = new DateTime($holiday['date']);
+							foreach ($holidays as $holiday) {
+								$holiday_date = new DateTime($holiday['date']);
 
-							if ($holiday_date == $date_to_check) {
-								$is_holiday = true;
-								$holiday_description = $holiday['description'];
-								break;
+								if ($holiday_date == $date_to_check) {
+									$is_holiday = true;
+									$holiday_description = $holiday['description'];
+									break;
+								}
 							}
-						}
 
-						if ($is_holiday) {
-							echo '<td style="text-align:center;">' . $holiday_description . '</td>';
-						} else {
-							$menu_found = false;
-							foreach ($menu_daily_set as $menu) {
-								$menu_date = new DateTime($menu['date']);
+							if ($is_holiday) {
+								echo '<td style="text-align:center;">' . $holiday_description . '</td>';
+							} else {
+								$menu_found = false;
+								foreach ($menu_daily_set as $menu) {
+									$menu_date = new DateTime($menu['date']);
 
-								if ($menu_date == $date_to_check) {
-									echo '<td>';
-									echo $menu['name'] . ' - ' . $menu['price'];
-									echo '<input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)">';
-									echo '<hr>';
+									if ($menu_date == $date_to_check) {
+										echo '<td>';
+										echo $menu['name'] . ' - ' . $menu['price'] . ' ';
+										echo '<input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)">';
+										echo '<hr>';
 
-									if (isset($child_menus[$menu['id']])) {
-										$checkboxId = 2;
-										foreach ($child_menus[$menu['id']] as $child_menu) {
-											$child_menu_date = new DateTime($child_menu['date']);
-											if ($child_menu_date == $date_to_check) {
+										if (isset($child_menus[$menu['id']])) {
+											$checkboxId = 2;
+											foreach ($child_menus[$menu['id']] as $child_menu) {
+												$child_menu_date = new DateTime($child_menu['date']);
+												if ($child_menu_date == $date_to_check) {
+													echo $child_menu['name'] . ' - ' . $child_menu['price'];
+													echo '<span style="display:inline-block; width: 7px;"></span><input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]"  value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $child_menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br> ';
+													$checkboxId++;
+												}
+											}
+										}
+										$menu_found = true;
+										break;
+									}
+								}
+
+								if (!$menu_found) {
+									echo '<td></td>';  // Display a blank cell if no menu found
+								}
+								echo '<input type="hidden" id="hiddenInput" name="date">';
+							}
+						endfor;
+					endforeach;
+
+					?>
+				</tr>
+
+
+
+
+
+				<tr>
+					<td rowspan="2">Week 2<br><input type="checkbox" id="checkboxweek2daily"></td>
+					<?php foreach ($dates as $item) : ?>
+					<?php
+						$date = new DateTime($item['begin_date']);
+						$date->modify('+7 day'); // Add 7 days to the start date
+						$days_added = 0;
+
+						for ($i = 0; $days_added < 5; $i++) : // Add a day
+							// Print the date and increment the counter
+							echo '<td>' . $date->format('j M Y') . '</td>';
+							$date->modify('+1 day');
+							$days_added++;
+						endfor;
+					endforeach; ?>
+				</tr>
+
+				<tr>
+					<?php
+					foreach ($dates as $item) :
+						$begin_date = new DateTime($item['begin_date']);
+						$end_date = clone $begin_date;
+						$end_date->modify('+5 day');
+
+						for ($i = 7; $i < 12; $i++) :
+							$date_to_check = clone $begin_date;
+							$date_to_check->modify("+$i day");
+							$menu_name = '';
+							$menu_price = '';
+							$menu1_name = '';
+							$menu1_price = '';
+							$is_holiday = false;
+							$holiday_description = '';
+
+							foreach ($holidays as $holiday) {
+								$holiday_date = new DateTime($holiday['date']);
+
+								if ($holiday_date == $date_to_check) {
+									$is_holiday = true;
+									$holiday_description = $holiday['description'];
+									break;
+								}
+							}
+
+							if ($is_holiday) {
+								echo '<td style="text-align:center;">' . $holiday_description . '</td>';
+							} else {
+								$menu_found = false;
+								foreach ($menu_daily_set as $menu) {
+									$menu_date = new DateTime($menu['date']);
+
+									if ($menu_date == $date_to_check) {
+										echo '<td>';
+										echo $menu['name'] . ' - ' . $menu['price'];
+										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)"><br>';
+										echo '<hr>';
+
+										if (isset($child_menus[$menu['id']])) {
+											$checkboxId = 2;
+											foreach ($child_menus[$menu['id']] as $child_menu) {
 												echo $child_menu['name'] . ' - ' . $child_menu['price'];
-												echo '<span style="display:inline-block; width: 7px;"></span><input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]"  value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $child_menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br> ';
+												echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]" value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $child_menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 												$checkboxId++;
 											}
 										}
+										echo '</td>';
+										$menu_found = true;
+										break;
 									}
-									$menu_found = true;
-									break;
+								}
+								if (!$menu_found) {
+									echo '<td></td>';  // Display a blank cell if no menu found
 								}
 							}
+					?>
+					<?php
+						endfor;
+					endforeach;
+					?>
 
-							if (!$menu_found) {
-								echo '<td></td>';  // Display a blank cell if no menu found
-							}
-							echo '<input type="hidden" id="hiddenInput" name="date">';
-						}
-					endfor;
-				endforeach;
-
-				?>
-			</tr>
-
-
-
-
-
-			<tr>
-				<td rowspan="2">Week 2<br><input type="checkbox" id="checkboxweek2daily"></td>
-				<?php foreach ($dates as $item) : ?>
-				<?php
-					$date = new DateTime($item['begin_date']);
-					$date->modify('+7 day'); // Add 7 days to the start date
-					$days_added = 0;
-
-					for ($i = 0; $days_added < 5; $i++) : // Add a day
-						// Print the date and increment the counter
-						echo '<td>' . $date->format('j M Y') . '</td>';
-						$date->modify('+1 day');
-						$days_added++;
-					endfor;
-				endforeach; ?>
-			</tr>
-
-			<tr>
-				<?php
-				foreach ($dates as $item) :
-					$begin_date = new DateTime($item['begin_date']);
-					$end_date = clone $begin_date;
-					$end_date->modify('+5 day');
-
-					for ($i = 7; $i < 12; $i++) :
-						$date_to_check = clone $begin_date;
-						$date_to_check->modify("+$i day");
-						$menu_name = '';
-						$menu_price = '';
-						$menu1_name = '';
-						$menu1_price = '';
-						$is_holiday = false;
-						$holiday_description = '';
-
-						foreach ($holidays as $holiday) {
-							$holiday_date = new DateTime($holiday['date']);
-
-							if ($holiday_date == $date_to_check) {
-								$is_holiday = true;
-								$holiday_description = $holiday['description'];
-								break;
-							}
-						}
-
-						if ($is_holiday) {
-							echo '<td style="text-align:center;">' . $holiday_description . '</td>';
-						} else {
-							$menu_found = false;
-							foreach ($menu_daily_set as $menu) {
-								$menu_date = new DateTime($menu['date']);
-
-								if ($menu_date == $date_to_check) {
-									echo '<td>';
-									echo $menu['name'] . ' - ' . $menu['price'];
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)"><br>';
-									echo '<hr>';
-
-									if (isset($child_menus[$menu['id']])) {
-										$checkboxId = 2;
-										foreach ($child_menus[$menu['id']] as $child_menu) {
-											echo $child_menu['name'] . ' - ' . $child_menu['price'];
-											echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]" value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $child_menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
-											$checkboxId++;
-										}
-									}
-									echo '</td>';
-									$menu_found = true;
-									break;
-								}
-							}
-							if (!$menu_found) {
-								echo '<td></td>';  // Display a blank cell if no menu found
-							}
-						}
-				?>
-				<?php
-					endfor;
-				endforeach;
-				?>
-
-				<!-- Add more rows as needed -->
+					<!-- Add more rows as needed -->
+		</div>
 		</table>
 
 		<h1>Pasta</h1>
 		<table>
 			<tr>
-				<th>All <br><input type="checkbox" id="checkboxall2"></th>
-				<th>Monday<br>
-				<th>Tuesday<br>
-				<th>Wednesday<br>
-				<th>Thursday<br>
-				<th>Friday<br>
+				<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall2"></th>
+				<th style="width: 19%;">Monday<br>
+				<th style="width: 19%;">Tuesday<br>
+				<th style="width: 19%;">Wednesday<br>
+				<th style="width: 19%;">Thursday<br>
+				<th style="width: 19%;">Friday<br>
 			</tr>
 			<tr>
 				<td rowspan="2">Week 1<br><input type="checkbox" id="checkboxweek1pasta"></td>
@@ -550,12 +557,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<h1>Breakfast and stall</h1>
 		<table>
 			<tr>
-				<th>All <br><input type="checkbox" id="checkboxall3"></th>
-				<th>Monday<br>
-				<th>Tuesday<br>
-				<th>Wednesday<br>
-				<th>Thursday<br>
-				<th>Friday<br>
+				<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall3"></th>
+				<th style="width: 19%;">Monday<br>
+				<th style="width: 19%;">Tuesday<br>
+				<th style="width: 19%;">Wednesday<br>
+				<th style="width: 19%;">Thursday<br>
+				<th style="width: 19%;">Friday<br>
 			<tr>
 				<td rowspan="2">Week 1<br><input type="checkbox" id="checkboxweek1breakfast"></td>
 				<?php foreach ($dates as $item) : ?>
@@ -701,9 +708,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		<input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
 
-		<div style="display: flex; justify-content: center; align-items: center;">
-			<button class="btn btn-danger btn-lg" style="background-color:#b21628; font-size: 30px; padding: 10px 20px; width : 15%; ">Submit</button>
+		<div style="display: flex; justify-content: center;">
+			<button class="btn btn-danger btn-lg" style="background-color:#b21628; font-size: 30px; padding: 10px 20px; width : auto;">Submit</button>
 		</div>
+		<br>
+
+
 
 
 	</form>
@@ -762,16 +772,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				});
 
 				// Add event listener to child checkboxes
-				let childCheckboxes = document.querySelectorAll('input[id^="checkboxdaily_week1_day' + i + '_"]');
+				let childCheckboxes = document.querySelectorAll('input[id^="checkboxdaily_week1_day' + i + '_"]:not([id$="_1"])');
 				childCheckboxes.forEach(function(childCheckbox) {
 					childCheckbox.addEventListener('change', function() {
-						if (!this.checked) {
-							parentCheckbox.checked = false;
-						}
+						let allChecked = Array.from(childCheckboxes).every(cb => cb.checked);
+						parentCheckbox.checked = allChecked;
 					});
 				});
 			}
 		}
+
 
 
 		for (let i = 7; i <= 12; i++) {
@@ -784,16 +794,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					}, this);
 				});
 
-				let childCheckboxes = document.querySelectorAll('input[id^="checkboxdaily_week2_day' + i + '_"]');
+				// Add event listener to child checkboxes
+				let childCheckboxes = document.querySelectorAll('input[id^="checkboxdaily_week2_day' + i + '_"]:not([id$="_1"])');
 				childCheckboxes.forEach(function(childCheckbox) {
 					childCheckbox.addEventListener('change', function() {
-						if (!this.checked) {
+						// Check if all child checkboxes are checked
+						let allChecked = Array.from(childCheckboxes).every(cb => cb.checked);
+						// If all child checkboxes are checked, check the parent checkbox
+						if (allChecked) {
+							parentCheckbox.checked = true;
+						} else {
 							parentCheckbox.checked = false;
 						}
 					});
 				});
 			}
 		}
+
 
 		//Pasta
 		document.getElementById('checkboxall2').addEventListener('change', function() {
@@ -886,21 +903,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 		// Listen for changes on each checkbox
-		// week1Checkboxes.forEach(function(checkbox) {
-		// 	checkbox.addEventListener('change', function() {
-		// 		// If any checkbox is unchecked, uncheck 'week 1' and 'ALL'
-		// 		if (!this.checked) {
-		// 			document.getElementById('checkboxweek1daily').checked = false;
-		// 			document.getElementById('checkboxall1').checked = false;
-		// 		} else {
-		// 			// If all checkboxes are checked, check 'week 1'
-		// 			let allChecked = Array.from(week1Checkboxes).every(c => c.checked);
-		// 			if (allChecked) {
-		// 				document.getElementById('checkboxweek1daily').checked = true;
-		// 			}
-		// 		}
-		// 	});
-		// });
+		week1Checkboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If any checkbox is unchecked, uncheck 'week 1' and 'ALL'
+				if (!this.checked) {
+					document.getElementById('checkboxweek1daily').checked = false;
+					document.getElementById('checkboxall1').checked = false;
+				} else {
+					// If all checkboxes are checked, check 'week 1'
+					let allChecked = Array.from(week1Checkboxes).every(c => c.checked);
+					if (allChecked) {
+						document.getElementById('checkboxweek1daily').checked = true;
+					}
+				}
+			});
+		});
+
+
 
 		// week1Checkboxes.forEach(function(checkbox) {
 		// 	checkbox.addEventListener('change', function() {
@@ -915,21 +934,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		// 	});
 		// });
 
-		// week2Checkboxes.forEach(function(checkbox) {
-		// 	checkbox.addEventListener(	'change', function() {
-		// 		// If any checkbox is unchecked, uncheck 'week 1' and 'ALL'
-		// 		if (!this.checked) {
-		// 			document.getElementById('checkboxweek2daily').checked = false;
-		// 			document.getElementById('checkboxall1').checked = false;
-		// 		} else {
-		// 			// If all checkboxes are checked, check 'week 1'
-		// 			let allChecked = Array.from(week2Checkboxes).every(c => c.checked);
-		// 			if (allChecked) {
-		// 				document.getElementById('checkboxweek2daily').checked = true;
-		// 			}
-		// 		}
-		// 	});
-		// });
+		week2Checkboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If any checkbox is unchecked, uncheck 'week 1' and 'ALL'
+				if (!this.checked) {
+					document.getElementById('checkboxweek2daily').checked = false;
+					document.getElementById('checkboxall1').checked = false;
+				} else {
+					// If all checkboxes are checked, check 'week 1'
+					let allChecked = Array.from(week2Checkboxes).every(c => c.checked);
+					if (allChecked) {
+						document.getElementById('checkboxweek2daily').checked = true;
+					}
+				}
+			});
+		});
 
 		// week2Checkboxes.forEach(function(checkbox) {
 		// 	checkbox.addEventListener('change', function() {
@@ -964,6 +983,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		// For breakfast
 		let week1BreakfastCheckboxes = document.querySelectorAll('input[id^="checkboxbreakfast_week1_"]');
 		let week2BreakfastCheckboxes = document.querySelectorAll('input[id^="checkboxbreakfast_week2_"]');
+
+		// Listen for changes on each checkbox
+		week1BreakfastCheckboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If any checkbox is unchecked, uncheck 'week 1' and 'ALL'
+				if (!this.checked) {
+					document.getElementById('checkboxweek1breakfast').checked = false;
+					document.getElementById('checkboxall2').checked = false;
+				} else {
+					// If all checkboxes are checked, check 'week 1'
+					let allChecked = Array.from(week1BreakfastCheckboxes).every(c => c.checked);
+					if (allChecked) {
+						document.getElementById('checkboxweek1breakfast').checked = true;
+					}
+				}
+			});
+		});
+
+		week2BreakfastCheckboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If any checkbox is unchecked, uncheck 'week 1' and 'ALL'
+				if (!this.checked) {
+					document.getElementById('checkboxweek2breakfast').checked = false;
+					document.getElementById('checkboxall2').checked = false;
+				} else {
+					// If all checkboxes are checked, check 'week 1'
+					let allChecked = Array.from(week2BreakfastCheckboxes).every(c => c.checked);
+					if (allChecked) {
+						document.getElementById('checkboxweek2breakfast').checked = true;
+					}
+				}
+			});
+		});
 
 		// week1BreakfastCheckboxes.forEach(function(checkbox) {
 		// 	checkbox.addEventListener('change', function() {
@@ -1013,6 +1065,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		let week1PastaCheckboxes = document.querySelectorAll('input[id^="checkboxpasta_week1_"]');
 		let week2PastaCheckboxes = document.querySelectorAll('input[id^="checkboxpasta_week2_"]');
 
+		// Listen for changes on each checkbox
+		week1PastaCheckboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If any checkbox is unchecked, uncheck 'week 1' and 'ALL'
+				if (!this.checked) {
+					document.getElementById('checkboxweek1pasta').checked = false;
+					document.getElementById('checkboxall3').checked = false;
+				} else {
+					// If all checkboxes are checked, check 'week 1'
+					let allChecked = Array.from(week1PastaCheckboxes).every(c => c.checked);
+					if (allChecked) {
+						document.getElementById('checkboxweek1pasta').checked = true;
+					}
+				}
+			});
+		});
+
+		week2PastaCheckboxes.forEach(function(checkbox) {
+			checkbox.addEventListener('change', function() {
+				// If any checkbox is unchecked, uncheck 'week 1' and 'ALL'
+				if (!this.checked) {
+					document.getElementById('checkboxweek2pasta').checked = false;
+					document.getElementById('checkboxall3').checked = false;
+				} else {
+					// If all checkboxes are checked, check 'week 1'
+					let allChecked = Array.from(week2PastaCheckboxes).every(c => c.checked);
+					if (allChecked) {
+						document.getElementById('checkboxweek2pasta').checked = true;
+					}
+				}
+			});
+		});
+
 		// week1PastaCheckboxes.forEach(function(checkbox) {
 		// 	checkbox.addEventListener('change', function() {
 		// 		let allUnchecked = Array.from(week1PastaCheckboxes).every(c => !c.checked);
@@ -1052,42 +1137,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			});
 		});
 
-		// Get all checkboxes
-		var checkboxes1 = document.querySelectorAll('input[type="checkbox"][id^="checkboxdaily"]');
-
-		// Filter out parent and child checkboxes
-		var parentCheckboxes = Array.from(checkboxes1).filter(function(checkbox) {
-			return checkbox.id.endsWith('_1');
-		});
-		var childCheckboxes = Array.from(checkboxes1).filter(function(checkbox) {
-			return !checkbox.id.endsWith('_1');
-		});
-
-		// Add event listener to each child checkbox
-		childCheckboxes.forEach(function(childCheckbox) {
-			childCheckbox.addEventListener('change', function() {
-				// Get parent id by removing the last character from child id
-				var parentId = childCheckbox.id.slice(0, -1) + '1';
-				var parentCheckbox = document.getElementById(parentId);
-
-				if (parentCheckbox) {
-					var siblingCheckboxes = document.querySelectorAll('input[type="checkbox"][id^="' + parentId.slice(0, -1) + '"]');
-					var allChecked = true;
-
-					// Check if all sibling checkboxes are checked
-					siblingCheckboxes.forEach(function(siblingCheckbox) {
-						if (!siblingCheckbox.checked) {
-							allChecked = false;
-						} else {
-							allChecked = true;
-						}
-					});
-
-					// Check or uncheck parent checkbox based on sibling checkboxes
-					parentCheckbox.checked = allChecked;
-				}
-			});
-		});
 
 		// Function to calculate total
 		function calculateTotal() {
@@ -1133,6 +1182,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		}
 	</script>
 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </body>

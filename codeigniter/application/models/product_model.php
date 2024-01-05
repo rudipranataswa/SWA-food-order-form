@@ -95,7 +95,7 @@ class Product_model extends CI_Model
                 $this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
                 $this->db->where('id_category', 3);
                 $this->db->where('po_purchase_meal_hdr.status', 'active');
-                // $this->db->order_by('po_purchase_meal_dtl.date', 'ASC');
+                //      
                 $query = $this->db->get();
                 return $query->result_array();
         }
