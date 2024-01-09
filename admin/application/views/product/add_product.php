@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<?php if ($this->session->flashdata('message')) { ?>
-					<div class="alert alert-info">
+					<div class="alert alert-info" style="background-color: #4bb543; color: #000000;">
 						<?php echo $this->session->flashdata('message'); ?>
 					</div>
 				<?php } ?>
