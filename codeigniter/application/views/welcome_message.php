@@ -137,6 +137,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		table {
 			margin-bottom: 3%;
 		}
+
+		.block-display {
+			display: block;
+		}
+
+		.center-text {
+			text-align: center;
+		}
 	</style>
 
 </head>
@@ -182,19 +190,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<form method="post" action="<?php echo site_url('Welcome/submit_order'); ?>" onsubmit="return confirm('Are you sure you want to submit?')">
 		<div>
 			<label for="Email">Email: <span style="color: red;">*</span></label>
-			<div style="display: block;"><input type="email" name="Email" required></div>
+			<div class="block-display"><input type="email" name="Email" required></div>
 		</div>
 		<div>
 			<label for="Name">Student's Complete Name: <span style="color: red;">*</span></label>
-			<div style="display: block;"><input type="text" maxlength=100 name="Name" required></div>
+			<div class="block-display"><input type="text" maxlength=100 name="Name" required></div>
 		</div>
 		<div>
 			<label for="Grade">Grade Level: <span style="color: red;">*</span></label>
-			<div style="display: block;"><input type="text" maxlength=50 name="Grade" required></div>
+			<div class="block-display"><input type="text" maxlength=50 name="Grade" required></div>
 		</div>
 		<div>
 			<label for="Phone_Number">Parent's Phone Number: <span style="color: red;">*</span></label>
-			<div style="display: block;"><input type="text" maxlength=50 name="Phone_Number" required></div>
+			<div class="block-display"><input type="text" maxlength=50 name="Phone_Number" required></div>
 		</div>
 		<?php if ($this->session->flashdata('thank_you_note')) : ?>
 			<p class="thanks_label alert alert-success"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
@@ -264,7 +272,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							}
 
 							if ($is_holiday) {
-								echo '<td style="text-align:center;">' . $holiday_description . '</td>';
+								echo '<td class="center-text">' . $holiday_description . '</td>';
 							} else {
 								$menu_found = false;
 								foreach ($menu_daily_set as $menu) {
@@ -352,7 +360,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							}
 
 							if ($is_holiday) {
-								echo '<td style="text-align:center;">' . $holiday_description . '</td>';
+								echo '<td class="center-text">' . $holiday_description . '</td>';
 							} else {
 								$menu_found = false;
 								foreach ($menu_daily_set as $menu) {
@@ -443,7 +451,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						}
 
 						if ($is_holiday) {
-							echo '<td style="text-align:center;">' . $holiday_description . '</td>';
+							echo '<td class="center-text">' . $holiday_description . '</td>';
 						} else {
 							$checkboxIdPasta = 1;
 							$menu_found = false;
@@ -520,7 +528,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						}
 
 						if ($is_holiday) {
-							echo '<td style="text-align:center;">' . $holiday_description . '</td>';
+							echo '<td class="center-text">' . $holiday_description . '</td>';
 						} else {
 							$checkboxIdPasta = 1;
 							$menu_found = false;
@@ -605,7 +613,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						}
 
 						if ($is_holiday) {
-							echo '<td style="text-align:center;">' . $holiday_description . '</td>';
+							echo '<td class="center-text">' . $holiday_description . '</td>';
 						} else {
 							$checkboxIdBreakfast = 1;
 							echo '<td>';  // Open the cell here
@@ -677,7 +685,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						}
 
 						if ($is_holiday) {
-							echo '<td style="text-align:center;">' . $holiday_description . '</td>';
+							echo '<td class="center-text">' . $holiday_description . '</td>';
 						} else {
 							$checkboxIdBreakfast = 1;
 							echo '<td>';  // Open the cell here
