@@ -58,4 +58,13 @@ class Po_meal_model extends CI_Model
 	{
 		$this->db->insert('po_purchase_meal_dtl', $data);
 	}
+
+	public function get_by_id($inserted_id_hdr)
+	{
+		$this->db->select('remark, begin_date, end_date, status');
+		$this->db->from('po_purchase_meal_hdr');
+		$this->db->where('id', $inserted_id_hdr);
+		$query = $this->db->get();
+		return $query->row_array();
+	}
 }

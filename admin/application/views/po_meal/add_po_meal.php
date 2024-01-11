@@ -2,6 +2,14 @@
 	.required {
 		color: red;
 	}
+
+	.table-data2 {
+		margin-left: 16px;
+	}
+
+	.card {
+		margin-bottom: 5px;
+	}
 </style>
 
 <style>
@@ -23,8 +31,9 @@
 				<div class="col-lg-6">
 					<h3 class="title-5 m-b-35">New PO Meal</h3>
 					<?php if ($this->session->flashdata('message')) { ?>
-						<div class="alert alert-info" style="background-color: #4bb543; color: #000000;">
-							<?php echo $this->session->flashdata('message'); ?>
+						<div class="alert alert-info" style="background-color: #4bb543; color: #ffff;">
+							<?php echo $this->session->flashdata('message'); ?> <br>
+							<a id="checkLink" href="/SWA-food-order-form/admin/po_meal/history_po_meal">Check</a>
 						</div>
 					<?php } ?>
 
@@ -339,7 +348,6 @@
 			});
 		}
 
-		// Set the Title, Status, Begin, and End input values from the URL parameters
 		var titleParam = urlParams.get('title');
 		var statusParam = urlParams.get('status');
 		var beginParam = urlParams.get('begin');
@@ -463,14 +471,19 @@
 			}
 		}
 
-		document.getElementById('productForm').submit();
+		document.getElementById('productForm');
 		return true;
 	}
 </script>
 
 
+<script>
+	var url = window.location.href;
 
+	var value = url.split("/").pop();
 
+	document.getElementById("checkLink").href += "/" + value;
+</script>
 
 
 

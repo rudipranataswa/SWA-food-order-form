@@ -41,18 +41,6 @@ class Po_meal extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
-	public function history_po_meal()
-	{
-		$data['judul'] = 'Edit PO Purchase Meal #1';
-		$data['po_meal'] = $this->po_meal_model->get_po_meal();
-		$data['dailyset'] = $this->po_meal_model->get_daily_set();
-		$data['pastas'] = $this->po_meal_model->get_pasta();
-		$data['breakfasts'] = $this->po_meal_model->get_breakfast();
-		$data['menus'] = $this->po_meal_model->get_menus();
-		$this->load->view('templates/header', $data);
-		$this->load->view('po_meal/history_po_meal');
-		$this->load->view('templates/footer');
-	}
 
 	public function submitHdr()
 	{
@@ -62,8 +50,24 @@ class Po_meal extends CI_Controller
 			'end_date' => $this->input->post('End'),
 			'status' => $this->input->post('Status')
 		);
-		return $this->po_meal_model->insertData($data);
+		$this->po_meal_model->insertData($data);
+
+		$inserted_id_hdr = $this->db->insert_id();
+		return $inserted_id_hdr;
 	}
+
+
+	public function history_po_meal($inserted_id_hdr)
+	{
+		$data['judul'] = 'History PO Purchase Meal #';
+		$data['purchase_meal'] = $this->po_meal_model->get_by_id($inserted_id_hdr);
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('po_meal/history_po_meal', $data);
+		$this->load->view('templates/footer');
+	}
+
+
 
 
 	public function submitForm()
@@ -107,51 +111,6 @@ class Po_meal extends CI_Controller
 				}
 			}
 		}
-
-		// for ($i = 0; $i < count($dailyset_parent); $i++) {
-		// 	print $dailyset_parent[$i];
-		// 	exit;
-		// 	if (!empty($dailyset_parent[$i]) && !empty($dailyset_price[$i])) {
-
-		// 		// print array_keys($dailyset_dates[$i])[0];
-		// 		// exit;
-
-		// 		print '<br>';
-		// 		print $dailyset_price[$i];
-		// 		print '<br>';
-		// 		print $dailyset_dates[$i][array_keys($dailyset_dates[$i])[0]];
-		// 		print '<br>';
-		// 		print $id_po_purchase_meal_hdr;
-
-
-		// 		$data = array(
-		// 			'id_menu' => $dailyset_parent[$i],
-		// 			'price' => $dailyset_price[$i],
-		// 			'parent' => 0,
-		// 			'id_category' => 1,
-		// 			'date' => $dailyset_dates[$i][array_keys($dailyset_dates[$i])[0]],
-		// 			'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
-		// 		);
-		// 		$this->po_meal_model->insertMeal($data);
-		// 	}
-
-		// 	if (isset($id_menu[$i]) && is_array($id_menu[$i])) {
-		// 		foreach ($id_menu[$i] as $key => $value) {
-		// 			if (!empty($value) && !empty($price[$i][$key])) {
-		// 				list($menu_id, $category_id) = explode("-", $value);
-		// 				$data = array(
-		// 					'id_menu' => $menu_id,
-		// 					'price' => $price[$i][$key],
-		// 					'parent' => $dailyset_parent[$i],
-		// 					'id_category' => $category_id,
-		// 					'date' => $dailyset_dates[$i][array_keys($dailyset_dates[$i])[0]],
-		// 					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
-		// 				);
-		// 				$this->po_meal_model->insertMeal($data);
-		// 			}
-		// 		}
-		// 	}
-		// }
 
 
 		$pasta_parent = $this->input->post('Pasta_parent');
@@ -288,7 +247,8 @@ class Po_meal extends CI_Controller
 	public function submit()
 	{
 		$this->submitForm();
-		$this->session->set_flashdata('message', 'Insert PO Succeed!');
-		redirect('po_meal/add_po_meal');
+		$inserted_id_hdr = $this->submitHdr();
+		$this->session->set_flashdata('message', 'the header ID is: ' . $inserted_id_hdr);
+		redirect('po_meal/add_po_meal/' . $inserted_id_hdr);
 	}
 }
