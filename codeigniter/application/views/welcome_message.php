@@ -24,6 +24,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			color: white;
 		}
 
+		textarea {
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+		}
+
 		::-moz-selection {
 			background-color: #E13300;
 			color: white;
@@ -142,7 +147,70 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			display: block;
 		}
 
+		.block-display1 {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+
 		.center-text {
+			text-align: center;
+		}
+
+		@media screen and (max-width: 600px) {
+			.block-display1 textarea {
+				width: 100%;
+			}
+		}
+
+		@media screen and (min-width: 601px) and (max-width: 2000px) {
+			.block-display1 textarea {
+				width: 50%;
+			}
+		}
+
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1;
+			padding-top: 150px;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0, 0, 0);
+			background-color: rgba(0, 0, 0, 0.9);
+		}
+
+		.modal-content {
+			margin: auto;
+			display: block;
+			width: 80%;
+			max-width: 700px;
+			align-items: center;
+		}
+
+		.close {
+			position: absolute;
+			top: 15px;
+			right: 35px;
+			color: #f1f1f1;
+			font-size: 40px;
+			font-weight: bold;
+			transition: 0.3s;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: #bbb;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		#noImage {
+			font-size: 30px;
+			color: white;
 			text-align: center;
 		}
 	</style>
@@ -280,7 +348,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 									if ($menu_date == $date_to_check) {
 										echo '<td>';
-										echo $menu['name'] . ' - ' . $menu['price'] . ' ';
+										$link = isset($menu['link']) ? $menu['link'] : '';
+										echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 										echo '<input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)">';
 										echo '<hr>';
 
@@ -288,8 +357,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 											$checkboxId = 2;
 											foreach ($child_menus[$menu['id']] as $child_menu) {
 												$child_menu_date = new DateTime($child_menu['date']);
+												$link = isset($child_menu['link']) ? $child_menu['link'] : '';
 												if ($child_menu_date == $date_to_check) {
-													echo $child_menu['name'] . ' - ' . $child_menu['price'];
+													echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $child_menu['name'] . "</a> - " . $child_menu['price'] . " ";
 													echo '<span style="display:inline-block; width: 7px;"></span><input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]"  value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $child_menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br> ';
 													$checkboxId++;
 												}
@@ -309,6 +379,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					endforeach;
 
 					?>
+					<div id="myModal" class="modal">
+						<span class="close">×</span>
+						<img class="modal-content" id="img01">
+						<div id="noImage" style="display: none;">Image is not available</div>
+					</div>
+
 				</tr>
 
 
@@ -368,14 +444,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 									if ($menu_date == $date_to_check) {
 										echo '<td>';
-										echo $menu['name'] . ' - ' . $menu['price'];
+										$link = isset($menu['link']) ? $menu['link'] : '';
+										echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)"><br>';
 										echo '<hr>';
 
 										if (isset($child_menus[$menu['id']])) {
 											$checkboxId = 2;
 											foreach ($child_menus[$menu['id']] as $child_menu) {
-												echo $child_menu['name'] . ' - ' . $child_menu['price'];
+												$link = isset($child_menu['link']) ? $child_menu['link'] : '';
+												echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $child_menu['name'] . "</a> - " . $child_menu['price'] . " ";
 												echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]" value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $child_menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 												$checkboxId++;
 											}
@@ -465,7 +543,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									$menu_id = $menu['id'];
 
 									// Don't open a new cell here, just add the menu
-									echo $menu_name . ' - ' . $menu_price;
+									$link = isset($menu['link']) ? $menu['link'] : '';
+									echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week1_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									$checkboxIdPasta++;
 									$menu_found = true;
@@ -542,7 +621,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									$menu_id = $menu['id'];
 
 									// Don't open a new cell here, just add the menu
-									echo $menu_name . ' - ' . $menu_price;
+									$link = isset($menu['link']) ? $menu['link'] : '';
+									echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week2_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									$checkboxIdPasta++;
 									$menu_found = true;
@@ -626,7 +706,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									$menu_id = $menu['id'];
 
 									// Don't open a new cell here, just add the menu
-									echo $menu_name . ' - ' . $menu_price;
+									$link = isset($menu['link']) ? $menu['link'] : '';
+									echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week1_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									$checkboxIdBreakfast++;
 								}
@@ -698,7 +779,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									$menu_id = $menu['id'];
 
 									// Don't open a new cell here, just add the menu
-									echo $menu_name . ' - ' . $menu_price;
+									$link = isset($menu['link']) ? $menu['link'] : '';
+									echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week2_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									$checkboxIdBreakfast++;
 								}
@@ -715,6 +797,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</table>
 
 		<input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
+
+		<label for="Name">Notes: </label>
+		<div class="block-display1">
+			<textarea style="height: 70px;" type="text" maxlength=100 name="Notes"></textarea>
+		</div>
 
 		<div style="display: flex; justify-content: center;">
 			<button class="btn btn-danger btn-lg" style="background-color:#b21628; font-size: 30px; padding: 10px 20px; width : auto;">Submit</button>
@@ -1187,6 +1274,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			// Display the total
 			let totalPriceElement = document.getElementById('totalPrice');
 			totalPriceElement.textContent = 'Rp. ' + total.toLocaleString('id-ID'); // Use toLocaleString to format the number with a thousands separator
+		}
+
+		function showPopup(url) {
+			var modal = document.getElementById("myModal");
+			var img = document.getElementById("img01");
+			var noImage = document.getElementById("noImage");
+
+			if (url) {
+				img.src = url;
+				img.style.display = "block";
+				noImage.style.display = "none";
+			} else {
+				img.style.display = "none";
+				noImage.style.display = "block";
+			}
+
+			modal.style.display = "block";
+
+			var span = document.getElementsByClassName("close")[0];
+			span.onclick = function() {
+				modal.style.display = "none";
+			}
 		}
 	</script>
 
