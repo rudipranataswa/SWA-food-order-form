@@ -229,6 +229,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			width: 95%;
 			text-align: right;
 		}
+
+		table {
+			background-color: #e0e0e0;
+		}
 	</style>
 
 </head>
