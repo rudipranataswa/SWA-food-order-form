@@ -213,6 +213,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			color: white;
 			text-align: center;
 		}
+
+		.container {
+			display: contents;
+			justify-content: space-between;
+		}
+
+		.left {
+			width: 10%;
+			text-align: left;
+			/* Align text to the left */
+		}
+
+		.right {
+			width: 95%;
+			text-align: right;
+		}
 	</style>
 
 </head>
@@ -285,7 +301,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<h3 id="totalPrice" style="color: white !important;">Rp. 0</h3>
 		</div>
 
-		<h1>Daily Set</h1>
+		<div class="container">
+			<div class="right">
+				<h10>Click on the menu name to display image</h10>
+			</div>
+			<div class="left">
+				<h1>Daily Set</h1>
+				<!-- Your daily set goes here -->
+			</div>
+		</div>
+
 		<div class="table-responsive">
 			<table>
 				<tr>
@@ -349,7 +374,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									if ($menu_date == $date_to_check) {
 										echo '<td>';
 										$link = isset($menu['link']) ? $menu['link'] : '';
-										echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+										echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 										echo '<input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)">';
 										echo '<hr>';
 
@@ -359,7 +384,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 												$child_menu_date = new DateTime($child_menu['date']);
 												$link = isset($child_menu['link']) ? $child_menu['link'] : '';
 												if ($child_menu_date == $date_to_check) {
-													echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $child_menu['name'] . "</a> - " . $child_menu['price'] . " ";
+													echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $child_menu['name'] . "</a> - " . $child_menu['price'] . " ";
 													echo '<span style="display:inline-block; width: 7px;"></span><input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]"  value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $child_menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br> ';
 													$checkboxId++;
 												}
@@ -445,7 +470,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									if ($menu_date == $date_to_check) {
 										echo '<td>';
 										$link = isset($menu['link']) ? $menu['link'] : '';
-										echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+										echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)"><br>';
 										echo '<hr>';
 
@@ -453,7 +478,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 											$checkboxId = 2;
 											foreach ($child_menus[$menu['id']] as $child_menu) {
 												$link = isset($child_menu['link']) ? $child_menu['link'] : '';
-												echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $child_menu['name'] . "</a> - " . $child_menu['price'] . " ";
+												echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $child_menu['name'] . "</a> - " . $child_menu['price'] . " ";
 												echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]" value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $child_menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 												$checkboxId++;
 											}
@@ -544,7 +569,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 									// Don't open a new cell here, just add the menu
 									$link = isset($menu['link']) ? $menu['link'] : '';
-									echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+									echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week1_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									$checkboxIdPasta++;
 									$menu_found = true;
@@ -622,7 +647,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 									// Don't open a new cell here, just add the menu
 									$link = isset($menu['link']) ? $menu['link'] : '';
-									echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+									echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+
 									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week2_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									$checkboxIdPasta++;
 									$menu_found = true;
@@ -707,7 +733,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 									// Don't open a new cell here, just add the menu
 									$link = isset($menu['link']) ? $menu['link'] : '';
-									echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+									echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+
 									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week1_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									$checkboxIdBreakfast++;
 								}
@@ -780,7 +807,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 									// Don't open a new cell here, just add the menu
 									$link = isset($menu['link']) ? $menu['link'] : '';
-									echo "<a href=\"#\" onclick=\"showPopup('" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+									echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week2_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 									$checkboxIdBreakfast++;
 								}
@@ -1276,7 +1303,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			totalPriceElement.textContent = 'Rp. ' + total.toLocaleString('id-ID'); // Use toLocaleString to format the number with a thousands separator
 		}
 
-		function showPopup(url) {
+		function showPopup(event, url) {
+			event.preventDefault(); // Prevent the default action
+
 			var modal = document.getElementById("myModal");
 			var img = document.getElementById("img01");
 			var noImage = document.getElementById("noImage");
@@ -1295,7 +1324,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			var span = document.getElementsByClassName("close")[0];
 			span.onclick = function() {
 				modal.style.display = "none";
+				document.body.style.overflow = "auto"; // Enable scrolling
 			}
+
+			document.body.style.overflow = "hidden"; // Disable scrolling
 		}
 	</script>
 
