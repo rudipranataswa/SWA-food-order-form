@@ -31,6 +31,8 @@ class Welcome extends CI_Controller
 		$this->load->library('user_agent');
 		$this->load->library('session');
 		$this->load->helper(array('form', 'url'));
+		$this->load->helper('url');
+
 
 		// $this->load->library('security');
 	}

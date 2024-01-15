@@ -217,6 +217,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		.container {
 			display: contents;
 			justify-content: space-between;
+			color: #444;
+			background-color: transparent;
+			border-bottom: 1px solid #D0D0D0;
+			font-size: 19px;
+			font-weight: normal;
+			margin: 0 0 14px 0;
+			padding: 14px 15px 10px 15px;
 		}
 
 		.left {
@@ -230,14 +237,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			text-align: right;
 		}
 
-		table {
-			background-color: #e0e0e0;
+		th {
+			background-color: lightgray;
+		}
+
+		/* .col-md-3 {
+			padding-top: 40px;
+		} */
+
+		.center-image {
+			display: flex;
+			justify-content: center;
+		}
+
+		.center-image img {
+			width: 125px;
+			height: 125px;
 		}
 	</style>
 
 </head>
 
 <body>
+	<div class="col-md-12 center-image">
+		<!-- Display the image -->
+		<img src="<?php echo 'https://bedrockasia.files.wordpress.com/2010/10/sws-identity1.png'; ?>" class="img-fluid">
+	</div>
 
 	<!-- <div id="container"> -->
 	<!-- <h1>Bamboo Kitchen</h1> -->
@@ -306,12 +331,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 
 		<div class="container">
-			<div class="right">
-				<h10>Click on the menu name to display image</h10>
-			</div>
-			<div class="left">
-				<h1>Daily Set</h1>
-				<!-- Your daily set goes here -->
+			<div class="row">
+				<div class="col-md-9">
+					<h1>Daily Set</h1>
+				</div>
+				<div class="col-md-3">Click on the menu name to display image</div>
 			</div>
 		</div>
 
@@ -506,7 +530,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		</table>
 
-		<h1>Pasta</h1>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<h1>Pasta</h1>
+				</div>
+				<div class="col-md-3">Click on the menu name to display image</div>
+			</div>
+		</div>
 		<table>
 			<tr>
 				<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall2"></th>
@@ -672,7 +703,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<!-- Add more rows as needed -->
 		</table>
 
-		<h1>Breakfast and stall</h1>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<h1>Breakfast and Stall</h1>
+				</div>
+				<div class="col-md-3">Click on the menu name to display image</div>
+			</div>
+		</div>
 		<table>
 			<tr>
 				<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall3"></th>
