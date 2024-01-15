@@ -4,27 +4,40 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6">
+                    <?php if ($this->session->flashdata('message')) { ?>
+                        <div class="alert alert-info">
+                            <?php echo $this->session->flashdata('message'); ?>
+                        </div>
+                    <?php } ?>
                     <!-- Input Size -->
                     <div class="card">
                         <div class="card-header">
                             <strong>Add Category</strong>
                         </div>
                         <div class="card-body card-block">
-                            <form action="" method="post" class="form-horizontal">
+                            <form action="<?php echo site_url('Category/create_new'); ?>" method="post" class="form-horizontal" id="productForm">
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="input-normal" class=" form-control-label">Category <span class="text-danger">*</span></label>
+                                        <label for="input-normal" class=" form-control-label">Category</label>
                                     </div>
                                     <div class="col col-sm-6">
-                                        <input type="text" id="input-normal" name="input-normal" placeholder="Type here..." class="form-control">
+                                        <input type="text" id="input-normal" name="Category" placeholder="Type here..." class="form-control">
                                     </div>
                                 </div>
+                                <div class="card-footer">
+                                    <a href="<?php echo site_url('Category/index'); ?>" class="btn btn-secondary btn-sm">
+                                        <i class="fa fa-arrow-left"></i> Back
+                                    </a>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+                                        <i class="fa fa-dot-circle-o"></i> Submit
+                                    </button>
+                                </div>
                             </form>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
-                                <i class=""></i> Submit
-                            </button>
+                            <?php if (validation_errors()) : ?>
+                                <div class="alert alert-warning">
+                                    <?php echo validation_errors('<div class="error">', '</div>'); ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -40,15 +53,15 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-            Are you sure to submit?
+                Are you sure you want to submit?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary">Yes</button>
+                <button type="submit" class="btn btn-primary" form="productForm">Yes</button>
             </div>
         </div>
     </div>

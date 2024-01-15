@@ -40,43 +40,47 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($holiday as $hdy) : ?>
-                      <tr class="tr-shadow">
-                        <td><?= $hdy['id']; ?></td>
-                        <td><?= $hdy['date']; ?></td>
-                        <td><?= $hdy['description']; ?></td>
-                        <td>
+                    <?php 
+                      $no = 1;
+                      foreach ($holiday as $hdy) : ?>
+                        <tr class="tr-shadow">
+                          <td><?= $no ?></td>
+                          <td><?= $hdy['date']; ?></td>
+                          <td><?= $hdy['description']; ?></td>
+                          <td>
+                              <div class="table-data-feature">
+                              <a
+                                  class="item"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Edit"
+                                  href="<?= base_url();?>holiday/edit_holiday/<?= $hdy['id']; ?>"
+                              >
+                                  <i class="zmdi zmdi-edit"></i>
+                              </a>
+                              </div>
+                          </td>
+                          <td>
                             <div class="table-data-feature">
-                            <a
-                                class="item"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="Edit"
-                                href="<?= base_url();?>holiday/edit_holiday/<?= $hdy['id']; ?>"
-                            >
-                                <i class="zmdi zmdi-edit"></i>
-                            </a>
+                              <form action="<?= base_url();?>holiday/delete_holiday" method="post" id="deleteForm<?= $hdy['id']; ?>">
+                                <input type="hidden" name="id_number" value="<?= $hdy['id']; ?>">  
+                                <button
+                                  type="button"
+                                  class="btn item"
+                                  data-toggle="modal"
+                                  data-target="#deleteModal<?= $hdy['id']; ?>"
+                                  title="Delete"
+                                  >
+                                  <i class="zmdi zmdi-delete"></i>
+                                </button>
+                              </form>
                             </div>
-                        </td>
-                        <td>
-                          <div class="table-data-feature">
-                            <form action="<?= base_url();?>holiday/delete_holiday" method="post" id="deleteForm<?= $hdy['id']; ?>">
-                              <input type="hidden" name="id_number" value="<?= $hdy['id']; ?>">  
-                              <button
-                                type="button"
-                                class="btn item"
-                                data-toggle="modal"
-                                data-target="#deleteModal<?= $hdy['id']; ?>"
-                                title="Delete"
-                                >
-                                <i class="zmdi zmdi-delete"></i>
-                              </button>
-                            </form>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr class="spacer"></tr>
-                    <?php endforeach; ?>
+                          </td>
+                        </tr>
+                        <tr class="spacer"></tr>
+                      <?php 
+                        $no++;
+                    endforeach; ?>
                   </tbody>
                 </table>
               </div>

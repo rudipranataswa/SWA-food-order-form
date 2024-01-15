@@ -9,7 +9,7 @@
                     <h3 class="title-5 m-b-35">Report Detail</h3>
                     <div class="card">
                         <div class="card-header">                                       
-                            <strong>Report Detail</strong>
+                            <strong>Customer Detail</strong>
                         </div>
                         <div class="card-body card-block">
                             <?php if (!empty($detail_report)) : ?>
@@ -60,7 +60,7 @@
                             <!-- Week 1 -->
                             <thead>
                                 <tr>
-                                <th rowspan="2" class="align-middle">Week 1</th>
+                                <th rowspan="2" class="align-middle col-1">Week 1</th>
                                 <th>Monday</th>
                                 <th>Tuesday</th>
                                 <th>Wednesday</th>
@@ -116,7 +116,7 @@
                                             }
 
                                             if ($is_holiday == true) {
-                                                echo '<td class="t-2">' . $holiday_description . '</td>';
+                                                echo '<td class="col-2">' . $holiday_description . '</td>';
                                             } else {
                                                 $menu_found = false;
                                                 $total_price = '';
@@ -136,7 +136,7 @@
                                                                     $background = '';
                                                                 }
                                                             }
-                                                            echo '<td class="t-2">';
+                                                            echo '<td class="col-2">';
                                                             $price_in_k = $menu['price'] / 1000 . 'k';   
                                                             echo '<span class="' . $background . '">' . $menu['name'] . ' - ' . $price_in_k . '</span><br>'; 
                                                             if (isset($child_menus[$menu['id_menu']])) { 
@@ -167,7 +167,7 @@
                                                 }
 
                                                 if (!$menu_found) {
-                                                    echo '<td>-</td>';  // Display a blank cell if no menu found
+                                                    echo '<td class="col-2">-</td>';  // Display a blank cell if no menu found
                                                 }
                                             }
                                         endfor;
@@ -271,7 +271,7 @@
                                                             $background = '';
                                                             foreach ($detail_report as $report) {
                                                                 if ($report['id_po_purchase_meal_dtl'] == $menu['id']) {
-                                                                    $background = $report['background'];
+                                                                    $background = 'bg-success text-white px-1'; 
                                                                     $total_price += $menu['price'];
                                                                     break;
                                                                 } else {

@@ -17,6 +17,7 @@
                         <th>order date</th>
                         <th>time</th>
                         <th>detail</th>
+                        <th>summary</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -31,17 +32,30 @@
                                         <td><?= $vrpt['date_only']; ?></td>
                                         <td><?= $vrpt['time_only']; ?></td>
                                         <td>
-                                        <div class="table-data-feature">
-                                            <a
-                                            class="item"
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="View"
-                                            href="<?= base_url(); ?>report/detail_report/<?= $vrpt['id']; ?>"
-                                            >
-                                            <i class="zmdi zmdi-eye"></i>
-                                            </a>
-                                        </div>
+                                            <div class="table-data-feature">
+                                                <a
+                                                class="item"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="View"
+                                                href="<?= base_url(); ?>report/detail_report/<?= $vrpt['id']; ?>"
+                                                >
+                                                <i class="zmdi zmdi-eye"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="table-data-feature">
+                                                <a
+                                                class="item"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Summary"
+                                                href="<?= base_url(); ?>report/summary/<?= $vrpt['id']; ?>"
+                                                >
+                                                <i class="zmdi zmdi-eye"></i>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr class="spacer"></tr>

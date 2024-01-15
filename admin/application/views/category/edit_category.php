@@ -4,35 +4,39 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6">
-                    <!-- Horizontal Form -->
+                    <!-- Input Size -->
                     <div class="card">
                         <div class="card-header">
-                            <strong>Edit</strong> Category
+                            <strong>Edit Category</strong>
                         </div>
                         <div class="card-body card-block">
-                            <form action="" method="post" class="form-horizontal">
+                            <form action="<?php echo site_url('Category/update_category'); ?>" method="post" class="form-horizontal" id="editForm">
                                 <div class="row form-group">
-                                    <div class="col col-md-3">
+                                    <div class="col col-sm-5">
                                         <label for="hf-id" class=" form-control-label">ID</label>
                                     </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="int" id="hf-id" name="hf-id" placeholder="ID" class="form-control" disabled>
+                                    <div class="col col-sm-6">
+                                        <input type="int" id="hf-id" name="id_number" placeholder="<?= $this->uri->segment(3); ?>" class="form-control" disabled>
+                                        <input type="hidden" id="hf-id" name="id_number" value="<?= $this->uri->segment(3); ?>">
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <label for="hf-category" class=" form-control-label">Category</label>
+                                    <div class="col col-sm-5">
+                                        <label for="hf-menu" class=" form-control-label">New category name</label>
                                     </div>
-                                    <div class="col-12 col-md-9">
-                                        <input type="text" id="hf-category" name="hf-category" placeholder="Edit category..." class="form-control">
+                                    <div class="col col-sm-6">
+                                        <input type="text" id="hf-menu" name="Category1" value="<?= $category_name; ?>" class="form-control" required>
                                     </div>
                                 </div>
+                                <div class="card-footer">
+                                    <a href="<?php echo site_url('Category/index'); ?>" class="btn btn-secondary btn-sm">
+                                        <i class="fa fa-arrow-left"></i> Back
+                                    </a>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+                                        <i class="fa fa-dot-circle-o"></i> Submit
+                                    </button>
+                                </div>
                             </form>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" name="add" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
-                                <i class=""></i> Submit
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -48,15 +52,15 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-            Are you sure to change it?
+                Are you sure to change it?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary">Yes</button>
+                <button type="submit" class="btn btn-primary" form="editForm">Yes</button>
             </div>
         </div>
     </div>

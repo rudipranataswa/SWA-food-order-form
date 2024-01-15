@@ -287,6 +287,7 @@ section {
 		padding-bottom: 12vh;
 	}
 }
+
 .page-container {
 	background: #e5e5e5;
 	padding-left: 300px;
@@ -4577,7 +4578,6 @@ section {
 .table-data2 {
 	border-collapse: collapse;
 	overflow: visible;
-	display: inline;
 }
 
 .table-data2.table thead th {
@@ -4589,12 +4589,10 @@ section {
 	vertical-align: top;
 	padding: 15px 40px;
 	padding-right: 10px;
-	width: 18% !important;
 }
 
 .table-data2.table thead th:first-child {
 	padding-right: 0;
-	width: 10% !important;
 }
 
 .table-data2.table tbody {
@@ -4609,14 +4607,13 @@ section {
 	-moz-border-radius-bottomleft: 3px;
 	border-bottom-left-radius: 3px;
 	vertical-align: top;
-	width: 10% !important;
 }
 
 .table-data2.table tbody tr td:first-child .au-checkbox {
 	margin-top: 5px;
 }
 
-@media (max-width: 1199pxkk) {
+@media (max-width: 1199px) {
 	.table-data2.table tbody tr td:first-child {
 		vertical-align: middle;
 	}
@@ -4643,7 +4640,6 @@ section {
 	padding: 25px 40px;
 	padding-right: 10px;
 	border: none;
-	width: 18% !important;
 }
 
 .table-data2.table tbody td.desc {
