@@ -122,6 +122,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		table {
 			width: 100%;
 			border-collapse: collapse;
+			padding-bottom: 0px;
 		}
 
 		table,
@@ -253,6 +254,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		.center-image img {
 			width: 125px;
 			height: 125px;
+		}
+
+		.daily_info {
+			padding-top: 0px;
+			padding-bottom: 7%;
+			font-size: 16px;
+			font-weight: bold;
 		}
 	</style>
 
@@ -529,6 +537,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<!-- Add more rows as needed -->
 		</div>
 		</table>
+		<p class="daily_info">Two dishes with vegetables served alongside steamed rice, soup, and dessert provided during lunchtime.</p>
 
 		<div class="container">
 			<div class="row">
@@ -702,6 +711,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 				<!-- Add more rows as needed -->
 		</table>
+		<p class="daily_info">A variety of pasta provided during snack time & lunch time</p>
 
 		<div class="container">
 			<div class="row">
@@ -864,6 +874,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 				<!-- Add more rows as needed -->
 		</table>
+		<p class="daily_info">A variety of breakfast items served in the morning and a selection of snacks provided during snack time.</p>
 
 		<input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
 

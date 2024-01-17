@@ -63,7 +63,7 @@ class Product_model extends CI_Model
 
         public function get_child_menus()
         {
-                $this->db->select('menu.id, menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price, po_purchase_meal_dtl.parent');
+                $this->db->select('menu.id, menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price, po_purchase_meal_dtl.parent, menu.link');
                 $this->db->from('po_purchase_meal_dtl');
                 $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
                 $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
