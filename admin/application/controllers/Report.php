@@ -8,6 +8,24 @@ class Report extends CI_Controller
         parent::__construct();
         $this->load->model('report_model');
 		$this->load->database();
+        if (!$this->session->userdata('logged_in')) {
+            // Redirect to login page
+            redirect('login');
+        }
+        $this->check_timeout();
+    }
+
+    public function check_timeout()
+    {
+        $login_time = $this->session->userdata('login_time');
+
+        if (isset($login_time) && time() - $login_time > 3600) {
+            $this->session->set_flashdata('timeout', 'Your session has expired due to inactivity.');
+            $this->session->sess_destroy();
+            redirect('login');
+        } else {
+            $this->session->set_userdata('login_time', time());
+        }
     }
 
     public function index() 
@@ -71,6 +89,7 @@ class Report extends CI_Controller
     public function summary($id) {
         $data = array(
             'holidays' => $this->report_model->get_holidays(),
+            'dates' => $this->report_model->get_dates($id),
             'detail_report' => $this->report_model->get_detail_report($id)
         );
         

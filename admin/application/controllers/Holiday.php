@@ -7,6 +7,24 @@ class Holiday extends CI_Controller
     {
         parent::__construct();
         $this->load->model('holiday_model');
+        if (!$this->session->userdata('logged_in')) {
+            // Redirect to login page
+            redirect('login');
+        }
+        $this->check_timeout();
+    }
+
+    public function check_timeout()
+    {
+        $login_time = $this->session->userdata('login_time');
+
+        if (isset($login_time) && time() - $login_time > 3600) {
+            $this->session->set_flashdata('timeout', 'Your session has expired due to inactivity.');
+            $this->session->sess_destroy();
+            redirect('login');
+        } else {
+            $this->session->set_userdata('login_time', time());
+        }
     }
 
     public function index()
@@ -19,9 +37,15 @@ class Holiday extends CI_Controller
 
         $data['judul'] = 'Holiday';
         $data['holiday'] = $this->holiday_model->paginate($config['per_page'], $this->uri->segment(3));
+        
         $this->load->view('templates/header', $data);
         $this->load->view('holiday/index', $data);
         $this->load->view('templates/footer');
+
+        header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . 'GMT');
+        header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: no-cache');
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
     }
 
     public function add_holiday()
@@ -35,9 +59,13 @@ class Holiday extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('holiday/add_holiday');
             $this->load->view('templates/footer');
+
+            $this->session->set_flashdata('flash', 'Create New Category Fail!');
         } else {
-            $this->holiday_model->add_holiday_data();
-            $this->session->set_flashdata('flash', 'ditambahkan');
+            $session_name = $this->session->userdata('fullname');
+            $admin_id = $this->holiday_model->get_admin_id($session_name);
+            $this->holiday_model->add_holiday_data($admin_id);
+            $this->session->set_flashdata('flash', 'Create New Holiday Succeed!');
             redirect('holiday');
         }
     }
@@ -50,20 +78,6 @@ class Holiday extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('holiday/edit_holiday', $data);
         $this->load->view('templates/footer');
-        
-        
-        // $this->form_validation->set_rules('date', 'date', 'required|date');
-        // $this->form_validation->set_rules('description', 'description', 'required');
-
-        // if($this->form_validation->run() == false) {
-        //     $this->load->view('templates/header', $data);
-        //     $this->load->view('holiday/edit_holiday', $data);
-        //     $this->load->view('templates/footer');
-        // } else {
-        //     $this->holiday_model->edit_holiday_data();
-        //     $this->session->set_flashdata('flash', 'diubah');
-        //     redirect('holiday');
-        // } 
     }
 
     public function update_data($id)
@@ -72,8 +86,11 @@ class Holiday extends CI_Controller
             'date' => $this->input->post('date'),
             'description' => $this->input->post('description')
         );
+        $session_name = $this->session->userdata('fullname');
+        $admin_id = $this->holiday_model->get_admin_id($session_name);
 
-        $this->holiday_model->edit_holiday_data($id, $data);
+        $this->holiday_model->edit_holiday_data($id, $data, $admin_id);
+        $this->session->set_flashdata('flash', 'Holiday Successfully Edited!');
         redirect('holiday');
     }
 
@@ -83,10 +100,11 @@ class Holiday extends CI_Controller
         $result = $this->holiday_model->delete_holiday_data($id);
 
         if ($result === true) {
+            $this->session->set_flashdata('flash', 'Holiday Successfully Deleted!');
             redirect('holiday');
         } else {
             // Store the error message in flashdata
-            $this->session->set_flashdata('error_message', $result);
+            $this->session->set_flashdata('flash', $result);
             redirect('holiday');
         }
     }

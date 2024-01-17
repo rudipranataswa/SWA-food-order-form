@@ -26,5 +26,31 @@
     <script>
       $("#zero_config").DataTable();
     </script>
+
+    <script>
+    $(document).ready(function(){
+        setTimeout(function() {
+            $('#flashdata').fadeOut('slow');
+        }, 5000); // <-- time in milliseconds, 10000 ms = 10 sec
+    });
+    document.querySelector('.card-header .btn-copy').addEventListener('click', function() {
+      var text = document.querySelector('.body-text').innerText;
+      var textarea = document.createElement('textarea');
+      textarea.textContent = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      // When the user clicks on div, open the popup
+    });
+    function myFunction() {
+      var popup = document.getElementById("myPopup");
+      popup.classList.toggle("show");
+      setTimeout(function() {
+          $('#myPopup').fadeOut('slow');
+      }, 1500);
+    }
+    </script>
+
   </body>
 </html>

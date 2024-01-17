@@ -1,8 +1,8 @@
 <style>
-     	.pagination-link a {
-     		padding: 10px;
-     	}
-     </style>
+  .pagination-link a {
+    padding: 10px;
+  }
+</style>
 <!-- MAIN CONTENT-->
 <div class="main-content">
   <div class="section__content section__content--p30">
@@ -16,14 +16,18 @@
               <div class="table-data__tool">
                 <div class="table-data__tool-left">
                   <a
-                    class="au-btn au-btn-icon au-btn--green au-btn--small"
-                    href="<?= base_url(); ?>holiday/add_holiday"
+                  class="au-btn au-btn-icon au-btn--green au-btn--small"
+                  href="<?= base_url(); ?>holiday/add_holiday"
                   >
                     <i class="zmdi zmdi-plus"></i>Create New
                   </a>
                 </div>
               </div>
-              <div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
+              <?php if($this->session->flashdata('flash')): ?>
+                <div class="alert alert-info" id="flashdata" >
+                  <?php echo $this->session->flashdata('flash'); ?>
+                </div>
+              <?php endif; ?>              
               <div class="table-responsive table-responsive-data2">
                 <table
                   id="zero_config"

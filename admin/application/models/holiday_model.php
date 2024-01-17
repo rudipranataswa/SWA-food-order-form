@@ -32,7 +32,23 @@ class Holiday_model extends CI_Model
 		return $query->result_array();
     }
 
-    public function add_holiday_data()
+    public function get_admin_id($fullname)
+    {
+        $this->db->select('id');
+        $this->db->from('admin');
+        $this->db->where('fullname', $fullname);
+        $query = $this->db->get();
+
+        // Check if a result is returned
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            return $result->id;
+        } else {
+            return null; // or handle this case as you see fit
+        }
+    }
+
+    public function add_holiday_data($admin_id)
     {
         $this->db->select_max('id');
         $result = $this->db->get('holiday')->row();
@@ -41,17 +57,21 @@ class Holiday_model extends CI_Model
         $data = [
             "id" => $new_id,
             "date" => $this->input->post('date', true),
-            "description" => $this->input->post('description', true)
+            "description" => $this->input->post('description', true),
+            "created_by" => $admin_id,
+            "created_date" => date('Y-m-d H:i:s', strtotime('+6 hours'))
         ];
 
         $this->db->insert('holiday', $data);
     }
 
-    public function edit_holiday_data($id, $data)
+    public function edit_holiday_data($id, $data, $admin_id)
     {
         $data = [
             "date" => $this->input->post('date', true),
-            "description" => $this->input->post('description', true )
+            "description" => $this->input->post('description', true),
+            'modified_by' => $admin_id,
+            'modified_date' => date('Y-m-d H:i:s', strtotime('+6 hours'))
         ];
 
         $this->db->where('id', $id);

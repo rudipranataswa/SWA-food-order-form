@@ -38,7 +38,7 @@ class Category_model extends CI_Model
             'category' => $category,
             'id' => $new_id,
             'created_by' => $admin_id,
-            'created_date' => date('Y-m-d H:i:s'),
+            'created_date' => date('Y-m-d H:i:s', strtotime('+6 hours'))
         );
 
         return $this->db->insert('category', $data);
@@ -49,7 +49,7 @@ class Category_model extends CI_Model
         $data = array(
             'category' => $category,
             'modified_by' => $admin_id,
-            'modified_date' => date('Y-m-d H:i:s'),
+            'modified_date' => date('Y-m-d H:i:s', strtotime('+6 hours'))
         );
 
         $this->db->where('id', $id);
@@ -64,6 +64,7 @@ class Category_model extends CI_Model
         if ($query->num_rows() == 0) {
             $this->db->where('id', $id);
             $this->db->delete('category');
+            
             return true;
         } else {
             return 'Fail: Cannot edit category because it exists in po_purchase_meal_dtl';

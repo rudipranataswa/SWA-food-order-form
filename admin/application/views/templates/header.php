@@ -90,25 +90,6 @@
                       <i class="fas fa-file-text"></i>Report
                   </a>
               </li>
-              <!-- <li class="has-sub">
-                <a class="js-arrow" href="#">
-                  <i class="fas fa-user"></i>Profile</a
-                >
-                <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                  <li>
-                    <a href="login.html">Login</a>
-                  </li>
-                  <li>
-                    <a href="register.html">Register</a>
-                  </li>
-                  <li>
-                    <a href="forget-pass.html">Forget Password</a>
-                  </li>
-                  <li>
-                    <a href="logout.html">Logout</a>
-                  </li>
-                </ul>
-              </li> -->
             </ul>
           </div>
         </nav>
@@ -155,60 +136,41 @@
                   <i class="fas fa-file-text"></i>Report</a
                 >
               </li>
-              <!-- <li class="has-sub">
-                <a class="js-arrow" href="#">
-                  <i class="fas fa-user"></i>Profile</a
-                >
-                <ul class="list-unstyled navbar__sub-list js-sub-list">
-                  <li>
-                    <a href="login.html">Login</a>
-                  </li>
-                  <li>
-                    <a href="register.html">Register</a>
-                  </li>
-                  <li>
-                    <a href="forget-pass.html">Forget Password</a>
-                  </li>
-                  <li>
-                    <a href="logout.html">Logout</a>
-                  </li>
-                </ul>
-              </li> -->
             </ul>
           </nav>
         </div>
       </aside>
       <!-- END MENU SIDEBAR-->
 
-      <!-- PAGE CONTAINER-->
-      <div class="page-container">
-        <!-- HEADER DESKTOP-->
-        <header class="header-desktop">
-          <div class="section__content section__content--p30">
-            <div class="container-fluid">
-              <div class="header-wrap">
-                <form class="form-header" action="" method="POST">
-                </form>
-                <div class="header-button">
-                  <div class="noti-wrap">
-                  </div>
-                  <div class="account-wrap">
-                    <div class="account-item clearfix js-item-menu">
-                      <div class="content">
-                        <a class="js-acc-btn" href="#">admin</a>
-                      </div>
+     <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <header class="header-desktop">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="header-wrap">
+              <form class="form-header" action="" method="POST">
+              </form>
+              <div class="header-button">
+                <div class="noti-wrap">
+                </div>
+                <div class="account-wrap">
+                  <div class="account-item clearfix js-item-menu">
+                    <div class="content">
+                      <i class="fas fa-user"></i>
+                      <?php echo $this->session->userdata('fullname'); ?></a>
                       <div class="account-dropdown js-dropdown">
                         <div class="info clearfix">
                           <div class="content">
                             <h5 class="name">
-                              <a href="#">admin</a>
+                              <?php echo $this->session->userdata('fullname'); ?></i>
                             </h5>
-                            <span class="email">johndoe@example.com</span>
+                            <?php echo $this->session->userdata('email'); ?></span>
                           </div>
                         </div>
                         <div class="account-dropdown__footer">
-                          <a href="#"> <i class="zmdi zmdi-key"></i>Reset Password</a>
-                          <a href="#"> <i class="zmdi zmdi-power"></i>Logout</a>
+                          <a href="<?= base_url(); ?>Login/forget_password"> <i class="zmdi zmdi-key"></i>Reset Password</a>
+                          <a href="<?= base_url(); ?>Login/logout"> <i class="zmdi zmdi-power"></i>Logout</a>
                         </div>
                       </div>
                     </div>
@@ -217,5 +179,5 @@
               </div>
             </div>
           </div>
-        </header>
-        <!-- END HEADER DESKTOP-->      
+      </header>
+      <!-- END HEADER DESKTOP-->    

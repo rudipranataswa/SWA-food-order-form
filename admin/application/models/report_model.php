@@ -130,6 +130,7 @@ class Report_model extends CI_Model
 			order_hdr.student_name,
 			order_hdr.submitted_date as date,
 			order_hdr.id as id_ord,
+			order_hdr.grade_level as grade,
 			menu.id as menu_id,
 			menu.name as menu,
 			category.category as category'
