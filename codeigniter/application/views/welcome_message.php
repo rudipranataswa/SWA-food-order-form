@@ -258,8 +258,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		.daily_info {
 			padding-top: 0px;
-			padding-bottom: 50px;
+			padding-bottom: 7%;
 			font-size: 16px;
+			font-weight: bold;
 		}
 	</style>
 
