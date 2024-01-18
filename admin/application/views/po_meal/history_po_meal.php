@@ -19,9 +19,6 @@
 							<strong>PO Meal Detail</strong>
 						</div>
 
-						<?php foreach ($all_id_menu as $id_menu) : ?>
-							<li><?= $id_menu; ?></li>
-						<?php endforeach; ?>
 
 						<div class="card-body card-block">
 							<div class="row form-group">

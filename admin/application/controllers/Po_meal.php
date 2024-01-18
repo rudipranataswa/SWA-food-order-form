@@ -50,6 +50,7 @@ class Po_meal extends CI_Controller
 			'end_date' => $this->input->post('End'),
 			'status' => $this->input->post('Status')
 		);
+
 		$this->po_meal_model->insertData($data);
 
 		$inserted_id_hdr = $this->db->insert_id();
@@ -112,21 +113,8 @@ class Po_meal extends CI_Controller
 			}
 		}
 
-
 		$pasta_parent = $this->input->post('Pasta_parent');
 		$pasta_price = $this->input->post('Pasta_price');
-
-		$pasta_parent2 = $this->input->post('Pasta_parent2');
-		$pasta_price2 = $this->input->post('Pasta_price2');
-
-		$pasta_parent3 = $this->input->post('Pasta_parent3');
-		$pasta_price3 = $this->input->post('Pasta_price3');
-
-		$pasta_parent4 = $this->input->post('Pasta_parent4');
-		$pasta_price4 = $this->input->post('Pasta_price4');
-
-		$pasta_parent5 = $this->input->post('Pasta_parent5');
-		$pasta_price5 = $this->input->post('Pasta_price5');
 
 		$pasta_dates = $this->input->post('Dates');
 
@@ -142,54 +130,6 @@ class Po_meal extends CI_Controller
 					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
 				);
 				$this->po_meal_model->insertMeal($data);
-			}
-
-			if (!empty($pasta_parent2[$i]) && !empty($pasta_price2[$i])) {
-				$data2 = array(
-					'id_menu' => $pasta_parent2[$i],
-					'price' => $pasta_price2[$i],
-					'parent' => 0,
-					'id_category' => 3,
-					'date' => $pasta_dates[$i][$i],
-					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
-				);
-				$this->po_meal_model->insertMeal($data2);
-			}
-
-			if (!empty($pasta_parent3[$i]) && !empty($pasta_price3[$i])) {
-				$data3 = array(
-					'id_menu' => $pasta_parent3[$i],
-					'price' => $pasta_price3[$i],
-					'parent' => 0,
-					'id_category' => 3,
-					'date' => $pasta_dates[$i][$i],
-					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
-				);
-				$this->po_meal_model->insertMeal($data3);
-			}
-
-			if (!empty($pasta_parent4[$i]) && !empty($pasta_price4[$i])) {
-				$data4 = array(
-					'id_menu' => $pasta_parent4[$i],
-					'price' => $pasta_price4[$i],
-					'parent' => 0,
-					'id_category' => 3,
-					'date' => $pasta_dates[$i][$i],
-					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
-				);
-				$this->po_meal_model->insertMeal($data4);
-			}
-
-			if (!empty($pasta_parent5[$i]) && !empty($pasta_price5[$i])) {
-				$data5 = array(
-					'id_menu' => $pasta_parent5[$i],
-					'price' => $pasta_price5[$i],
-					'parent' => 0,
-					'id_category' => 3,
-					'date' => $pasta_dates[$i][$i],
-					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
-				);
-				$this->po_meal_model->insertMeal($data5);
 			}
 		}
 
@@ -242,12 +182,13 @@ class Po_meal extends CI_Controller
 				$this->po_meal_model->insertMeal($data3);
 			}
 		}
+		return $id_po_purchase_meal_hdr;
 	}
 
 	public function submit()
 	{
-		$this->submitForm();
-		$inserted_id_hdr = $this->submitHdr();
+		$inserted_id_hdr = $this->submitForm();
+
 		$this->session->set_flashdata('message', 'the header ID is: ' . $inserted_id_hdr);
 		redirect('po_meal/add_po_meal/' . $inserted_id_hdr);
 	}
