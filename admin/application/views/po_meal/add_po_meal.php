@@ -33,7 +33,7 @@
 					<?php if ($this->session->flashdata('message')) { ?>
 						<div class="alert alert-info" style="background-color: #4bb543; color: #ffff;">
 							<?php echo $this->session->flashdata('message'); ?> <br>
-							<a id="checkLink" href="/SWA-food-order-form/admin/po_meal/history_po_meal">Check</a>
+							<a id="checkLink" href="/SWA-food-order-form/admin/po_meal/history_po_meal">Check PO</a>
 						</div>
 					<?php } ?>
 

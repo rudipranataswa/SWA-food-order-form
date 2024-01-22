@@ -67,4 +67,14 @@ class Po_meal_model extends CI_Model
 		$query = $this->db->get();
 		return $query->row_array();
 	}
+
+	public function get_details_by_id($id_hdr)
+	{
+		$this->db->select('po_purchase_meal_dtl.id, menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price');
+		$this->db->from('po_purchase_meal_dtl');
+		$this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
+		$this->db->where('po_purchase_meal_dtl.id_po_purchase_meal_hdr', $id_hdr);
+		$query = $this->db->get();
+		return $query->result();
+	}
 }

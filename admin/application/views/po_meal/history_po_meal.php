@@ -12,13 +12,12 @@
 	<div class="section__content section__content--p30">
 		<div class="container-fluid">
 			<!-- Title -->
-			<div class="row form-group">
+			<div class="row form-group justify-content-center">
 				<div class="col-lg-6">
 					<div class="card">
 						<div class="card-header">
-							<strong>PO Meal Detail</strong>
+							<strong>PO Meal History</strong>
 						</div>
-
 
 						<div class="card-body card-block">
 							<div class="row form-group">
@@ -50,7 +49,6 @@
 							</div>
 						</div>
 
-
 					</div>
 
 
@@ -59,30 +57,33 @@
 		</div>
 
 
-		<div class="row form-group">
+		<div class="row form-group justify-content-center">
 			<div class="col-md-12">
-				<!-- DATA TABLE -->
 				<div class="table-responsive">
+					<?php
+					$grouped_details = [];
+					foreach ($po_purchase_meal_dtl as $detail) {
+						$grouped_details[$detail->date][] = $detail;
+					}
+					?>
+
 					<table id="dataTable" class="table table-data2">
-						<thead>
-							<tr>
-								<th style="text-align: center; font-size: 16px;" id="date1"></th>
-								<th style="text-align: center; font-size: 16px;" id="date2"></th>
-								<th style="text-align: center; font-size: 16px;" id="date3"></th>
-								<th style="text-align: center; font-size: 16px;" id="date4"></th>
-								<th style="text-align: center; font-size: 16px;" id="date5"></th>
-								<th style="text-align: center; font-size: 16px;" id="date6"></th>
-								<th style="text-align: center; font-size: 16px;" id="date7"></th>
-								<th style="text-align: center; font-size: 16px;" id="date8"></th>
-								<th style="text-align: center; font-size: 16px;" id="date9"></th>
-								<th style="text-align: center; font-size: 16px;" id="date10"></th>
-							</tr>
-						</thead>
+						<?php foreach ($grouped_details as $date => $details) : ?>
+							<thead>
+								<tr>
+									<th style="font-size: 16px; padding-top: 50px;" id="date"><?php echo $date; ?></th>
+								</tr>
+							</thead>
 
-
+							<?php foreach ($details as $detail) : ?>
+								<tr>
+									<td><?php echo $detail->name; ?></td>
+									<td>Rp. <?php echo $detail->price; ?></td>
+								</tr>
+							<?php endforeach; ?>
+						<?php endforeach; ?>
 					</table>
 				</div>
-
-
 			</div>
 		</div>
+	</div>

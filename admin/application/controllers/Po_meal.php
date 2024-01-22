@@ -34,7 +34,7 @@ class Po_meal extends CI_Controller
 
 	public function edit_po_meal()
 	{
-		$data['judul'] = 'Edit PO Purchase Meal #1';
+		$data['judul'] = 'Edit PO Purchase Meal';
 		$data['po_meal'] = $this->po_meal_model->get_po_meal();
 		$this->load->view('templates/header', $data);
 		$this->load->view('po_meal/edit_po_meal');
@@ -60,15 +60,15 @@ class Po_meal extends CI_Controller
 
 	public function history_po_meal($inserted_id_hdr)
 	{
-		$data['judul'] = 'History PO Purchase Meal #';
+		$data['judul'] = 'History PO Purchase Meal';
 		$data['purchase_meal'] = $this->po_meal_model->get_by_id($inserted_id_hdr);
+
+		$data['po_purchase_meal_dtl'] = $this->po_meal_model->get_details_by_id($inserted_id_hdr);
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('po_meal/history_po_meal', $data);
 		$this->load->view('templates/footer');
 	}
-
-
 
 
 	public function submitForm()
@@ -189,7 +189,7 @@ class Po_meal extends CI_Controller
 	{
 		$inserted_id_hdr = $this->submitForm();
 
-		$this->session->set_flashdata('message', 'the header ID is: ' . $inserted_id_hdr);
+		$this->session->set_flashdata('message', 'Insert PO and Menu Succeed!');
 		redirect('po_meal/add_po_meal/' . $inserted_id_hdr);
 	}
 }

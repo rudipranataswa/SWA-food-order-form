@@ -34,7 +34,7 @@
 										<?php foreach ($po_meal as $po) : ?>
 											<tr class="tr-shadow">
 												<td style="vertical-align: middle;"><?= $po['id']; ?></td>
-												<td><a href="<?= base_url(); ?>po_meal/history_po_meal?remark=<?= $po['remark']; ?>&begin_date=<?= $po['begin_date']; ?>&end_date=<?= $po['end_date']; ?>&status=<?= $po['status']; ?>">check</a></td>
+												<td><a href="<?= base_url(); ?>po_meal/history_po_meal?remark=<?= $po['remark']; ?>&begin_date=<?= $po['begin_date']; ?>&end_date=<?= $po['end_date']; ?>&status=<?= $po['status']; ?>"><a id="checkLink" href="<?= base_url(); ?>po_meal/history_po_meal/<?= $po['id']; ?>">Check PO</a></a></td>
 												<td><?= $po['remark']; ?></td>
 												<td><?= $po['begin_date']; ?></td>
 												<td><?= $po['end_date']; ?></td>
