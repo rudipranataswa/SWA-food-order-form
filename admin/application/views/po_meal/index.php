@@ -20,7 +20,6 @@
 									<thead>
 										<tr>
 											<th>no</th>
-											<th></th>
 											<th>title</th>
 											<th>begin date</th>
 											<th>end date</th>
@@ -33,8 +32,9 @@
 									<tbody>
 										<?php foreach ($po_meal as $po) : ?>
 											<tr class="tr-shadow">
-												<td style="vertical-align: middle;"><?= $po['id']; ?></td>
-												<td><a href="<?= base_url(); ?>po_meal/history_po_meal?remark=<?= $po['remark']; ?>&begin_date=<?= $po['begin_date']; ?>&end_date=<?= $po['end_date']; ?>&status=<?= $po['status']; ?>"><a id="checkLink" href="<?= base_url(); ?>po_meal/history_po_meal/<?= $po['id']; ?>">Check PO</a></a></td>
+												<td style="vertical-align: middle;">
+													<a id="checkLink" href="<?= base_url(); ?>po_meal/history_po_meal/<?= $po['id']; ?>"><?= $po['id']; ?></a>
+												</td>
 												<td><?= $po['remark']; ?></td>
 												<td><?= $po['begin_date']; ?></td>
 												<td><?= $po['end_date']; ?></td>
@@ -47,7 +47,20 @@
 												</td>
 												<td>
 													<div class="table-data-feature">
-														<a class="item" data-toggle="tooltip" data-placement="top" title="Edit" href="<?= base_url(); ?>po_meal/edit_po_meal">
+														<?php
+														$begin = new DateTime($po['begin_date']);
+														$end = new DateTime($po['end_date']);
+														$interval = DateInterval::createFromDateString('1 day');
+														$period = new DatePeriod($begin, $interval, $end);
+
+														$dates = [];
+														foreach ($period as $dt) {
+															$dates[] = $dt->format("Y-m-d");
+														}
+														$dates[] = $end->format("Y-m-d");
+														$dates_str = implode("/", $dates);
+														?>
+														<a class="item" data-toggle="tooltip" data-placement="top" title="Edit" href="<?= base_url(); ?>po_meal/edit_po_meal/<?= $po['id']; ?>/<?= $dates_str; ?>">
 															<i class="zmdi zmdi-edit"></i>
 														</a>
 													</div>
@@ -63,6 +76,8 @@
 											<tr class="spacer"></tr>
 										<?php endforeach; ?>
 									</tbody>
+
+
 
 
 								</table>

@@ -58,7 +58,7 @@
 
 
 		<div class="row form-group justify-content-center">
-			<div class="col-md-12">
+			<div class="col-md-9">
 				<div class="table-responsive">
 					<?php
 					$grouped_details = [];
@@ -68,6 +68,8 @@
 					?>
 
 					<table id="dataTable" class="table table-data2">
+						<th class="text-center">Name</th>
+						<th class="text-center">Price</th>
 						<?php foreach ($grouped_details as $date => $details) : ?>
 							<thead>
 								<tr>
@@ -86,4 +88,5 @@
 				</div>
 			</div>
 		</div>
+
 	</div>

@@ -32,12 +32,29 @@ class Po_meal extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
-	public function edit_po_meal()
+	public function edit_po_meal($inserted_id_hdr)
 	{
 		$data['judul'] = 'Edit PO Purchase Meal';
-		$data['po_meal'] = $this->po_meal_model->get_po_meal();
+		$data['purchase_meal'] = $this->po_meal_model->get_by_id($inserted_id_hdr);
+		$data['po_purchase_meal_dtl'] = $this->po_meal_model->get_details_by_id($inserted_id_hdr);
+		$data['dailyset'] = $this->po_meal_model->get_daily_set();
+		$data['pastas'] = $this->po_meal_model->get_pasta();
+		$data['breakfasts'] = $this->po_meal_model->get_breakfast();
+		$data['menus'] = $this->po_meal_model->get_menus();
 		$this->load->view('templates/header', $data);
-		$this->load->view('po_meal/edit_po_meal');
+		$this->load->view('po_meal/edit_po_meal', $data);
+		$this->load->view('templates/footer');
+	}
+
+
+	public function history_po_meal($inserted_id_hdr)
+	{
+		$data['judul'] = 'History PO Purchase Meal';
+		$data['purchase_meal'] = $this->po_meal_model->get_by_id($inserted_id_hdr);
+		$data['po_purchase_meal_dtl'] = $this->po_meal_model->get_details_by_id($inserted_id_hdr);
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('po_meal/history_po_meal', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -55,19 +72,6 @@ class Po_meal extends CI_Controller
 
 		$inserted_id_hdr = $this->db->insert_id();
 		return $inserted_id_hdr;
-	}
-
-
-	public function history_po_meal($inserted_id_hdr)
-	{
-		$data['judul'] = 'History PO Purchase Meal';
-		$data['purchase_meal'] = $this->po_meal_model->get_by_id($inserted_id_hdr);
-
-		$data['po_purchase_meal_dtl'] = $this->po_meal_model->get_details_by_id($inserted_id_hdr);
-
-		$this->load->view('templates/header', $data);
-		$this->load->view('po_meal/history_po_meal', $data);
-		$this->load->view('templates/footer');
 	}
 
 

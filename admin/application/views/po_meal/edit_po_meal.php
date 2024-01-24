@@ -1,3 +1,24 @@
+<style>
+	.required {
+		color: red;
+	}
+
+	.card {
+		margin-bottom: 5px;
+	}
+</style>
+
+<style>
+	.table-responsive {
+		overflow-x: auto;
+	}
+
+	.dailyset {
+		white-space: nowrap;
+	}
+</style>
+
+
 <!-- MAIN CONTENT-->
 <div class="main-content">
 	<div class="section__content section__content--p30">
@@ -7,285 +28,200 @@
 				<div class="col-lg-6">
 					<!-- Input Size -->
 					<h3 class="title-5 m-b-35">Edit PO Meal</h3>
+
 					<div class="card">
 						<div class="card-header">
 							<strong>PO Meal Detail</strong>
 						</div>
+
 						<div class="card-body card-block">
-							<form action="" method="post" class="form-horizontal">
-								<div class="row form-group">
-									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">Title</label>
-									</div>
-									<div class="col col-sm-6">
-										<input type="text" id="input-normal" name="input-normal" placeholder="Indonesia Chinese Food" class="form-control" readonly>
-									</div>
+							<div class="row form-group">
+								<div class="col col-sm-5">
+									<label for="input-normal" class="form-control-label">Title</label>
 								</div>
-								<div class="row form-group">
-									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">Begin Date</label>
-									</div>
-									<div class="col col-sm-6">
-										<input type="text" id="input-normal" name="input-normal" placeholder="12-12-2012" class="form-control" readonly>
-									</div>
+								<div class="col col-sm-6">
+									<input type="text" value="<?= $purchase_meal['remark'] ?>" id="input-normal" name="Title" class="form-control" required>
 								</div>
-								<div class="row form-group">
-									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">End Date</label>
-									</div>
-									<div class="col col-sm-6">
-										<input type="text" id="input-normal" name="input-normal" placeholder="1-1-2013" class="form-control" readonly>
-									</div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-5">
+									<label for="input-normal" class=" form-control-label">Begin Date</label>
 								</div>
-								<div class="row form-group">
-									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">Status</label>
-									</div>
-									<div class="col col-sm-6">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Please select</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</div>
+								<div class="col col-sm-6">
+									<input type="date" value="<?= $purchase_meal['begin_date'] ?>" id="input-normal" name="Begin" class="form-control" disabled>
 								</div>
-							</form>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-5">
+									<label for="input-normal" class=" form-control-label">End Date</label>
+								</div>
+								<div class="col col-sm-6">
+									<input type="date" value="<?= $purchase_meal['end_date'] ?>" id="input-normal" name="End" class="form-control" disabled>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-5">
+									<label for="input-normal" class=" form-control-label">Status</label>
+								</div>
+								<div class="col col-sm-6">
+									<select name="Status" id="input-normal" class="form-control" required>
+										<option value="ACTIVE">Active</option>
+										<option value="INACTIVE">Inactive</option>
+									</select>
+								</div>
+							</div>
 						</div>
-						<div class="card-footer">
-							<button type="submit" class="btn btn-primary btn-sm">
-								<i class=""></i> Generate
-							</button>
-							<!-- <button type="reset" class="btn btn-danger btn-sm">
-                                <i class="fa fa-ban"></i> Reset
-                            </button> -->
-						</div>
+
 					</div>
 				</div>
 			</div>
+
+
+			<?php foreach ($po_purchase_meal_dtl as $detail) : ?>
+				<tr>
+					<td><?php echo $detail->id; ?></td><br>
+					<td><?php echo $detail->id_menu; ?></td><br>
+					<td><?php echo $detail->date; ?></td><br>
+					<td><?php echo $detail->name; ?></td><br>
+					<td>Rp. <?php echo $detail->price; ?></td><br><br>
+				</tr>
+			<?php endforeach; ?>
+
+
+
 			<!-- Table -->
 			<div class="row form-group">
 				<div class="col-md-12">
 					<!-- DATA TABLE -->
 					<div class="table-responsive">
-						<table class="table table-data2">
+						<table id="dataTable" class="table table-data2">
 							<thead>
 								<tr>
-									<th rowspan="2" class="align-middle">Week 1</th>
-									<th>Monday</th>
-									<th>Tuesday</th>
-									<th>Wednesday</th>
-									<th>Thrusday</th>
-									<th>Friday</th>
-								</tr>
-								<tr>
-									<th>6/11/2023</th>
-									<th>7/11/2023</th>
-									<th>8/11/2023</th>
-									<th>9/11/2023</th>
-									<th>10/11/2023</th>
+									<th style="text-align: center; font-size: 16px;"></th>
+									<th style="text-align: center; font-size: 16px;" id="date1"></th>
+									<th style="text-align: center; font-size: 16px;" id="date2"></th>
+									<th style="text-align: center; font-size: 16px;" id="date3"></th>
+									<th style="text-align: center; font-size: 16px;" id="date4"></th>
+									<th style="text-align: center; font-size: 16px;" id="date5"></th>
+									<th style="text-align: center; font-size: 16px;" id="date6"></th>
+									<th style="text-align: center; font-size: 16px;" id="date7"></th>
+									<th style="text-align: center; font-size: 16px;" id="date8"></th>
+									<th style="text-align: center; font-size: 16px;" id="date9"></th>
+									<th style="text-align: center; font-size: 16px;" id="date10"></th>
 								</tr>
 							</thead>
+
+							<!-- Daily Set -->
 							<tbody>
-								<tr class="tr">
+								<tr>
 									<td rowspan="2" class="align-middle">Daily Set</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-								</tr>
-								<tr class="tr">
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-								</tr>
-								<tr class="spacer"></tr>
-								<tr class="tr">
-									<td rowspan="2" class="align-middle">Pasta</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
+									<?php
+									$uri = $_SERVER['REQUEST_URI'];
+									$dates = array_slice(explode('/', $uri), -2);
 
-								</tr>
-								<tr class="tr">
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-								</tr>
-								<tr class="spacer"></tr>
-								<tr class="tr">
-									<td rowspan="2" class="align-middle">Stall</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
-									<td class="desc">
-										<select name="select" id="input-normal" class="form-control">
-											<option value="0">Select Menu..</option>
-											<option value="1">Option #1</option>
-											<option value="2">Option #2</option>
-											<option value="3">Option #3</option>
-										</select>
-									</td>
+									for ($i = 0; $i < 12; $i++) : ?>
+										<td class="dailyset">
+											<div style="display: flex; align-items: center;">
+												<select name="Dailyset_parent[<?= $i ?>]" id="dailyset<?= $i ?>" class="form-control" onchange="checkCheckbox(<?= $i ?>)">
+													<option disabled>Select Menu..</option>
+													<?php foreach ($dailyset as $daily) : ?>
+														<option value="<?= $daily['id'] ?>" <?php foreach ($po_purchase_meal_dtl as $detail) : ?><?php if ($detail->id_menu == $daily['id'] && $detail->date == $dates[$i % count($dates)]) echo 'selected'; ?><?php endforeach; ?>> <?= $daily['name'] ?></option>
+													<?php endforeach; ?>
+												</select>
+												<input name="Dailyset_price[<?= $i ?>]" type="number" style="width: 30%; margin-left: 7px;" placeholder="Price..." class="form-control">
+												<input name="Dates[<?= $i ?>]" id="dailysetParentDate<?= $i ?>" type="checkbox" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+												<input type="checkbox" id="open-checkbox<?= $i ?>" onchange="toggleCheckboxes(<?= $i ?>)" style="display: none;">
+											</div>
+											<br>
 
-								</tr>
-								<tr class="tr">
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
-									<td>
-										<input type="number" id="input-normal" name="input-normal" placeholder="Price..." class="form-control">
-									</td>
+											<?php foreach ($menus as $j => $menu) : ?>
+												<div style="display: flex; align-items: center;" class="pb-2">
+													<input name="Id_menu[<?= $i ?>][<?= $j ?>]" id="checkbox<?= $i ?><?= $j ?>" value="<?= $menu['id'] ?>-<?= $menu['category_id'] ?>" type="checkbox" style="margin-right: 7px;" onclick="checkMenuCheckbox(<?= $i ?>, <?= $j ?>)" data-id-menu="<?= $menu['id'] ?>" data-date="<?= $dates[$i % count($dates)] ?>">
+													<span class="text-dark"><?= wordwrap($menu['name'], 36, "<br />\n", true) ?></span>
+													<input name="Price[<?= $i ?>][<?= $j ?>]" type="number" style="width: 120px; margin-left: 7px;" placeholder="Price..." class="form-control">
+													<input name="Dates[<?= $i ?>][<?= $j ?>]" id="dailysetDate<?= $i ?><?= $j ?>" type="checkbox" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display:  none;" class="form-control">
+												</div>
+											<?php endforeach; ?>
+
+										</td>
+									<?php endfor; ?>
 								</tr>
 							</tbody>
-						</table>
+
 					</div>
-					<!-- END DATA TABLE -->
+
+					<tbody>
+						<tr>
+							<td rowspan="2" class="align-middle">Pasta</td>
+							<?php for ($i = 0; $i < 12; $i++) : ?>
+								<td class="pasta">
+									<select name="Pasta_parent[<?= $i ?>]" id="pasta<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate<?= $i ?>').checked = this.value !== '';">
+										<option disabled selected>Select Menu..</option>
+										<?php foreach ($pastas as $pasta) : ?>
+											<option value="<?= $pasta['id'] ?>" <?php foreach ($po_purchase_meal_dtl as $detail) : ?><?php if ($detail->id_menu == $pasta['id'] && $detail->date == $dates[$i % count($dates)]) echo 'selected'; ?><?php endforeach; ?>> <?= $pasta['name'] ?></option>
+										<?php endforeach; ?>
+									</select>
+									<input type="number" name="Pasta_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+								</td>
+							<?php endfor; ?>
+						</tr>
+					</tbody>
+
+
+					<tbody>
+						<tr class="tr">
+							<td rowspan="2" class="align-middle">Breakfast and Stall</td>
+							<?php for ($i = 0; $i < 12; $i++) : ?>
+								<td class="breakfast">
+									<select name="Breakfast_parent[<?= $i ?>]" id="breakfast<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate<?= $i ?>').checked = this.value !== '';">
+										<option disabled selected>Select Menu..</option>
+										<?php foreach ($breakfasts as $breakfast) : ?>
+											<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
+										<?php endforeach; ?>
+									</select>
+									<input type="number" name="Breakfast_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
+									<br><br>
+
+									<select name="Breakfast_parent2[<?= $i ?>]" id="breakfast2<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate2<?= $i ?>').checked = this.value !== '';">
+										<option disabled selected>Select Menu..</option>
+										<?php foreach ($breakfasts as $breakfast) : ?>
+											<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
+										<?php endforeach; ?>
+									</select>
+									<input type="number" name="Breakfast_price2[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
+									<br><br>
+
+									<select name="Breakfast_parent3[<?= $i ?>]" id="breakfast3<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate3<?= $i ?>').checked = this.value !== '';">
+										<option disabled selected>Select Menu..</option>
+										<?php foreach ($breakfasts as $breakfast) : ?>
+											<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
+										<?php endforeach; ?>
+									</select>
+									<input type="number" name="Breakfast_price3[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
+									<br><br>
+								</td>
+							<?php endfor; ?>
+						</tr>
+					</tbody>
+
+					</table>
 				</div>
+				<!-- END DATA TABLE -->
+
 			</div>
-			<div class="row form-group">
-				<div class="col-md-12">
-					<button class="btn btn-success btn-lg float-right" type="submit">
-						Submit
-					</button>
-				</div>
+		</div>
+		<div class="row form-group">
+			<div class="col-md-12">
+				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter" onclick="return validatePrices()">Submit</button>
+
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 
 <!-- Modal Pop-up -->
@@ -303,8 +239,65 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-				<button type="button" class="btn btn-primary">Yes</button>
+				<button type="submit" class="btn btn-primary">Yes</button>
 			</div>
 		</div>
 	</div>
 </div>
+
+
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var beginDate = new Date(document.getElementsByName("Begin")[0].value);
+		var endDate = new Date(document.getElementsByName("End")[0].value);
+
+		var dateRange = [];
+		var currentDate = new Date(beginDate);
+		while (currentDate <= endDate) {
+			if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+				dateRange.push(new Date(currentDate));
+			}
+			currentDate.setDate(currentDate.getDate() + 1);
+		}
+
+		var tableHeaders = document.querySelectorAll("th[id^='date']");
+		for (var i = 0; i < tableHeaders.length && i < dateRange.length; i++) {
+			tableHeaders[i].textContent = formatDate(dateRange[i]);
+		}
+
+		var dailyset = document.querySelectorAll('.dailyset');
+		var pasta = document.querySelectorAll('.pasta');
+		var breakfast = document.querySelectorAll('.breakfast');
+		[dailyset, pasta, breakfast].forEach(function(category) {
+			category.forEach(function(td, index) {
+				if (index < dateRange.length) {
+					td.style.display = 'table-cell';
+				} else {
+					td.style.display = 'none';
+				}
+			});
+		});
+	});
+
+	function formatDate(date) {
+		var day = date.getDate();
+		var month = date.getMonth() + 1;
+		var year = date.getFullYear();
+
+		day = (day < 10) ? '0' + day : day;
+		month = (month < 10) ? '0' + month : month;
+
+		return day + '/' + month + '/' + year;
+	}
+</script>
+
+<script>
+	window.onload = function() {
+		<?php foreach ($po_purchase_meal_dtl as $detail) : ?>
+			var checkboxes = document.querySelectorAll('input[data-id-menu="<?php echo $detail->id_menu; ?>"][data-date="<?php echo $detail->date; ?>"]');
+			checkboxes.forEach(function(checkbox) {
+				checkbox.checked = true;
+			});
+		<?php endforeach; ?>
+	};
+</script>
