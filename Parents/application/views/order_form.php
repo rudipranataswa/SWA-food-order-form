@@ -141,7 +141,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		}
 
 		table {
-			margin-bottom: 10px;
+			margin-bottom: 3%;
 		}
 
 		.block-display {
@@ -258,12 +258,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		.daily_info {
 			padding-top: 0px;
-			padding-bottom: 10px;
+			padding-bottom: 7%;
 			font-size: 16px;
-		}
-
-		.table-responsive {
-			padding-bottom: 0px;
+			font-weight: bold;
 		}
 	</style>
 
@@ -887,7 +884,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 
 		<div style="display: flex; justify-content: center;">
-			<button class="btn btn-danger btn-lg" style="background-color:#b21628; font-size: 20px; padding: 10px 20px; width : auto;">Submit</button>
+			<button class="btn btn-danger btn-lg" style="background-color:#b21628; font-size: 30px; padding: 10px 20px; width : auto;">Submit</button>
 		</div>
 		<br>
 
