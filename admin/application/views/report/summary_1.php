@@ -1,4 +1,4 @@
-    <style>
+<style>
     /* Popup container - can be anything you want */
     .popup {
     position: relative;
@@ -75,15 +75,15 @@
                             </div>
                         </div>
                         <div class="card-body card-block body-text">
+                            <label class="form-control-label">Dear SWA Parents</label></br></br>
+                            <?php if (!empty($detail_report)) : ?>
+                                <label class="form-control-label"> 
+                                    Thank you for ordering and submitting the Pre  Order Meal for <?= $detail_report[0]['student_name'] 
+                                    ?> (Student Name)</label><br/></br>
+                                <label class="form-control-label">Please kindly confirm and recheck the revise Pre Order Meal details:</label><br/>
+                                <label class="form-control-label text-uppercase"> <?= $detail_report[0]['student_name'] ?> - <?= $detail_report[0]['grade'] ?></label><br/>
+                            <?php endif; ?>
                             <form>
-                                <label class="form-control-label mt-1">Dear SWA Parents,</label></br></br>
-                                <?php if (!empty($detail_report)) : ?>
-                                    <label class="form-control-label mt-1"> 
-                                        Thank you for ordering and submitting the Pre  Order Meal for <?= $detail_report[0]['student_name'] 
-                                        ?> (Student Name)</label><br/></br>
-                                    <label class="form-control-label">Please kindly confirm and recheck the revise Pre Order Meal details:</label><br/>
-                                    <label class="form-control-label text-uppercase"> <?= $detail_report[0]['student_name'] ?> - <?= $detail_report[0]['grade'] ?></label><br/>
-                                <?php endif; ?>
                                 <?php 
                                     $counter = 1;
                                     $total_price = 0;
@@ -107,10 +107,11 @@
                                             }
                                         }
                                         // print_r($date_range); exit;
-                                        
+
                                         foreach ($po_dates as $v) {
+                                            // Check if the date is in date_range
                                             if (in_array($v, $date_range)) {
-                                            // The date is in date_range
+                                                // The date is in date_range
                                                 foreach ($detail_report as $detail) {
                                                     echo '<div class="form-group">';
                                                     if ($detail['po_date'] == $v) {
@@ -127,8 +128,6 @@
                                                             }
                                                         }
                                                         // echo '<label class="form-control-label">'; 
-                                                        // Check if the date is in date_range
-                                                            // print_r($detail); exit;
                                                         if ($is_holiday == true) {
                                                             echo $holiday_description . '</br>';
                                                         } else {
@@ -136,8 +135,7 @@
                                                             $formatted_date = $date->format('d M');
                                                             $menu_found = false;
                                                             $total_price += $detail['price'];
-                                                            $price = 'IDR ' . number_format($detail['price'], 0, ',', '.');
-                                                            echo $no . '. ' . $formatted_date . ' - ' . $detail['menu'] . ' - ' . $price . '';
+                                                            echo $no . '. ' . $detail['menu'] . ' - ' . $formatted_date . ' - IDR ' . $detail['price'] . '';
                                                             $menu_found = true;  
                                                             $no++;
                                                         }
@@ -146,12 +144,12 @@
                                                     echo '</div>';
                                                     // echo '</br>';
                                                 }
-                                                // Removing the date in date_range
+                                                // The date is in date_range, remove it
                                                 $key = array_search($v, $date_range);
                                                 unset($date_range[$key]);
 
                                             } 
-                                            // else if (!in_array($v, $date_range)) {
+                                            // xelse if (!in_array($v, $date_range)) {
                                                 // print_r($date_range); exit;
                                                 // The date is not in date_range, print the date_range array as a string
                                                 // $date_range = [];  // Clear the date_range array                                            }
@@ -160,18 +158,7 @@
                                         foreach($date_range as $date) {
                                             $formatted_dates[] = date('d M', strtotime($date));
                                         }
-                                        $count = count($formatted_dates);
-                                        $result = '';
-                                        foreach ($formatted_dates as $index => $date) {
-                                            if ($index === $count - 1) {
-                                                // Last array value, use "&" instead of ","
-                                                $result .= '& ' . $date;
-                                            } else {
-                                                $result .= $date . ', ';
-                                            }
-                                        }
-
-                                        echo "No Meals for : " . $result . "<br>";
+                                        echo "No order in dates: " . implode(", ", $formatted_dates) . "<br>";
                                         // print_r($date_range); exit;
                                         // Convert $po_dates[0] to 'd M' format
                                         $date_start = DateTime::createFromFormat('Y-m-d', $po_dates[0]);
@@ -181,15 +168,13 @@
                                         $date_end = DateTime::createFromFormat('Y-m-d', end($po_dates));
                                         $formatted_date_end = $date_end->format('d M Y');
                                         // echo '<div class="form-group">';
-                                        $total = 'IDR ' . number_format($total_price, 0, ',', '.');
-                                        echo '<label class="form-control-label">Sub Total : ' . $total . '</label></br></br>';
-                                        echo '<label class="form-control-label">The total amount need to be transferred to our School Account 0000554103 (Bank Sinarmas) or 4970350018 (BCA) is ' . $total . '</label></br></br>';
-                                        echo '<label class="form-control-label">Please kindly send the payment proof of the pre order meal to <a href="mailto:finance@swa-jkt.com">finance@swa-jkt.com</a> or <a href="mailto:ervi_liu@swa-jkt.com">ervi_liu@swa-jkt.com</a> , 
-                                            so we can proceed to prepare your requested meal starting ' . $formatted_date_start . ' - ' . $formatted_date_end . ' and deliver to ' . $detail_report[0]['student_name'] . '\'s Class.</label>';
+                                        echo '<label class="form-control-label my-2">Sub Total : IDR ' . $total_price . '<label></br>';
+                                        echo "</br>The total amount need to be transferred to our School Account 0000554103 (Bank Sinarmas) or 4970350018 (BCA) is IDR " . $total_price . "<br/>";
+                                        echo 'Please kindly send the payment proof of the pre order meal to <a href="mailto:finance@swa-jkt.com">finance@swa-jkt.com</a> or <a href="mailto:ervi_liu@swa-jkt.com">ervi_liu@swa-jkt.com</a> , so we can proceed to prepare your requested meal starting ' . $formatted_date_start . ' - ' . $formatted_date_end . ' and deliver to ' . $detail_report[0]['student_name'] . '\'s Class.';
                                         // echo '</div>';
-                                    } 
-                                    $no++;
+                                    }
                                 ?>
+                                
                             </form>
 
                             <!-- No empty text -->

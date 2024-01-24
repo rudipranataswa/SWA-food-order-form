@@ -13,9 +13,9 @@
                         <div class="card-body">
                             <!-- DATA TABLE -->
                             <h3 class="title-5 m-b-35">Category List</h3>
-                            <?php if ($this->session->flashdata('error_message')) : ?>
-                                <div class="alert alert-info">
-                                    <?php echo $this->session->flashdata('error_message'); ?>
+                            <?php if ($this->session->flashdata('flash')) : ?>
+                                <div class="alert alert-info" id="flashdata">
+                                    <?php echo $this->session->flashdata('flash'); ?>
                                 </div>
                             <?php endif; ?>
                             <div class="table-data__tool">
@@ -36,30 +36,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($category_item as $cat) : ?>
-                                            <tr class="tr-shadow">
-                                                <td><?= $cat['id']; ?></td>
-                                                <td><?= $cat['category']; ?></td>
-                                                <td>
-                                                    <div class="table-data-feature">
-                                                        <a class="item" data-toggle="tooltip" data-placement="top" title="Edit" href="<?= base_url(); ?>category/edit_category/<?= $cat['id']; ?>">
-                                                            <i class="zmdi zmdi-edit"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="table-data-feature">
-                                                        <form action="<?= base_url(); ?>category/delete_category" method="post" id="deleteForm<?= $cat['id']; ?>">
-                                                            <input type="hidden" name="id_number" value="<?= $cat['id']; ?>">
-                                                            <button type="button" class="btn item" data-toggle="modal" data-target="#deleteModal<?= $cat['id']; ?>" title="Delete">
-                                                                <i class="zmdi zmdi-delete"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
-                                        <?php endforeach; ?>
+                                        <?php 
+                                            $no = 1;
+                                            foreach ($category_item as $cat) : ?>
+                                                <tr class="tr-shadow">
+                                                    <td><?= $no; ?></td>
+                                                    <td><?= $cat['category']; ?></td>
+                                                    <td>
+                                                        <div class="table-data-feature">
+                                                            <a class="item" data-toggle="tooltip" data-placement="top" title="Edit" href="<?= base_url(); ?>category/edit_category/<?= $cat['id']; ?>">
+                                                                <i class="zmdi zmdi-edit"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="table-data-feature">
+                                                            <form action="<?= base_url(); ?>category/delete_category" method="post" id="deleteForm<?= $cat['id']; ?>">
+                                                                <input type="hidden" name="id_number" value="<?= $cat['id']; ?>">
+                                                                <button type="button" class="btn item" data-toggle="modal" data-target="#deleteModal<?= $cat['id']; ?>" title="Delete">
+                                                                    <i class="zmdi zmdi-delete"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="spacer"></tr>
+                                            <?php 
+                                            $no++;
+                                        endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>

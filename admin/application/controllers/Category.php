@@ -81,7 +81,7 @@ class Category extends CI_Controller
             $this->load->view('category/add_category', $data);
             $this->load->view('templates/footer');
 
-            $this->session->set_flashdata('message', 'Create New Category Fail!');
+            $this->session->set_flashdata('flash ', 'Create New Category Fail!');
             redirect('category');
         } else {
             $category = $this->input->post('Category');
@@ -89,7 +89,7 @@ class Category extends CI_Controller
             $admin_id = $this->category_model->get_admin_id($session_name);
 
             $this->category_model->create_category($category, $admin_id);
-            $this->session->set_flashdata('message', 'Create New Category Succeed!');
+            $this->session->set_flashdata('flash ', 'Create New Category Succeed!');
             redirect('category');
         }
     }
@@ -120,11 +120,11 @@ class Category extends CI_Controller
         $result = $this->category_model->delete_category($id);
 
         if ($result === true) {
-            $this->session->set_flashdata('error_message', 'Category successfully deleted');
+            $this->session->set_flashdata('flash', 'Category successfully deleted');
             redirect('category');
         } else {
             // Store the error message in flashdata
-            $this->session->set_flashdata('error_message', $result);
+            $this->session->set_flashdata('flash', $result);
             redirect('category');
         }
     }

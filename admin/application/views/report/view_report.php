@@ -16,7 +16,7 @@
                         <th>customer name</th>
                         <th>order date</th>
                         <th>time</th>
-                        <th>detail</th>
+                        <!-- <th>detail</th> -->
                         <th>summary</th>
                     </tr>
                     </thead>
@@ -31,7 +31,7 @@
                                         <td><?= $vrpt['student_name']; ?></td>
                                         <td><?= $vrpt['date_only']; ?></td>
                                         <td><?= $vrpt['time_only']; ?></td>
-                                        <td>
+                                        <!-- <td>
                                             <div class="table-data-feature">
                                                 <a
                                                 class="item"
@@ -43,7 +43,7 @@
                                                 <i class="zmdi zmdi-eye"></i>
                                                 </a>
                                             </div>
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <div class="table-data-feature">
                                                 <a
