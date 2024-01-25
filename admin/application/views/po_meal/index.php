@@ -55,16 +55,21 @@
 
 														$dates = [];
 														foreach ($period as $dt) {
-															$dates[] = $dt->format("Y-m-d");
+															if ($dt->format('N') < 6) {
+																$dates[] = $dt->format("Y-m-d");
+															}
 														}
-														$dates[] = $end->format("Y-m-d");
+														if ($end->format('N') < 6) {
+															$dates[] = $end->format("Y-m-d");
+														}
 														$dates_str = implode("/", $dates);
 														?>
-														<a class="item" data-toggle="tooltip" data-placement="top" title="Edit" href="<?= base_url(); ?>po_meal/edit_po_meal/<?= $po['id']; ?>/<?= $dates_str; ?>">
+														<a class="item" data-toggle="tooltip" data-placement="top" title="Edit" href="<?= base_url(); ?>po_meal/edit_po_meal/<?= $po['id']; ?>/?dates=<?= $dates_str; ?>">
 															<i class="zmdi zmdi-edit"></i>
 														</a>
 													</div>
 												</td>
+
 												<td>
 													<div class="table-data-feature">
 														<button type="button" class="btn item" data-toggle="modal" data-target="#exampleModalCenter" title="Delete">

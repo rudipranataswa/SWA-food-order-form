@@ -116,30 +116,50 @@
 								<tr>
 									<td rowspan="2" class="align-middle">Daily Set</td>
 									<?php
-									$uri = $_SERVER['REQUEST_URI'];
-									$dates = array_slice(explode('/', $uri), -2);
+									$dates = $_GET['dates'];
+									$dateArray = explode('/', $dates);
 
 									for ($i = 0; $i < 12; $i++) : ?>
 										<td class="dailyset">
 											<div style="display: flex; align-items: center;">
 												<select name="Dailyset_parent[<?= $i ?>]" id="dailyset<?= $i ?>" class="form-control" onchange="checkCheckbox(<?= $i ?>)">
-													<option disabled>Select Menu..</option>
-													<?php foreach ($dailyset as $daily) : ?>
-														<option value="<?= $daily['id'] ?>" <?php foreach ($po_purchase_meal_dtl as $detail) : ?><?php if ($detail->id_menu == $daily['id'] && $detail->date == $dates[$i % count($dates)]) echo 'selected'; ?><?php endforeach; ?>> <?= $daily['name'] ?></option>
-													<?php endforeach; ?>
+													<option disabled selected>Select Menu..</option>
+													<?php
+													$added_options = array();
+													foreach ($dailyset as $daily) :
+														foreach ($po_purchase_meal_dtl as $detail) {
+															if (!in_array($daily['id'], $added_options)) {
+																if ($detail->date == $dateArray[$i] && $detail->id_menu == $daily['id']) {
+																	echo '<option value="' . $daily['id'] . '" selected> ' . $daily['name'] . '</option>';
+																} else {
+																	echo '<option value="' . $daily['id'] . '"> ' . $daily['name'] . '</option>';
+																}
+																$added_options[] = $daily['id'];
+															}
+														}
+													endforeach; ?>
 												</select>
-												<input name="Dailyset_price[<?= $i ?>]" type="number" style="width: 30%; margin-left: 7px;" placeholder="Price..." class="form-control">
-												<input name="Dates[<?= $i ?>]" id="dailysetParentDate<?= $i ?>" type="checkbox" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+
+												<input name="Dailyset_price[<?= $i ?>]" type="number" style="width: 30%; margin-left: 7px;" placeholder="Price..." class="form-control" onclick="document.getElementById('open-checkbox<?= $i ?>').checked = true;">
+												<input name="Dates[<?= $i ?>]" id="dailysetParentDate<?= $i ?>" type="checkbox" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
 												<input type="checkbox" id="open-checkbox<?= $i ?>" onchange="toggleCheckboxes(<?= $i ?>)" style="display: none;">
 											</div>
 											<br>
-
 											<?php foreach ($menus as $j => $menu) : ?>
 												<div style="display: flex; align-items: center;" class="pb-2">
-													<input name="Id_menu[<?= $i ?>][<?= $j ?>]" id="checkbox<?= $i ?><?= $j ?>" value="<?= $menu['id'] ?>-<?= $menu['category_id'] ?>" type="checkbox" style="margin-right: 7px;" onclick="checkMenuCheckbox(<?= $i ?>, <?= $j ?>)" data-id-menu="<?= $menu['id'] ?>" data-date="<?= $dates[$i % count($dates)] ?>">
+													<?php
+													$matched = false;
+													foreach ($po_purchase_meal_dtl as $detail) {
+														if ($detail->date == $dateArray[$i] && $detail->id_menu == $menu['id']) {
+															$matched = true;
+															break;
+														}
+													}
+													?>
+													<input name="Id_menu[<?= $i ?>][<?= $j ?>]" id="checkbox<?= $i ?><?= $j ?>" value="<?= $menu['id'] ?>-<?= $menu['category_id'] ?>-<?= $dateArray[$i] ?>" type="checkbox" style="margin-right: 7px;" onclick="checkMenuCheckbox(<?= $i ?>, <?= $j ?>)" data-id-menu="<?= $menu['id'] ?>" data-date="<?= $dateArray[$i] ?>">
 													<span class="text-dark"><?= wordwrap($menu['name'], 36, "<br />\n", true) ?></span>
-													<input name="Price[<?= $i ?>][<?= $j ?>]" type="number" style="width: 120px; margin-left: 7px;" placeholder="Price..." class="form-control">
-													<input name="Dates[<?= $i ?>][<?= $j ?>]" id="dailysetDate<?= $i ?><?= $j ?>" type="checkbox" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display:  none;" class="form-control">
+													<input name="Price[<?= $i ?>][<?= $j ?>]" type="number" style="width: 120px; margin-left: 7px;" placeholder="Price..." class="form-control" value="<?php if ($matched) echo $detail->price; ?>">
+													<input name="Dates[<?= $i ?>][<?= $j ?>]" id="dailysetDate<?= $i ?><?= $j ?>" type="checkbox" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display:  ;" class="form-control">
 												</div>
 											<?php endforeach; ?>
 
@@ -162,7 +182,7 @@
 										<?php endforeach; ?>
 									</select>
 									<input type="number" name="Pasta_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
 								</td>
 							<?php endfor; ?>
 						</tr>
@@ -181,7 +201,7 @@
 										<?php endforeach; ?>
 									</select>
 									<input type="number" name="Breakfast_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
+									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
 									<br><br>
 
 									<select name="Breakfast_parent2[<?= $i ?>]" id="breakfast2<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate2<?= $i ?>').checked = this.value !== '';">
@@ -191,7 +211,7 @@
 										<?php endforeach; ?>
 									</select>
 									<input type="number" name="Breakfast_price2[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
+									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
 									<br><br>
 
 									<select name="Breakfast_parent3[<?= $i ?>]" id="breakfast3<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate3<?= $i ?>').checked = this.value !== '';">
@@ -201,7 +221,7 @@
 										<?php endforeach; ?>
 									</select>
 									<input type="number" name="Breakfast_price3[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dates[$i % count($dates)] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
+									<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
 									<br><br>
 								</td>
 							<?php endfor; ?>
@@ -300,4 +320,17 @@
 			});
 		<?php endforeach; ?>
 	};
+</script>
+
+<script>
+	function checkMenuCheckbox(i, j) {
+		var checkbox = document.getElementById('checkbox' + i + j);
+		var dateCheckbox = document.getElementById('dailysetDate' + i + j);
+
+		if (checkbox.checked) {
+			dateCheckbox.checked = true;
+		} else {
+			dateCheckbox.checked = false;
+		}
+	}
 </script>
