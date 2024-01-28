@@ -4,9 +4,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6">
-                    <?php if ($this->session->flashdata('message')) { ?>
+                    <?php if ($this->session->flashdata('flash')) { ?>
                         <div class="alert alert-info">
-                            <?php echo $this->session->flashdata('message'); ?>
+                            <?php echo $this->session->flashdata('flash'); ?>
                         </div>
                     <?php } ?>
                     <!-- Input Size -->
@@ -24,20 +24,20 @@
                                         <input type="text" id="input-normal" name="Category" placeholder="Type here..." class="form-control">
                                     </div>
                                 </div>
-                                <div class="card-footer">
-                                    <a href="<?php echo site_url('Category/index'); ?>" class="btn btn-secondary btn-sm">
-                                        <i class="fa fa-arrow-left"></i> Back
-                                    </a>
-                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
-                                        <i class="fa fa-dot-circle-o"></i> Submit
-                                    </button>
-                                </div>
                             </form>
                             <?php if (validation_errors()) : ?>
                                 <div class="alert alert-warning">
                                     <?php echo validation_errors('<div class="error">', '</div>'); ?>
                                 </div>
-                            <?php endif; ?>
+                                <?php endif; ?>
+                        </div>
+                        <div class="card-footer">
+                            <a href="<?php echo site_url('Category/index'); ?>" class="btn btn-secondary btn-sm">
+                                <i class="fa fa-arrow-left"></i> Back
+                            </a>
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+                                <i class=""></i> Submit
+                            </button>
                         </div>
                     </div>
                 </div>

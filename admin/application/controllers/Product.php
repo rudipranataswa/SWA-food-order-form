@@ -12,6 +12,7 @@ class Product extends CI_Controller
             // Redirect to login page
             redirect('login');
         }
+        $this->check_timeout();
     }
 
     public function check_timeout()
@@ -29,7 +30,6 @@ class Product extends CI_Controller
 
     public function index()
     {
-        $this->check_timeout();
         // $this->load->library('pagination');
         // $config['num_tag_open'] = '&nbsp;<span class="pagination-link">';
         // $config['num_tag_close'] = '</span>&nbsp;';
@@ -39,16 +39,16 @@ class Product extends CI_Controller
 
         $this->pagination->initialize($config);
 
-        $data['judul'] = 'Product';
-        $data['product'] = $this->product_model->get_by_id($config['per_page'], $this->uri->segment(3));
+        $data['judul'] = 'Menu';
+        $data['product'] = $this->product_model->paginate($config['per_page'], $this->uri->segment(3));
         $this->load->view('templates/header', $data);
         $this->load->view('product/index', $data);
         $this->load->view('templates/footer');
 
-        // header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
-        // header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-        // header('Pragma: no-cache');
-        // header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
+        header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: no-cache');
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
     }
 
     public function add_product()
@@ -61,11 +61,11 @@ class Product extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function edit_product()
+    public function edit_product($id)
     {
         $data['judul'] = 'Edit Product';
+        $data['menu'] = $this->product_model->get_by_id($id);
         $data['categories'] = $this->product_model->get_category();
-        $data['products'] = $this->product_model->get_product();
         // $data['product'] = $this->product_model->get_by_id();
         $this->load->view('templates/header', $data);
         $this->load->view('product/edit_product', $data);
@@ -99,7 +99,7 @@ class Product extends CI_Controller
             $this->session->set_flashdata('flash', 'Fail: Cannot edit product because it exists in po_purchase_meal_dtl');
             redirect('product');
         } else {
-            $this->product_model->update_product($id, $category_id, $name);
+            $this->product_model->update_menu($id, $category_id, $name);
             $this->session->set_flashdata('flash', 'Success: Product edited!');
             redirect('product');
         }

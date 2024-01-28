@@ -47,6 +47,7 @@ class Report extends CI_Controller
     {
         $data['judul'] = 'View Report';
         $data['view_report'] = $this->report_model->get_view_report($id);
+        $data['report'] = $this->report_model->get_dates($id);
 
         foreach ($data['view_report'] as &$vrpt) {
             $datetime = $vrpt['submitted_date'];
@@ -86,18 +87,22 @@ class Report extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function summary($id) {
+    public function summary() 
+    {
+        $data['id'] = $this->uri->segment(3);
+        $data['summary_id'] = $this->uri->segment(4);
+
         $data = array(
             'holidays' => $this->report_model->get_holidays(),
-            'dates' => $this->report_model->get_dates($id),
-            'detail_report' => $this->report_model->get_detail_report($id)
+            'dates' => $this->report_model->get_dates($data['id']),
+            'summary' => $this->report_model->summary($data['summary_id'])
         );
         
         $data['judul'] = 'Summary';
         
         // Add the condition to the detail_report
         $po_dates = array();
-        foreach ($data['detail_report'] as &$drpt) {
+        foreach ($data['summary'] as &$drpt) {
             $datetime = $drpt['date'];
             $date = new DateTime($datetime);
             $drpt['date_only'] = $date->format('Y-m-d');

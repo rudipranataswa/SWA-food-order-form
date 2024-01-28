@@ -18,16 +18,27 @@ class Product_model extends CI_Model
                 return $query->row_array();
         }
 
-        public function get_by_id($limit, $start)
+        public function paginate($limit, $start)
         {
-                $this->db->limit($limit, $start);
-                $this->db->select('menu.id, menu.name, category.category');
+                $this->db->limit($limit, $start);        
+                $this->db->select('menu.id as menu_id, menu.name, category.category');
                 $this->db->from('menu');
                 $this->db->join('category', 'menu.category_id = category.id');
+                // $this->db->where('menu.id', $id);
                 $query = $this->db->get();
                 return $query->result_array();
         }
-
+        
+        public function get_by_id($id)
+        {
+                // $this->db->limit($limit, $start);
+                $this->db->select('menu.id as menu_id, menu.name, category.category');
+                $this->db->from('menu');
+                $this->db->join('category', 'menu.category_id = category.id');
+                $this->db->where('menu.id', $id);
+                $query = $this->db->get();
+                return $query->row_array();
+        }
 
         public function get_category($slug = FALSE)
         {
@@ -50,7 +61,7 @@ class Product_model extends CI_Model
                 return $this->db->insert('menu', $data);
         }
 
-        public function update_product($id, $category_id, $name)
+        public function update_menu($id, $category_id, $name)
         {
                 $data = array(
                         'category_id' => $category_id,
@@ -63,7 +74,17 @@ class Product_model extends CI_Model
 
         public function delete_product($id)
         {
+                // $this->db->where('id', $id);
+                // $this->db->delete('menu');
+                $this->db->where('id_menu', $id);
+                $query = $this->db->get('po_purchase_meal_dtl');
+
+                if ($query->num_rows() == 0) {
                 $this->db->where('id', $id);
-                $this->db->delete('menu');
+                $this->db->delete('category');
+                return true;
+                } else {
+                return 'Fail: Cannot edit category because it exists in po_purchase_meal_dtl';
+                }
         } 
 }

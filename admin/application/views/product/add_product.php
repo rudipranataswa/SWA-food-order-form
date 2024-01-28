@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<?php if ($this->session->flashdata('flash')) { ?>
-					<div class="alert alert-info" style="background-color: #4bb543; color: #ffff;">
+					<div class="alert alert-info" id="flashdata" style="background-color: #4bb543; color: #ffff;">
 						<?php echo $this->session->flashdata('flash'); ?>
 					</div>
 				<?php } ?>
@@ -20,12 +20,12 @@
 					</div>
 					<div class="card-body card-block">
 						<form action="<?php echo site_url('Product/create_new'); ?>" method="post" class="form-horizontal" id="productForm">
-							<div class="row form-group pb-3">
+							<div class="row form-group">
 								<div class="col col-sm-5">
 									<label class="pb-1">Choose Category:</label>
 								</div>
 								<div class="col col-sm-6">
-									<select name="Category" id="category">
+									<select name="Category" id="category" class="form-control">
 										<?php $i = 1;
 										foreach ($categories as $cat) : ?>
 											<option value="<?= $i++; ?>"><?= $cat['category']; ?></option>
@@ -33,7 +33,6 @@
 									</select>
 								</div>
 							</div>
-
 							<div class="row form-group">
 								<div class="col col-sm-5">
 									<label for="input-normal" class=" form-control-label">Menu Name</label>
@@ -42,10 +41,12 @@
 									<input type="text" id="input-normal" name="Name" placeholder="Type here..." class="form-control" required>
 								</div>
 							</div>
-							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
-								<i class=""></i> Submit
-							</button>
                         </form>
+					</div>
+					<div class="card-footer">
+						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+							<i class=""></i> Submit
+						</button>
 					</div>
 				</div>
 			</div>
@@ -68,7 +69,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-				<button type="submit" class="btn btn-primary">Yes</button>
+				<button type="submit" class="btn btn-primary" form="productForm">Yes</button>
 			</div>
 		</div>
 	</div>

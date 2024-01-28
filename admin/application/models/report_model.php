@@ -144,6 +144,31 @@ class Report_model extends CI_Model
         $query = $this->db->get();
 		return $query->result_array();
 	}
+
+    public function summary($id)
+    {
+        $this->db->select(
+			'po_purchase_meal_dtl.id as id,
+			po_purchase_meal_dtl.price,
+			po_purchase_meal_dtl.date as po_date,
+			order_dtl.id_po_purchase_meal_dtl, 
+			order_hdr.student_name,
+			order_hdr.submitted_date as date,
+			order_hdr.id as id_ord,
+			order_hdr.grade_level as grade,
+			menu.id as menu_id,
+			menu.name as menu,
+			category.category as category'
+		);
+        $this->db->from('order_dtl');
+        $this->db->join('po_purchase_meal_dtl', 'order_dtl.id_po_purchase_meal_dtl = po_purchase_meal_dtl.id');
+        $this->db->join('order_hdr', 'order_dtl.id_order = order_hdr.id');
+        $this->db->join('menu', 'menu.id = po_purchase_meal_dtl.id_menu');
+        $this->db->join('category', 'category.id = po_purchase_meal_dtl.id_category');
+		$this->db->where('order_hdr.id', $id);
+        $query = $this->db->get();
+		return $query->result_array();
+	}
 		
 
 	public function get_child_menus($id)

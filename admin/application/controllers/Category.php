@@ -62,8 +62,8 @@ class Category extends CI_Controller
 
     public function edit_category()
     {
-        $data['judul'] = 'Edit New Category#1';
         $data['id'] = $this->uri->segment(3);
+        $data['judul'] = 'Edit New Category ' . $data['id'];
         $data['category_name'] = $this->category_model->get_category_name($data['id']); // Fetch the category name
         $this->load->view('templates/header', $data);
         $this->load->view('category/edit_category', $data);

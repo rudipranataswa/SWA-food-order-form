@@ -25,26 +25,26 @@
                                             foreach ($report as $rpt) : 
                                                 if($rpt != null) { // Check if $vrpt is not null
                                             ?>
-                                            <tr class="tr-shadow">
-                                                <td><?= $no ?></td>
-                                                <td><?= $rpt['remark']; ?></td>
-                                                <td><?= $rpt['begin_date']; ?></td>
-                                                <td><?= $rpt['end_date']; ?></td>
-                                                <td>
-                                                    <div class="table-data-feature">
-                                                        <a
-                                                        class="item"
-                                                        data-toggle="tooltip"
-                                                        data-placement="top"
-                                                        title="View"
-                                                        href="<?= base_url(); ?>report/view_report/<?= $rpt['id']; ?>"
-                                                        >
-                                                        <i class="zmdi zmdi-eye"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
+                                                <tr class="tr-shadow">
+                                                    <td><?= $no ?></td>
+                                                    <td><?= $rpt['remark']; ?></td>
+                                                    <td><?= $rpt['begin_date']; ?></td>
+                                                    <td><?= $rpt['end_date']; ?></td>
+                                                    <td>
+                                                        <div class="table-data-feature">
+                                                            <a
+                                                            class="item"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="View"
+                                                            href="<?= base_url(); ?>report/view_report/<?= $rpt['id']; ?>"
+                                                            >
+                                                            <i class="zmdi zmdi-eye"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="spacer"></tr>
                                             <?php 
                                                 $no++; // Increment $no variable
                                             }

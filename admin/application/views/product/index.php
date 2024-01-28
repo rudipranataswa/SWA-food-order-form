@@ -53,16 +53,20 @@
                           <td><?= $pro['name']; ?></td>
                           <td>
                             <div class="table-data-feature">
-                              <a class="item" data-toggle="tooltip" data-placement="top" title="Edit" 
-                                href="<?= base_url(); ?>Product/edit_product/<?= $pro['id']; ?>?category=<?= $pro['category']; ?>&name=<?= $pro['name']; ?>">
+                              <a 
+                                class="item" 
+                                data-toggle="tooltip" 
+                                data-placement="top" 
+                                title="Edit" 
+                                href="<?= base_url(); ?>product/edit_product/<?= $pro['menu_id']; ?>"> <!-- ?category=<?= $pro['category']; ?>&name=<?= $pro['name']; ?> -->
                                 <i class="zmdi zmdi-edit"></i>
                               </a>
                             </div>
                           </td>
                           <td>
                             <div class="table-data-feature">
-                              <form action="<?= base_url('Product/delete_product'); ?>" method="post" class="form-horizontal">
-                                <input type="hidden" name="id" value="<?= $pro['id']; ?>">
+                              <form action="<?= base_url('product/delete_product'); ?>" method="post" class="form-horizontal">
+                                <input type="hidden" name="id" value="<?= $pro['menu_id']; ?>">
                                 <button type="button" class="btn item" data-toggle="modal" data-target="#exampleModalCenter" title="Delete">
                                   <i class="zmdi zmdi-delete"></i>
                                 </button>

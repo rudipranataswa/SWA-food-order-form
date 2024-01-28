@@ -21,7 +21,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <?php
+                        <!-- <?php
                             $no = 1; // Initialize $no variable
                             foreach ($view_report as $vrpt) : 
                                 if($vrpt != null) { // Check if $vrpt is not null
@@ -31,7 +31,7 @@
                                         <td><?= $vrpt['student_name']; ?></td>
                                         <td><?= $vrpt['date_only']; ?></td>
                                         <td><?= $vrpt['time_only']; ?></td>
-                                        <!-- <td>
+                                        // <td>
                                             <div class="table-data-feature">
                                                 <a
                                                 class="item"
@@ -43,7 +43,7 @@
                                                 <i class="zmdi zmdi-eye"></i>
                                                 </a>
                                             </div>
-                                        </td> -->
+                                        // </td> 
                                         <td>
                                             <div class="table-data-feature">
                                                 <a
@@ -62,7 +62,39 @@
                             <?php 
                                     $no++; // Increment $no variable
                                 }
-                        endforeach; ?>
+                        endforeach; ?> -->
+                        <?php
+                            $no = 1; // Initialize $no variable
+                            foreach ($view_report as $vrpt) {
+                                if($vrpt != null) { // Check if $vrpt is not null
+                                    foreach($report as $rpt) {
+                        ?>
+                                        <tr class="tr-shadow">
+                                            <td><?= $no ?></td>
+                                            <td><?= $vrpt['student_name'] ?></td>
+                                            <td><?= $vrpt['date_only'] ?></td>
+                                            <td><?= $vrpt['time_only'] ?></td>
+                                            <td>
+                                                <div class="table-data-feature">
+                                                    <a
+                                                    class="item"
+                                                    data-toggle="tooltip"
+                                                    data-placement="top"
+                                                    title="View"
+                                                    href="<?= base_url(); ?>report/summary/<?= $rpt['id']; ?>/<?= $vrpt['id']; ?>"
+                                                    >
+                                                    <i class="zmdi zmdi-eye"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="spacer"></tr>
+                        <?php
+                                    }
+                                }
+                            }
+                            $no++;
+                        ?>
                     </tbody>
                 </table>
                 </div>
