@@ -77,15 +77,38 @@
 			</div>
 
 
-			<?php foreach ($po_purchase_meal_dtl as $detail) : ?>
-				<tr>
-					<td><?php echo $detail->id; ?></td><br>
-					<td><?php echo $detail->id_menu; ?></td><br>
-					<td><?php echo $detail->date; ?></td><br>
-					<td><?php echo $detail->name; ?></td><br>
-					<td>Rp. <?php echo $detail->price; ?></td><br><br>
-				</tr>
-			<?php endforeach; ?>
+			<div id="menu-array" style="display: ;">
+
+				<?php foreach ($po_purchase_meal_dtl as $detail) : ?>
+					<tr>
+						<td><?php echo $detail->id; ?></td><br>
+						<td><?php echo $detail->id_menu; ?></td><br>
+						<td><?php echo $detail->date; ?></td><br>
+						<td><?php echo $detail->name; ?></td><br>
+						<td>Rp. <?php echo $detail->price; ?></td><br><br>
+					</tr>
+				<?php endforeach; ?>
+
+
+				<?php
+				$matchedDetails = array();
+				foreach ($po_purchase_meal_dtl as $detail) :
+					foreach ($breakfasts as $breakfast) :
+						if ($detail->id_menu == $breakfast['id']) {
+							$matchedDetails[$detail->date][] = $detail->id_menu;
+						}
+					endforeach;
+				endforeach;
+				?>
+
+				<?php
+				echo "<pre>";
+				print_r($matchedDetails);
+				echo "</pre>";
+				?>
+			</div>
+
+
 
 
 
@@ -182,39 +205,26 @@
 									<td rowspan="2" class="align-middle">Breakfast and Stall</td>
 									<?php for ($i = 0; $i < 12; $i++) : ?>
 										<td class="breakfast">
-											<select name="Breakfast_parent[<?= $i ?>]" id="breakfast<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate<?= $i ?>').checked = this.value !== '';">
-												<option disabled selected>Select Menu..</option>
-												<?php foreach ($breakfasts as $breakfast) : ?>
-													<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-											<input type="number" name="Breakfast_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-											<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
-											<br><br>
-
-											<select name="Breakfast_parent2[<?= $i ?>]" id="breakfast2<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate2<?= $i ?>').checked = this.value !== '';">
-												<option disabled selected>Select Menu..</option>
-												<?php foreach ($breakfasts as $breakfast) : ?>
-													<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-											<input type="number" name="Breakfast_price2[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-											<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-											<br><br>
-
-											<select name="Breakfast_parent3[<?= $i ?>]" id="breakfast3<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate3<?= $i ?>').checked = this.value !== '';">
-												<option disabled selected>Select Menu..</option>
-												<?php foreach ($breakfasts as $breakfast) : ?>
-													<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-											<input type="number" name="Breakfast_price3[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-											<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-											<br><br>
+											<?php
+											$defaultValues = isset($matchedDetails[$dateArray[$i]]) ? $matchedDetails[$dateArray[$i]] : [];
+											for ($j = 1; $j <= 3; $j++) :
+												$defaultValue = isset($defaultValues[$j - 1]) ? $defaultValues[$j - 1] : '';
+											?>
+												<select name="Breakfast_parent<?= $j ?>[<?= $i ?>]" id="breakfast<?= $j ?><?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate<?= $j ?><?= $i ?>').checked = this.value !== '';">
+													<option disabled <?= empty($defaultValue) ? 'selected' : '' ?>>Select Menu..</option>
+													<?php foreach ($breakfasts as $breakfast) : ?>
+														<option value="<?= $breakfast['id'] ?>-<?= $dateArray[$i] ?>" <?= $breakfast['id'] == $defaultValue ? 'selected' : '' ?>><?= $breakfast['name'] ?></option>
+													<?php endforeach; ?>
+												</select>
+												<input type="number" name="Breakfast_price<?= $j ?>[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+												<br><br>
+											<?php endfor; ?>
 										</td>
 									<?php endfor; ?>
 								</tr>
 							</tbody>
+
+
 
 						</table>
 					</div>
