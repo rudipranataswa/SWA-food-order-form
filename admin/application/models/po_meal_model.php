@@ -50,14 +50,26 @@ class Po_meal_model extends CI_Model
 
 	public function insertData($data)
 	{
+		$query = $this->db->query('SELECT MAX(id) as maxid FROM po_purchase_meal_hdr');
+		$result = $query->row();
+		$max_id = $result->maxid;
+		$data['id'] = $max_id + 1;
+
 		$this->db->insert('po_purchase_meal_hdr', $data);
 		return $this->db->insert_id();
 	}
 
 	public function insertMeal($data)
 	{
+		$query = $this->db->query('SELECT MAX(id) as maxid FROM po_purchase_meal_dtl');
+		$result = $query->row();
+		$max_id = $result->maxid;
+		$data['id'] = $max_id + 1;
+
 		$this->db->insert('po_purchase_meal_dtl', $data);
 	}
+
+
 
 	public function get_by_id($inserted_id_hdr)
 	{
@@ -76,5 +88,11 @@ class Po_meal_model extends CI_Model
 		$this->db->where('po_purchase_meal_dtl.id_po_purchase_meal_hdr', $id_hdr);
 		$query = $this->db->get();
 		return $query->result();
+	}
+
+	public function delete_by_id($id)
+	{
+		$this->db->where('id_po_purchase_meal_hdr', $id);
+		$this->db->delete('po_purchase_meal_dtl');
 	}
 }

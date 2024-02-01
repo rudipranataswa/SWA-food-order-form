@@ -18,6 +18,68 @@
 	}
 </style>
 
+<div id="menu-array" style="display: none;">
+	<?php foreach ($po_purchase_meal_dtl as $detail) : ?>
+		<tr>
+			<td><?php echo $detail->id; ?></td><br>
+			<td><?php echo $detail->id_menu; ?></td><br>
+			<td><?php echo $detail->date; ?></td><br>
+			<td><?php echo $detail->name; ?></td><br>
+			<td>Rp. <?php echo $detail->price; ?></td><br><br>
+		</tr>
+	<?php endforeach; ?>
+
+	<!-- Daily Start-->
+	<?php
+	$dailyArray = array();
+	foreach ($po_purchase_meal_dtl as $detail) {
+		foreach ($dailyset as $daily) {
+			if ($detail->id_menu == $daily['id']) {
+				$dailyArray[$detail->date] = array(
+					'id_menu' => $detail->id_menu,
+					'price' => $detail->price
+				);
+			}
+		}
+	}
+	?>
+	<!-- Daily End-->
+
+
+	<!-- Pasta Start-->
+	<?php
+	$pastaArray = array();
+	foreach ($po_purchase_meal_dtl as $detail) {
+		foreach ($pastas as $pasta) {
+			if ($detail->id_menu == $pasta['id']) {
+				$pastaArray[$detail->date] = array(
+					'id_menu' => $detail->id_menu,
+					'price' => $detail->price
+				);
+			}
+		}
+	}
+	?>
+	<!-- Pasta End-->
+
+
+	<!-- Breakfast Start-->
+	<?php
+	$breakfastArray = array();
+	foreach ($po_purchase_meal_dtl as $detail) {
+		foreach ($breakfasts as $breakfast) {
+			if ($detail->id_menu == $breakfast['id']) {
+				$breakfastArray[$detail->date][] = array(
+					'id_menu' => $detail->id_menu,
+					'price' => $detail->price
+				);
+			}
+		}
+	}
+	?>
+	<!-- Breakfast End-->
+</div>
+
 
 <!-- MAIN CONTENT-->
 <div class="main-content">
@@ -34,123 +96,48 @@
 							<strong>PO Meal Detail</strong>
 						</div>
 
-						<div class="card-body card-block">
-							<div class="row form-group">
-								<div class="col col-sm-5">
-									<label for="input-normal" class="form-control-label">Title</label>
+						<form action="<?php echo site_url('Po_meal/submit2'); ?>" method="post" class="form-horizontal" id="productForm">
+							<div class="card-body card-block">
+								<div class="row form-group">
+									<div class="col col-sm-5">
+										<label for="input-normal" class="form-control-label">Title</label>
+									</div>
+									<div class="col col-sm-6">
+										<input type="text" value="<?= $purchase_meal['remark'] ?>" id="input-normal" name="Title" class="form-control" required>
+									</div>
 								</div>
-								<div class="col col-sm-6">
-									<input type="text" value="<?= $purchase_meal['remark'] ?>" id="input-normal" name="Title" class="form-control" required>
+								<div class="row form-group">
+									<div class="col col-sm-5">
+										<label for="input-normal" class=" form-control-label">Begin Date</label>
+									</div>
+									<div class="col col-sm-6">
+										<input type="date" value="<?= $purchase_meal['begin_date'] ?>" id="input-normal" name="Begin" class="form-control">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col col-sm-5">
+										<label for="input-normal" class=" form-control-label">End Date</label>
+									</div>
+									<div class="col col-sm-6">
+										<input type="date" value="<?= $purchase_meal['end_date'] ?>" id="input-normal" name="End" class="form-control">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col col-sm-5">
+										<label for="input-normal" class=" form-control-label">Status</label>
+									</div>
+									<div class="col col-sm-6">
+										<select name="Status" id="input-normal" class="form-control" required>
+											<option value="ACTIVE">Active</option>
+											<option value="INACTIVE">Inactive</option>
+										</select>
+									</div>
 								</div>
 							</div>
-							<div class="row form-group">
-								<div class="col col-sm-5">
-									<label for="input-normal" class=" form-control-label">Begin Date</label>
-								</div>
-								<div class="col col-sm-6">
-									<input type="date" value="<?= $purchase_meal['begin_date'] ?>" id="input-normal" name="Begin" class="form-control" disabled>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col col-sm-5">
-									<label for="input-normal" class=" form-control-label">End Date</label>
-								</div>
-								<div class="col col-sm-6">
-									<input type="date" value="<?= $purchase_meal['end_date'] ?>" id="input-normal" name="End" class="form-control" disabled>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col col-sm-5">
-									<label for="input-normal" class=" form-control-label">Status</label>
-								</div>
-								<div class="col col-sm-6">
-									<select name="Status" id="input-normal" class="form-control" required>
-										<option value="ACTIVE">Active</option>
-										<option value="INACTIVE">Inactive</option>
-									</select>
-								</div>
-							</div>
-						</div>
 
 					</div>
 				</div>
 			</div>
-
-
-			<div id="menu-array" style="display: ;">
-				<?php foreach ($po_purchase_meal_dtl as $detail) : ?>
-					<tr>
-						<td><?php echo $detail->id; ?></td><br>
-						<td><?php echo $detail->id_menu; ?></td><br>
-						<td><?php echo $detail->date; ?></td><br>
-						<td><?php echo $detail->name; ?></td><br>
-						<td>Rp. <?php echo $detail->price; ?></td><br><br>
-					</tr>
-				<?php endforeach; ?>
-
-				<!-- Daily Start-->
-				<?php
-				$dailyArray = array();
-				foreach ($po_purchase_meal_dtl as $detail) {
-					foreach ($dailyset as $daily) {
-						if ($detail->id_menu == $daily['id']) {
-							$dailyArray[$detail->date] = array(
-								'id_menu' => $detail->id_menu,
-								'price' => $detail->price
-							);
-						}
-					}
-				}
-				?>
-				<!-- Daily End-->
-
-
-				<!-- Pasta Start-->
-				<?php
-				$pastaArray = array();
-				foreach ($po_purchase_meal_dtl as $detail) {
-					foreach ($pastas as $pasta) {
-						if ($detail->id_menu == $pasta['id']) {
-							$pastaArray[$detail->date] = array(
-								'id_menu' => $detail->id_menu,
-								'price' => $detail->price
-							);
-						}
-					}
-				}
-				?>
-				<!-- Pasta End-->
-
-
-				<!-- Breakfast Start-->
-				<?php
-				$breakfastArray = array();
-				foreach ($po_purchase_meal_dtl as $detail) {
-					foreach ($breakfasts as $breakfast) {
-						if ($detail->id_menu == $breakfast['id']) {
-							$breakfastArray[$detail->date][] = array(
-								'id_menu' => $detail->id_menu,
-								'price' => $detail->price
-							);
-						}
-					}
-				}
-				?>
-				<!-- Breakfast End-->
-
-
-
-				<?php
-				echo "<pre>";
-				print_r($dailyArray);
-				echo "</pre>";
-				?>
-
-
-			</div>
-
-
-
 
 
 			<!-- Table -->
@@ -193,9 +180,10 @@
 													<?php endforeach; ?>
 												</select>
 
-												<input name="Dailyset_price[<?= $i ?>]" type="number" style="width: 30%; margin-left: 7px;" placeholder="Price..." class="form-control" value="<?php if (isset($dailyArray[$dateArray[$i]])) echo $dailyArray[$dateArray[$i]]['price']; ?>" onclick="document.getElementById('open-checkbox<?= $i ?>').checked = true;">
-												<input name="Dates[<?= $i ?>]" id="dailysetParentDate<?= $i ?>" type="checkbox" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
+												<input name="Dailyset_price[<?= $i ?>]" type="number" style="width: 30%; margin-left: 7px;" placeholder="Price..." class="form-control" value="<?php if (isset($dailyArray[$dateArray[$i]])) echo $dailyArray[$dateArray[$i]]['price']; ?>" onclick="document.getElementById('open-checkbox<?= $i ?>').checked = true;" oninput="document.getElementById('dailysetParentDate<?= $i ?>').checked = this.value !== '';">
+												<input name="Dates[<?= $i ?>]" id="dailysetParentDate<?= $i ?>" type="checkbox" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control" <?php if (isset($dailyArray[$dateArray[$i]]) && $dailyArray[$dateArray[$i]]['price'] != '') echo 'checked'; ?>>
 												<input type="checkbox" id="open-checkbox<?= $i ?>" onchange="toggleCheckboxes(<?= $i ?>)" style="display: none;">
+
 											</div>
 											<br>
 											<?php foreach ($menus as $j => $menu) : ?>
@@ -232,13 +220,12 @@
 													<option value="<?= $pasta['id'] ?>" <?php if (isset($pastaArray[$dateArray[$i]]) && $pastaArray[$dateArray[$i]]['id_menu'] == $pasta['id']) echo 'selected'; ?>> <?= $pasta['name'] ?></option>
 												<?php endforeach; ?>
 											</select>
-											<input type="number" name="Pasta_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2" value="<?php if (isset($pastaArray[$dateArray[$i]])) echo $pastaArray[$dateArray[$i]]['price']; ?>">
-											<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
+											<input type="number" name="Pasta_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2" value="<?php if (isset($pastaArray[$dateArray[$i]])) echo $pastaArray[$dateArray[$i]]['price']; ?>" oninput="document.getElementById('pastaDate<?= $i ?>').checked = this.value !== '';">
+											<input name="Dates[<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control" <?php if (isset($pastaArray[$dateArray[$i]]) && $pastaArray[$dateArray[$i]]['price'] != '') echo 'checked'; ?>>
 										</td>
 									<?php endfor; ?>
 								</tr>
 							</tbody>
-
 
 
 							<tbody>
@@ -254,17 +241,18 @@
 												<select name="Breakfast_parent<?= $j + 1 ?>[<?= $i ?>]" id="breakfast<?= $j + 1 ?><?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate<?= $j + 1 ?><?= $i ?>').checked = this.value !== '';">
 													<option disabled selected>Select Menu..</option>
 													<?php foreach ($breakfasts as $breakfast) : ?>
-														<option value="<?= $breakfast['id'] ?>-<?= $dateArray[$i] ?>" <?= $detail && $detail['id_menu'] == $breakfast['id'] ? 'selected' : '' ?>><?= $breakfast['name'] ?></option>
+														<option value="<?= $breakfast['id'] ?>" <?= $detail && $detail['id_menu'] == $breakfast['id'] ? 'selected' : '' ?>><?= $breakfast['name'] ?></option>
 													<?php endforeach; ?>
 												</select>
-												<input type="number" name="Breakfast_price<?= $j + 1 ?>[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2" value="<?= $detail ? $detail['price'] : '' ?>">
-												<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
+												<input type="number" name="Breakfast_price<?= $j + 1 ?>[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2" value="<?= $detail ? $detail['price'] : '' ?>" oninput="document.getElementById('breakfastDate<?= $j + 1 ?><?= $i ?>').checked = this.value !== '';">
+												<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $j + 1 ?><?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control" <?php if ($detail && $detail['price'] != '') echo 'checked'; ?>>
 												<br><br>
 											<?php } ?>
 										</td>
 									<?php endfor; ?>
 								</tr>
 							</tbody>
+
 
 
 							<!--<tbody>
@@ -290,8 +278,6 @@
 									<?php endfor; ?>
 								</tr>
 							</tbody>-->
-
-
 
 						</table>
 					</div>
@@ -329,6 +315,8 @@
 		</div>
 	</div>
 </div>
+</form>
+
 
 
 <script>
