@@ -44,19 +44,11 @@ class Po_meal extends CI_Controller
 		$data['breakfasts'] = $this->po_meal_model->get_breakfast();
 		$data['menus'] = $this->po_meal_model->get_menus();
 
-		// Delete data on submit
-		if ($this->input->post('submit')) {
-			$this->po_meal_model->delete_by_id($this->input->post('inserted_id_hdr'));
-			redirect('Po_meal/submitForm'); // replace 'controller_name' with the name of your controller
-		}
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('po_meal/edit_po_meal', $data);
 		$this->load->view('templates/footer');
 	}
-
-
-
 
 
 	public function history_po_meal($inserted_id_hdr)
@@ -263,15 +255,16 @@ class Po_meal extends CI_Controller
 					'price' => $pasta_price[$i],
 					'parent' => 0,
 					'id_category' => 3,
-					'date' => isset($_POST['Dates'][$i]) ? $_POST['Dates'][$i] : null,
+					'date' => $pasta_dates[$i][$i],
 					'id_po_purchase_meal_hdr' => $id_po_purchase_meal_hdr
 				);
 				$this->po_meal_model->insertMeal($data);
 			}
 		}
 
-		$breakfast_parent = $this->input->post('Breakfast_parent');
-		$breakfast_price = $this->input->post('Breakfast_price');
+
+		$breakfast_parent = $this->input->post('Breakfast_parent1');
+		$breakfast_price = $this->input->post('Breakfast_price1');
 
 		$breakfast_parent2 = $this->input->post('Breakfast_parent2');
 		$breakfast_price2 = $this->input->post('Breakfast_price2');

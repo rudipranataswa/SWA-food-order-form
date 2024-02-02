@@ -90,6 +90,11 @@
 				<div class="col-lg-6">
 					<!-- Input Size -->
 					<h3 class="title-5 m-b-35">Edit PO Meal</h3>
+					<?php if ($this->session->flashdata('message')) { ?>
+						<div class="alert alert-info" style="background-color: #4bb543; color: #ffff;">
+							<?php echo $this->session->flashdata('message'); ?> <br>
+						</div>
+					<?php } ?>
 
 					<div class="card">
 						<div class="card-header">
@@ -181,7 +186,7 @@
 												</select>
 
 												<input name="Dailyset_price[<?= $i ?>]" type="number" style="width: 30%; margin-left: 7px;" placeholder="Price..." class="form-control" value="<?php if (isset($dailyArray[$dateArray[$i]])) echo $dailyArray[$dateArray[$i]]['price']; ?>" onclick="document.getElementById('open-checkbox<?= $i ?>').checked = true;" oninput="document.getElementById('dailysetParentDate<?= $i ?>').checked = this.value !== '';">
-												<input name="Dates[<?= $i ?>]" id="dailysetParentDate<?= $i ?>" type="checkbox" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control" <?php if (isset($dailyArray[$dateArray[$i]]) && $dailyArray[$dateArray[$i]]['price'] != '') echo 'checked'; ?>>
+												<input name="Dates[<?= $i ?>]" id="dailysetParentDate<?= $i ?>" type="checkbox" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control" <?php if (isset($dailyArray[$dateArray[$i]]) && $dailyArray[$dateArray[$i]]['price'] != '') echo 'checked'; ?>>
 												<input type="checkbox" id="open-checkbox<?= $i ?>" onchange="toggleCheckboxes(<?= $i ?>)" style="display: none;">
 
 											</div>
@@ -221,11 +226,12 @@
 												<?php endforeach; ?>
 											</select>
 											<input type="number" name="Pasta_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2" value="<?php if (isset($pastaArray[$dateArray[$i]])) echo $pastaArray[$dateArray[$i]]['price']; ?>" oninput="document.getElementById('pastaDate<?= $i ?>').checked = this.value !== '';">
-											<input name="Dates[<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control" <?php if (isset($pastaArray[$dateArray[$i]]) && $pastaArray[$dateArray[$i]]['price'] != '') echo 'checked'; ?>>
+											<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control" <?php if (isset($pastaArray[$dateArray[$i]]) && $pastaArray[$dateArray[$i]]['price'] != '') echo 'checked'; ?>>
 										</td>
 									<?php endfor; ?>
 								</tr>
 							</tbody>
+
 
 
 							<tbody>
@@ -245,7 +251,7 @@
 													<?php endforeach; ?>
 												</select>
 												<input type="number" name="Breakfast_price<?= $j + 1 ?>[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2" value="<?= $detail ? $detail['price'] : '' ?>" oninput="document.getElementById('breakfastDate<?= $j + 1 ?><?= $i ?>').checked = this.value !== '';">
-												<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $j + 1 ?><?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control" <?php if ($detail && $detail['price'] != '') echo 'checked'; ?>>
+												<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $j + 1 ?><?= $i ?>" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control" <?php if ($detail && $detail['price'] != '') echo 'checked'; ?>>
 												<br><br>
 											<?php } ?>
 										</td>
