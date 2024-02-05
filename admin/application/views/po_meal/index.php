@@ -8,6 +8,12 @@
 						<div class="card-body">
 							<!-- DATA TABLE -->
 							<h3 class="title-5 m-b-35">PO Meal List</h3>
+							<?php if ($this->session->flashdata('message')) : ?>
+								<div class="alert alert-success" style="background-color: #4bb543; color: #ffff;">
+									<?php echo $this->session->flashdata('message'); ?>
+								</div>
+							<?php endif; ?>
+
 							<div class="table-data__tool">
 								<div class="table-data__tool-left">
 									<a class="au-btn au-btn-icon au-btn--green au-btn--small" href="<?= base_url(); ?>po_meal/add_po_meal">

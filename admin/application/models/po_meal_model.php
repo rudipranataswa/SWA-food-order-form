@@ -50,14 +50,24 @@ class Po_meal_model extends CI_Model
 
 	public function insertData($data)
 	{
-		$query = $this->db->query('SELECT MAX(id) as maxid FROM po_purchase_meal_hdr');
-		$result = $query->row();
-		$max_id = $result->maxid;
-		$data['id'] = $max_id + 1;
+		// Dapatkan semua id yang ada
+		$query = $this->db->query('SELECT id FROM po_purchase_meal_hdr ORDER BY id');
+		$result = $query->result_array();
+		$existing_ids = array_column($result, 'id');
+
+		// Cari id terkecil yang belum digunakan
+		$id = 1;
+		while (in_array($id, $existing_ids)) {
+			$id++;
+		}
+
+		// Gunakan id tersebut untuk data baru
+		$data['id'] = $id;
 
 		$this->db->insert('po_purchase_meal_hdr', $data);
 		return $this->db->insert_id();
 	}
+
 
 	public function insertMeal($data)
 	{
