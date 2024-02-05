@@ -90,8 +90,11 @@ class Po_meal_model extends CI_Model
 		return $query->result();
 	}
 
-	public function delete_by_id($id)
+	public function deleteData($id)
 	{
+		$this->db->where('id', $id);
+		$this->db->delete('po_purchase_meal_hdr');
+
 		$this->db->where('id_po_purchase_meal_hdr', $id);
 		$this->db->delete('po_purchase_meal_dtl');
 	}

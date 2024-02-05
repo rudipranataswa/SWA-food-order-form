@@ -201,8 +201,11 @@ class Po_meal extends CI_Controller
 	}
 
 
-	public function submitForm2()
+	public function submitForm2($inserted_id_hdr)
 	{
+		$this->po_meal_model->deleteData($inserted_id_hdr);
+
+
 		$id_po_purchase_meal_hdr = $this->submitHdr();
 
 		$dailyset_parent = $this->input->post('Dailyset_parent');
@@ -317,7 +320,8 @@ class Po_meal extends CI_Controller
 
 	public function submit2()
 	{
-		$this->submitForm2();
+		$id_po = $this->input->post('Id_po');
+		$this->submitForm2($id_po);
 
 		$this->session->set_flashdata('message', 'Edit Succeed!');
 		redirect('po_meal/');

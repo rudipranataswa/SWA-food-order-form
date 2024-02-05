@@ -102,6 +102,7 @@
 						</div>
 
 						<form action="<?php echo site_url('Po_meal/submit2'); ?>" method="post" class="form-horizontal" id="productForm">
+							<input type="hidden" name="Id_po" value="<?php echo $this->uri->segment(3) ?>">
 							<div class="card-body card-block">
 								<div class="row form-group">
 									<div class="col col-sm-5">
@@ -205,7 +206,7 @@
 													<input name="Id_menu[<?= $i ?>][<?= $j ?>]" id="checkbox<?= $i ?><?= $j ?>" value="<?= $menu['id'] ?>-<?= $menu['category_id'] ?>" type="checkbox" style="margin-right: 7px;" onclick="checkMenuCheckbox(<?= $i ?>, <?= $j ?>)" data-id-menu="<?= $menu['id'] ?>" data-date="<?= $dateArray[$i] ?>" <?php if ($matched) echo 'checked'; ?>>
 													<span class="text-dark"><?= wordwrap($menu['name'], 36, "<br />\n", true) ?></span>
 													<input name="Price[<?= $i ?>][<?= $j ?>]" type="number" style="width: 120px; margin-left: 7px;" placeholder="Price..." class="form-control" value="<?php if ($matched) echo $detail->price; ?>">
-													<input name="Dates[<?= $i ?>][<?= $j ?>]" id="dailysetDate<?= $i ?><?= $j ?>" type="checkbox" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control" <?php if ($matched) echo 'checked'; ?>>
+													<input name="Dates[<?= $i ?>][<?= $j ?>]" id="dailysetDate<?= $i ?><?= $j ?>" type="checkbox" value="<?= $dateArray[$i] ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control" <?php if ($matched) echo 'checked'; ?>>
 												</div>
 											<?php endforeach; ?>
 										</td>
