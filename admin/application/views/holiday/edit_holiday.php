@@ -6,7 +6,7 @@
                 <div class="col-lg-6">
                     <!-- Horizontal Form -->
                     <div class="card">
-                        <form action="<?php echo base_url("holiday/update_data/" . $holiday['id']); ?>" method="post" class="form-horizontal" id="holiday_form">
+                        <form action="<?php echo base_url("holiday/update_holiday/" . $holiday['id']); ?>" method="post" class="form-horizontal" id="holiday_form">
                             <div class="card-header">
                                 <strong>Edit holiday</strong>
                             </div>

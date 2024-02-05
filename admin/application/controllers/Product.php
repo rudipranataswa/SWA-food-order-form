@@ -7,7 +7,6 @@ class Product extends CI_Controller
     {
         parent::__construct();
         $this->load->model('product_model');
-        $this->load->library('session');
         if (!$this->session->userdata('logged_in')) {
             // Redirect to login page
             redirect('login');
@@ -30,17 +29,43 @@ class Product extends CI_Controller
 
     public function index()
     {
-        // $this->load->library('pagination');
-        // $config['num_tag_open'] = '&nbsp;<span class="pagination-link">';
-        // $config['num_tag_close'] = '</span>&nbsp;';
-        $config['base_url'] = base_url('Product/index');
+        $config['full_tag_open'] = '<nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+        
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+        
+        // $config['next_link'] = '&raquo';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+        
+        // $config['prev_link'] = '&laquo';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="page-item"><a class="page-link" href="#"><strong>';
+        $config['cur_tag_close'] = '</li></a></strong>';
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+
+        $config['attributes'] = array('class' => 'page-link');
+
+        $config['base_url'] = base_url('product/index');
         $config['total_rows'] = $this->db->count_all('menu');
         $config['per_page'] = 10;
 
         $this->pagination->initialize($config);
 
         $data['judul'] = 'Menu';
+        $data['page'] = $this->uri->segment(3);
         $data['product'] = $this->product_model->paginate($config['per_page'], $this->uri->segment(3));
+        $data['category'] = $this->product_model->get_category();
+
         $this->load->view('templates/header', $data);
         $this->load->view('product/index', $data);
         $this->load->view('templates/footer');
@@ -51,41 +76,92 @@ class Product extends CI_Controller
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
     }
 
+    public function fetch_menu() {
+            if($this->input->post('id_category')) {
+                    echo $this->menu_model->fetch_menu($this->input->post('id_category'));
+            }
+    }
+
     public function add_product()
     {
-        $data['judul'] = 'Create New Product';
+        $data['judul'] = 'Create New Menu'; 
         $data['categories'] = $this->product_model->get_category();
-        // $data['product'] = $this->product_model->get_by_id();
-        $this->load->view('templates/header', $data);
-        $this->load->view('product/add_product', $data);
-        $this->load->view('templates/footer');
+        $name = $this->input->post('name');
+        $this->db->where('name', $name);
+        $query = $this->db->get('menu');
+
+        $this->form_validation->set_rules('category', 'category', 'required', array('required' => 'Category field must not be empty'));
+        $this->form_validation->set_rules('name', 'name', 'required', array('required' => 'Category field must not be empty'));
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('product/add_product', $data);
+            $this->load->view('templates/footer');
+
+            $this->session->set_flashdata('flash ', 'Create New Menu Fail!');
+            // redirect('product');
+        } else {
+            if ($query->num_rows() > 0) {
+                $this->session->set_flashdata('flash', 'Data already exist');
+                redirect('product');
+            } else {
+                $category = $this->input->post('category');
+                $name = $this->input->post('name');
+                $session_name = $this->session->userdata('fullname');
+                $admin_id = $this->product_model->get_admin_id($session_name);
+
+                $this->product_model->create_menu($category, $name, $admin_id);
+                $this->session->set_flashdata('flash', 'Create New Menu Succeed!');
+                redirect('product');
+            }
+        }
     }
 
     public function edit_product($id)
     {
         $data['judul'] = 'Edit Product';
         $data['menu'] = $this->product_model->get_by_id($id);
-        $data['categories'] = $this->product_model->get_category();
+        $data['category'] = $this->product_model->get_category();
         // $data['product'] = $this->product_model->get_by_id();
         $this->load->view('templates/header', $data);
         $this->load->view('product/edit_product', $data);
         $this->load->view('templates/footer');
     }
 
-    public function create_new()
-    {
-        $category = $this->input->post('Category');
-        $name = $this->input->post('Name');
-        $result = $this->product_model->create_menu($category, $name);
+    // public function create_menu()
+    // {
+    //     $data['judul'] = 'Create New Menu'; 
+    //     $data['categories'] = $this->product_model->get_category();
+    //     $name = $this->input->post('name');
+    //     $this->db->where('name', $name);
+    //     $query = $this->db->get('menu');
 
-        if ($result) {
-            $this->session->set_flashdata('flash', 'Create New Menu Succeed!');
-            redirect('product/add_product');
-        } else {
-            $this->session->set_flashdata('flash', 'Create New Menu Fail!');
-            redirect('product/add_product');
-        }
-    }
+    //     $this->form_validation->set_rules('category', 'category', 'required', array('required' => 'Category field must not be empty'));
+    //     $this->form_validation->set_rules('name', 'name', 'required', array('required' => 'Category field must not be empty'));
+
+    //     if ($this->form_validation->run() === FALSE) {
+    //         $this->load->view('templates/header', $data);
+    //         $this->load->view('product/add_product', $data);
+    //         $this->load->view('templates/footer');
+
+    //         $this->session->set_flashdata('flash ', 'Create New Menu Fail!');
+    //         // redirect('product');
+    //     } else {
+    //         if ($query->num_rows() > 0) {
+    //             $this->session->set_flashdata('flash', 'Data already exist');
+    //             redirect('product');
+    //         } else {
+    //             $category = $this->input->post('category');
+    //             $name = $this->input->post('name');
+    //             $session_name = $this->session->userdata('fullname');
+    //             $admin_id = $this->product_model->get_admin_id($session_name);
+
+    //             $this->product_model->create_menu($category, $name, $admin_id);
+    //             $this->session->set_flashdata('flash ', 'Create New Menu Succeed!');
+    //             redirect('product');
+    //         }
+    //     }
+    // }
 
     public function update_menu()
     {
@@ -93,10 +169,10 @@ class Product extends CI_Controller
         $this->db->where('id_menu', $id);
         $query = $this->db->get('po_purchase_meal_dtl');
         $category_id = $this->input->post('Category');
-        $name = $this->input->post('Name');
+        $name = $this->input->post('name');
 
         if ($query->num_rows() > 0) {
-            $this->session->set_flashdata('flash', 'Fail: Cannot edit product because it exists in po_purchase_meal_dtl');
+            $this->session->set_flashdata('flash', 'Fail: Cannot edit product because it exists in PO Purchase');
             redirect('product');
         } else {
             $this->product_model->update_menu($id, $category_id, $name);
@@ -105,17 +181,17 @@ class Product extends CI_Controller
         }
     }
 
-    public function delete_product()
+    public function delete_menu()
     {
         $id = $this->input->post('id');
         $this->db->where('id_menu', $id);
         $query = $this->db->get('po_purchase_meal_dtl');
 
         if ($query->num_rows() > 0) {
-            $this->session->set_flashdata('flash', 'Fail: Cannot delete product because it exists in po_purchase_meal_dtl');
+            $this->session->set_flashdata('flash', 'Fail: Cannot delete product because it exists in PO Purchase');
             redirect('product');
         } else {
-            $this->product_model->delete_product($id);
+            $this->product_model->delete_menu($id);
             $this->session->set_flashdata('flash', 'Success: Menu deleted');
             redirect('product');
         }

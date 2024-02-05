@@ -16,16 +16,16 @@
 				<?php } ?>
 				<div class="card">
 					<div class="card-header">
-						<strong>Create New Product</strong>
+						<strong>Create New Menu</strong>
 					</div>
 					<div class="card-body card-block">
-						<form action="<?php echo site_url('Product/create_new'); ?>" method="post" class="form-horizontal" id="productForm">
+						<form action="<?php echo site_url('product/add_product'); ?>" method="post" class="form-horizontal" id="productForm">
 							<div class="row form-group">
 								<div class="col col-sm-5">
 									<label class="pb-1">Choose Category:</label>
 								</div>
 								<div class="col col-sm-6">
-									<select name="Category" id="category" class="form-control">
+									<select name="category" id="category" class="form-control">
 										<?php $i = 1;
 										foreach ($categories as $cat) : ?>
 											<option value="<?= $i++; ?>"><?= $cat['category']; ?></option>
@@ -38,10 +38,10 @@
 									<label for="input-normal" class=" form-control-label">Menu Name</label>
 								</div>
 								<div class="col col-sm-6">
-									<input type="text" id="input-normal" name="Name" placeholder="Type here..." class="form-control" required>
+									<input type="text" id="input-normal" name="name" placeholder="Type here..." class="form-control" required>
 								</div>
 							</div>
-                        </form>
+						</form>
 					</div>
 					<div class="card-footer">
 						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">

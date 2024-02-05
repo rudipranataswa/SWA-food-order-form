@@ -31,6 +31,18 @@ class Product_model extends CI_Model
                 return $query->row_array();
         }
 
+        public function sort_category($id)
+        {
+                $this->db->select('menu.id, menu.name, category.category');
+                $this->db->from('menu');
+                $this->db->join('category', 'menu.id_category = category.id');
+                if ($id) {
+                        $this->db->where('id_category', $id);
+                }
+                $query = $this->db->get();
+                return $query->result_array();
+        }
+
         // public function insert_data()
         // {
         //         $data = array(
@@ -41,8 +53,6 @@ class Product_model extends CI_Model
         //                 'submitted_date' => date('Y-m-d H:i:s')
         //         );
 
-
-
         //         $clean_data = $this->security->xss_clean($data);
 
         //         $this->db->insert('order_hdr', $clean_data);
@@ -50,7 +60,7 @@ class Product_model extends CI_Model
 
         public function get_menu_daily_set()
         {
-                $this->db->select('menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price, menu.id');
+                $this->db->select('menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price, menu.id, menu.link');
                 $this->db->from('po_purchase_meal_dtl');
                 $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
                 $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
@@ -63,14 +73,14 @@ class Product_model extends CI_Model
 
         public function get_child_menus()
         {
-                $this->db->select('menu.id, menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price, po_purchase_meal_dtl.parent');
+                $this->db->select('menu.id, menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price, po_purchase_meal_dtl.parent, menu.link');
                 $this->db->from('po_purchase_meal_dtl');
                 $this->db->join('menu', 'po_purchase_meal_dtl.id_menu = menu.id');
                 $this->db->join('category', 'po_purchase_meal_dtl.id_category = category.id');
                 $this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
                 $this->db->where('parent !=', 0);
                 $this->db->where('po_purchase_meal_hdr.status', 'active');
-                // $this->db->order_by('po_purchase_meal_dtl.id_category', 'ASC');
+                $this->db->order_by('po_purchase_meal_dtl.id_category', 'ASC');
                 $query = $this->db->get();
                 $result = $query->result_array();
 
@@ -133,7 +143,8 @@ class Product_model extends CI_Model
                         'student_name' => $this->input->post('Name'),
                         'grade_level' => $this->input->post('Grade'),
                         'parent_phone_number' => $this->input->post('Phone_Number'),
-                        'submitted_date' => date('Y-m-d H:i:s') // Current date and time
+                        'submitted_date' => date('Y-m-d H:i:s'), // Current date and time
+                        'notes' => $this->input->post('Notes'), // Current date and time
                 );
 
                 // Insert data into order_hdr

@@ -1,6 +1,6 @@
 <style>
   .pagination-link a {
-    padding: 10px;
+    color: grey;
   }
 </style>
 <!-- MAIN CONTENT-->
@@ -12,6 +12,11 @@
           <div class="card">
             <div class="card-body">
               <h3 class="title-5 m-b-35">Holiday List</h3>
+              <?php if($this->session->flashdata('flash')): ?>
+                <div class="alert alert-info" id="flashdata" >
+                  <?php echo $this->session->flashdata('flash'); ?>
+                </div>
+              <?php endif; ?>              
               <!-- DATA TABLE -->
               <div class="table-data__tool">
                 <div class="table-data__tool-left">
@@ -23,11 +28,6 @@
                   </a>
                 </div>
               </div>
-              <?php if($this->session->flashdata('flash')): ?>
-                <div class="alert alert-info" id="flashdata" >
-                  <?php echo $this->session->flashdata('flash'); ?>
-                </div>
-              <?php endif; ?>              
               <div class="table-responsive table-responsive-data2">
                 <table
                   id="zero_config"
@@ -45,51 +45,49 @@
                   </thead>
                   <tbody>
                     <?php 
-                      $no = 1;
                       foreach ($holiday as $hdy) : ?>
-                        <tr class="tr-shadow">
-                          <td><?= $no ?></td>
-                          <td><?= $hdy['date']; ?></td>
-                          <td><?= $hdy['description']; ?></td>
-                          <td>
-                              <div class="table-data-feature">
-                              <a
-                                  class="item"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
-                                  title="Edit"
-                                  href="<?= base_url();?>holiday/edit_holiday/<?= $hdy['id']; ?>"
-                              >
-                                  <i class="zmdi zmdi-edit"></i>
-                              </a>
-                              </div>
-                          </td>
-                          <td>
+                      <tr class="tr-shadow">
+                        <td><?= ++$page; ?></td>
+                        <td><?= $hdy['date']; ?></td>
+                        <td><?= $hdy['description']; ?></td>
+                        <td>
                             <div class="table-data-feature">
-                              <form action="<?= base_url();?>holiday/delete_holiday" method="post" id="deleteForm<?= $hdy['id']; ?>">
-                                <input type="hidden" name="id_number" value="<?= $hdy['id']; ?>">  
-                                <button
-                                  type="button"
-                                  class="btn item"
-                                  data-toggle="modal"
-                                  data-target="#deleteModal<?= $hdy['id']; ?>"
-                                  title="Delete"
-                                  >
-                                  <i class="zmdi zmdi-delete"></i>
-                                </button>
-                              </form>
+                            <a
+                                class="item"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Edit"
+                                href="<?= base_url();?>holiday/edit_holiday/<?= $hdy['id']; ?>"
+                            >
+                                <i class="zmdi zmdi-edit"></i>
+                            </a>
                             </div>
-                          </td>
-                        </tr>
-                        <tr class="spacer"></tr>
-                      <?php 
-                        $no++;
+                        </td>
+                        <td>
+                          <div class="table-data-feature">
+                            <form action="<?= base_url();?>holiday/delete_holiday" method="post" id="deleteForm<?= $hdy['id']; ?>">
+                              <input type="hidden" name="id_number" value="<?= $hdy['id']; ?>">  
+                              <button
+                                type="button"
+                                class="btn item"
+                                data-toggle="modal"
+                                data-target="#deleteModal<?= $hdy['id']; ?>"
+                                title="Delete"
+                                >
+                                <i class="zmdi zmdi-delete"></i>
+                              </button>
+                            </form>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="spacer"></tr>
+                    <?php 
                     endforeach; ?>
                   </tbody>
                 </table>
-              </div>
-              <div class="pagination-link text-center">
-                <?php echo $this->pagination->create_links(); ?>
+                <div class="pagination-link">
+                  <?php echo $this->pagination->create_links(); ?>
+                </div>
               </div>
               <!-- END DATA TABLE -->
             </div>

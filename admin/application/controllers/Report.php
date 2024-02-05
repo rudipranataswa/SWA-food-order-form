@@ -30,6 +30,33 @@ class Report extends CI_Controller
 
     public function index() 
     {
+        // config
+        $config['full_tag_open'] = '<nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+        
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+        
+        $config['next_link'] = '&raquo';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+        
+        $config['prev_link'] = '&laquo';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="page-item"><a class="page-link" href="#"><strong>';
+        $config['cur_tag_close'] = '</li></a></strong>';
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+
+        $config['attributes'] = array('class' => 'page-link');
+
         $config['base_url'] = base_url('Po_meal/index');
 		$config['total_rows'] = $this->db->count_all('po_purchase_meal_hdr');
 		$config['per_page'] = 10;
@@ -37,6 +64,7 @@ class Report extends CI_Controller
 		$this->pagination->initialize($config);
 
         $data['judul'] = 'Report';
+        $data['page'] = $this->uri->segment(3);
         $data['report'] = $this->report_model->get_report();
         $this->load->view('templates/header', $data);
         $this->load->view('report/index', $data);    
@@ -45,7 +73,41 @@ class Report extends CI_Controller
 
     public function view_report($id) 
     {
+        // config
+        $config['full_tag_open'] = '<nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+        
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+        
+        // $config['next_link'] = '&raquo';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+        
+        // $config['prev_link'] = '&laquo';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="page-item"><a class="page-link" href="#"><strong>';
+        $config['cur_tag_close'] = '</li></a></strong>';
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+
+        $config['attributes'] = array('class' => 'page-link');
+
+        $config['base_url'] = base_url('po_meal/view_report');
+		$config['total_rows'] = $this->db->count_all('order_hdr', $id);
+		$config['per_page'] = 10;
+
+		$this->pagination->initialize($config);
+
         $data['judul'] = 'View Report';
+        $data['page'] = $this->uri->segment(4);
         $data['view_report'] = $this->report_model->get_view_report($id);
         $data['report'] = $this->report_model->get_dates($id);
 

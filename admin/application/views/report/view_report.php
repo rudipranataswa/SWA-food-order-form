@@ -1,3 +1,8 @@
+<style>
+    .pagination-link a {
+        color: grey;
+    }
+</style>
 <!-- MAIN CONTENT-->
 <div class="main-content">
     <div class="section__content section__content--p30">
@@ -21,13 +26,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <!-- <?php
-                            $no = 1; // Initialize $no variable
+                        <!-- <?php // Initialize $no variable
                             foreach ($view_report as $vrpt) : 
                                 if($vrpt != null) { // Check if $vrpt is not null
                             ?>
                                     <tr class="tr-shadow">
-                                        <td><?= $no ?></td>
+                                        <td><?= ++$page ?></td>
                                         <td><?= $vrpt['student_name']; ?></td>
                                         <td><?= $vrpt['date_only']; ?></td>
                                         <td><?= $vrpt['time_only']; ?></td>
@@ -64,39 +68,41 @@
                                 }
                         endforeach; ?> -->
                         <?php
-                            $no = 1; // Initialize $no variable
+                            $page = 0;
                             foreach ($view_report as $vrpt) {
                                 if($vrpt != null) { // Check if $vrpt is not null
                                     foreach($report as $rpt) {
-                        ?>
-                                        <tr class="tr-shadow">
-                                            <td><?= $no ?></td>
-                                            <td><?= $vrpt['student_name'] ?></td>
-                                            <td><?= $vrpt['date_only'] ?></td>
-                                            <td><?= $vrpt['time_only'] ?></td>
-                                            <td>
-                                                <div class="table-data-feature">
-                                                    <a
-                                                    class="item"
-                                                    data-toggle="tooltip"
-                                                    data-placement="top"
-                                                    title="View"
-                                                    href="<?= base_url(); ?>report/summary/<?= $rpt['id']; ?>/<?= $vrpt['id']; ?>"
-                                                    >
-                                                    <i class="zmdi zmdi-eye"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="spacer"></tr>
+                        ?>  
+                                    <tr class="tr-shadow">
+                                        <td><?= ++$page ?></td>
+                                        <td><?= $vrpt['student_name'] ?></td>
+                                        <td><?= $vrpt['date_only'] ?></td>
+                                        <td><?= $vrpt['time_only'] ?></td>
+                                        <td>
+                                            <div class="table-data-feature">
+                                                <a
+                                                class="item"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="View"
+                                                href="<?= base_url(); ?>report/summary/<?= $rpt['id']; ?>/<?= $vrpt['id']; ?>"
+                                                >
+                                                <i class="zmdi zmdi-eye"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="spacer"></tr>
                         <?php
                                     }
                                 }
                             }
-                            $no++;
                         ?>
                     </tbody>
                 </table>
+                <div class="pagination-link">
+                    <?php echo $this->pagination->create_links(); ?>
+                </div>
                 </div>
                 <!-- END DATA TABLE -->
             </div>

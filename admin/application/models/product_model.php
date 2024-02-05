@@ -40,6 +40,22 @@ class Product_model extends CI_Model
                 return $query->row_array();
         }
 
+        public function get_admin_id($fullname)
+        {
+                $this->db->select('id');
+                $this->db->from('admin');
+                $this->db->where('fullname', $fullname);
+                $query = $this->db->get();
+
+                // Check if a result is returned
+                if ($query->num_rows() > 0) {
+                $result = $query->row();
+                return $result->id;
+                } else {
+                return null; // or handle this case as you see fit
+                }
+        }
+
         public function get_category($slug = FALSE)
         {
                 if ($slug === FALSE) {
@@ -51,11 +67,26 @@ class Product_model extends CI_Model
                 return $query->row_array();
         }
 
-        public function create_menu($category, $name)
+        public function create_menu($category, $name, $admin_id)
         {
+                // $data = array(
+                //         'category_id' => $category,
+                //         'name' => $name
+                // );
+
+                // return $this->db->insert('menu', $data);
+
+                $this->db->select_max('id');
+                $result = $this->db->get('menu')->row();
+                $highest_id = $result->id;
+                $new_id = $highest_id + 1;
+                $session_data = $this->session->userdata('logged_in');
                 $data = array(
+                        'id' => $new_id,
                         'category_id' => $category,
-                        'name' => $name
+                        'name' => $name,
+                        'created_by' => $admin_id,
+                        'created_date' => date('Y-m-d H:i:s', strtotime('+6 hours'))
                 );
 
                 return $this->db->insert('menu', $data);
@@ -72,7 +103,7 @@ class Product_model extends CI_Model
                 return $this->db->update('menu', $data);
         }
 
-        public function delete_product($id)
+        public function delete_menu($id)
         {
                 // $this->db->where('id', $id);
                 // $this->db->delete('menu');
@@ -80,11 +111,11 @@ class Product_model extends CI_Model
                 $query = $this->db->get('po_purchase_meal_dtl');
 
                 if ($query->num_rows() == 0) {
-                $this->db->where('id', $id);
-                $this->db->delete('category');
-                return true;
+                        $this->db->where('id', $id);
+                        $this->db->delete('menu');
+                        return true;
                 } else {
-                return 'Fail: Cannot edit category because it exists in po_purchase_meal_dtl';
+                        return 'Fail: Cannot edit category because it exists in po_purchase_meal_dtl';
                 }
         } 
 }

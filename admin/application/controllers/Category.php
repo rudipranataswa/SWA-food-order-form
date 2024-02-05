@@ -30,15 +30,41 @@ class Category extends CI_Controller
     public function index()
     {
         // $this->load->library('pagination');
-        // $config['num_tag_open'] = '&nbsp;<span class="pagination-link">';
-        // $config['num_tag_close'] = '</span>&nbsp;';
+        // config
+        $config['full_tag_open'] = '<nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+        
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+        
+        // $config['next_link'] = '&raquo';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+        
+        // $config['prev_link'] = '&laquo';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="page-item"><a class="page-link" href="#"><strong>';
+        $config['cur_tag_close'] = '</li></a></strong>';
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+
+        $config['attributes'] = array('class' => 'page-link');
+
         $config['base_url'] = base_url('Category/index');
         $config['total_rows'] = $this->db->count_all('category');
         $config['per_page'] = 10;
-
+        // initialize
         $this->pagination->initialize($config);
 
         $data['judul'] = 'Category';
+        $data['page'] = $this->uri->segment(3);
         $data['category_item'] = $this->category_model->paginate($config['per_page'], $this->uri->segment(3));
 
         $this->load->view('templates/header', $data);
@@ -54,10 +80,32 @@ class Category extends CI_Controller
     public function add_category()
     {
         $data['judul'] = 'Create New Category';
-        
-        $this->load->view('templates/header', $data);
-        $this->load->view('category/add_category', $data);
-        $this->load->view('templates/footer');
+        $category = $this->input->post('Category');
+        $this->db->where('category', $category);
+        $query = $this->db->get('category');
+        $this->form_validation->set_rules('Category', 'Category', 'required', array('required' => 'Category field must not be empty'));
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('category/add_category', $data);
+            $this->load->view('templates/footer');
+
+            $this->session->set_flashdata('flash ', 'Create New Category Fail!');
+            // redirect('category');
+        } else {
+            if ($query->num_rows() > 0) {
+                $this->session->set_flashdata('flash', 'Data Already Exist');
+                redirect('category');
+            } else {
+                $category = $this->input->post('Category');
+                $session_name = $this->session->userdata('fullname');
+                $admin_id = $this->category_model->get_admin_id($session_name);
+                
+                $this->category_model->create_category($category, $admin_id);
+                $this->session->set_flashdata('flash', 'Create New Category Succeed!');
+                redirect('category');
+            }
+        }
     }
 
     public function edit_category()
@@ -70,61 +118,73 @@ class Category extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function create_new()
-    {
-        $data['judul'] = 'Create New Category';
-
-        $this->form_validation->set_rules('Category', 'Category', 'required', array('required' => 'Category field must not be empty'));
-
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('category/add_category', $data);
-            $this->load->view('templates/footer');
-
-            $this->session->set_flashdata('flash ', 'Create New Category Fail!');
-            redirect('category');
-        } else {
-            $category = $this->input->post('Category');
-            $session_name = $this->session->userdata('fullname');
-            $admin_id = $this->category_model->get_admin_id($session_name);
-
-            $this->category_model->create_category($category, $admin_id);
-            $this->session->set_flashdata('flash ', 'Create New Category Succeed!');
-            redirect('category');
-        }
-    }
-
-    // public function get_by_id($limit, $start)
+    // public function create_new()
     // {
-    //     $this->db->limit($limit, $start);
-    //     $this->db->select('id');
-    //     $this->db->from('category');
-    //     $query = $this->db->get();
-    //     return $query->result_array();
-    // }
+    //     $data['judul'] = 'Create New Category';
+    //     $category = $this->input->post('Category');
+    //     $this->db->where('category', $category);
+    //     $query = $this->db->get('category');
+    //     $this->form_validation->set_rules('Category', 'Category', 'required', array('required' => 'Category field must not be empty'));
 
+    //     if ($this->form_validation->run() === FALSE) {
+    //         $this->load->view('templates/header', $data);
+    //         $this->load->view('category/add_category', $data);
+    //         $this->load->view('templates/footer');
+
+    //         $this->session->set_flashdata('flash ', 'Create New Category Fail!');
+    //         // redirect('category');
+    //     } else {
+    //         if ($query->num_rows() > 0) {
+    //             $this->session->set_flashdata('flash', 'Data Already Exist');
+    //             redirect('category');
+    //         } else {
+    //             $category = $this->input->post('Category');
+    //             $session_name = $this->session->userdata('fullname');
+    //             $admin_id = $this->category_model->get_admin_id($session_name);
+                
+    //             $this->category_model->create_category($category, $admin_id);
+    //             $this->session->set_flashdata('flash', 'Create New Category Succeed!');
+    //             redirect('category');
+    //         }
+    //     }
+    // }
+        
     public function update_category()
     {
         $id = $this->input->post('id_number');
         $category = $this->input->post('Category1');
-        $session_name = $this->session->userdata('fullname');
-        $admin_id = $this->category_model->get_admin_id($session_name);
+        $this->db->where('category', $category);
+        $query = $this->db->get('category');
+        $query1 = $this->db->get('po_purchase_meal_dtl');
 
-        $this->category_model->update_category($id, $category, $admin_id);
-        redirect('category');
+        if ($query->num_rows() > 0) {
+            $this->session->set_flashdata('flash', 'Data Already Exist');
+            redirect('category');
+        } else if ($query1->num_rows() > 0) {
+            $this->session->set_flashdata('flash', 'Fail: Cannot edit category because it exists in PO Purchase');
+            redirect('category');
+        } else {
+            $session_name = $this->session->userdata('fullname');
+            $admin_id = $this->category_model->get_admin_id($session_name);
+            
+            $this->category_model->update_category($id, $category, $admin_id);
+            $this->session->set_flashdata('flash', 'Edit Category Succeed!');
+            redirect('category');
+        }  
     }
 
     public function delete_category()
     {
         $id = $this->input->post('id_number');
         $result = $this->category_model->delete_category($id);
+        $query = $this->db->get('po_purchase_meal_dtl');
 
-        if ($result === true) {
-            $this->session->set_flashdata('flash', 'Category successfully deleted');
+        if ($query->num_rows() > 0) {
+            $this->session->set_flashdata('flash', 'Fail: Cannot delete category because it exists in PO Purchase');
             redirect('category');
         } else {
-            // Store the error message in flashdata
-            $this->session->set_flashdata('flash', $result);
+            $this->category_model->delete_category($id);
+            $this->session->set_flashdata('flash', 'Success: Menu deleted');
             redirect('category');
         }
     }

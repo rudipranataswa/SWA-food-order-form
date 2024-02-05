@@ -1,3 +1,8 @@
+<style>
+    .pagination-link a {
+        color: grey;
+    }
+</style>
 <!-- MAIN CONTENT-->
 <div class="main-content">
     <div class="section__content section__content--p30">
@@ -21,12 +26,11 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $no = 1; // Initialize $no variable
                                             foreach ($report as $rpt) : 
                                                 if($rpt != null) { // Check if $vrpt is not null
                                             ?>
                                                 <tr class="tr-shadow">
-                                                    <td><?= $no ?></td>
+                                                    <td><?= ++$page ?></td>
                                                     <td><?= $rpt['remark']; ?></td>
                                                     <td><?= $rpt['begin_date']; ?></td>
                                                     <td><?= $rpt['end_date']; ?></td>
@@ -45,15 +49,14 @@
                                                     </td>
                                                 </tr>
                                                 <tr class="spacer"></tr>
-                                            <?php 
-                                                $no++; // Increment $no variable
+                                            <?php  // Increment $no variable
                                             }
                                         endforeach; ?>
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="pagination-link">
-                                <?php echo $this->pagination->create_links(); ?>
+                                <div class="pagination-link">
+                                    <?php echo $this->pagination->create_links(); ?>
+                                </div>
                             </div>
                             <!-- END DATA TABLE -->
                         </div>

@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="hf-menu" class=" form-control-label">New category name</label>
+                                        <label for="hf-menu" class=" form-control-label">New Category</label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="text" id="hf-menu" name="Category1" value="<?= $category_name; ?>" class="form-control" required>

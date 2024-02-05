@@ -1,6 +1,6 @@
 <style>
     .pagination-link a {
-        padding: 10px;
+        color: grey;
     }
 </style>
 <!-- MAIN CONTENT-->
@@ -20,7 +20,8 @@
                             <?php endif; ?>
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
-                                    <a class="au-btn au-btn-icon au-btn--green au-btn--small" href="<?= base_url(); ?>category/add_category">
+                                    <a class="au-btn au-btn-icon au-btn--green au-btn--small" 
+                                        href="<?= base_url(); ?>category/add_category">
                                         <i class="zmdi zmdi-plus"></i>create new
                                     </a>
                                 </div>
@@ -37,38 +38,36 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $no = 1;
-                                            foreach ($category_item as $cat) : ?>
-                                                <tr class="tr-shadow">
-                                                    <td><?= $no; ?></td>
-                                                    <td><?= $cat['category']; ?></td>
-                                                    <td>
-                                                        <div class="table-data-feature">
-                                                            <a class="item" data-toggle="tooltip" data-placement="top" title="Edit" href="<?= base_url(); ?>category/edit_category/<?= $cat['id']; ?>">
-                                                                <i class="zmdi zmdi-edit"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="table-data-feature">
-                                                            <form action="<?= base_url(); ?>category/delete_category" method="post" id="deleteForm<?= $cat['id']; ?>">
-                                                                <input type="hidden" name="id_number" value="<?= $cat['id']; ?>">
-                                                                <button type="button" class="btn item" data-toggle="modal" data-target="#deleteModal<?= $cat['id']; ?>" title="Delete">
-                                                                    <i class="zmdi zmdi-delete"></i>
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="spacer"></tr>
-                                            <?php 
-                                            $no++;
+                                        foreach ($category_item as $cat) : ?>
+                                            <tr class="tr-shadow">
+                                                <td><?= ++$page; ?></td>
+                                                <td><?= $cat['category']; ?></td>
+                                                <td>
+                                                    <div class="table-data-feature">
+                                                        <a class="item" data-toggle="tooltip" data-placement="top" title="Edit" href="<?= base_url(); ?>category/edit_category/<?= $cat['id']; ?>">
+                                                            <i class="zmdi zmdi-edit"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="table-data-feature">
+                                                        <form action="<?= base_url(); ?>category/delete_category" method="post" id="deleteForm<?= $cat['id']; ?>">
+                                                            <input type="hidden" name="id_number" value="<?= $cat['id']; ?>">
+                                                            <button type="button" class="btn item" data-toggle="modal" data-target="#deleteModal<?= $cat['id']; ?>" title="Delete">
+                                                                <i class="zmdi zmdi-delete"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="spacer"></tr>
+                                        <?php 
                                         endforeach; ?>
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="pagination-link text-center">
-                                <?php echo $this->pagination->create_links(); ?>
+                                <div class="pagination-link">
+                                    <?php echo $this->pagination->create_links(); ?>
+                                </div>
                             </div>
                             <!-- END DATA TABLE -->
                         </div>

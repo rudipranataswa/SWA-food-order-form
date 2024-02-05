@@ -10,15 +10,15 @@
 							<strong>Edit product</strong>
 						</div>
 						<div class="card-body card-block">
-							<form action="<?php echo base_url('product/update_menu'. $menu['menu_id']); ?>" method="post" class="form-horizontal" id="menu_form">
-								<!-- <div class="row form-group">
+							<form action="<?php echo base_url('product/update_menu/'. $menu['menu_id']); ?>" method="post" class="form-horizontal" id="menu_form">
+								<div class="row form-group">
 									<div class="col col-md-3">
 										<label for="hf-id" class=" form-control-label">ID</label>
 									</div>
 									<div class="col-12 col-md-9">
 										<input value="<?= $this->uri->segment(3); ?>" type="int" id="hf-id" name="hf-id" placeholder="<?= $this->uri->segment(3); ?>" class="form-control" readonly>
 									</div>
-								</div> -->
+								</div>
 								<div class="row form-group">
 									<div class="col col-md-3">
 										<label for="hf-menu" class=" form-control-label">Category</label>
@@ -27,7 +27,7 @@
 										<select name="Category" id="category" style="width: 373px;">
 											<?php
 											$selected_category = $menu['category'];
-											foreach ($categories as $cat) : ?>
+											foreach ($category as $cat) : ?>
 												<option value="<?= $cat['id']; ?>" <?= $cat['category'] == $selected_category ? 'selected' : ''; ?>><?= $cat['category']; ?></option>
 											<?php endforeach; ?>							
 										</select>
@@ -38,7 +38,7 @@
 										<label for="hf-menu" class=" form-control-label">Menu name</label>
 									</div>
 									<div class="col-12 col-md-9">
-										<input type="text" id="name" name="menu" value="<?= $menu['name']; ?>" class="form-control" required>
+										<input type="text" id="name" name="name" value="<?= $menu['name']; ?>" class="form-control" required>
 									</div>
 								</div>
 							</form>

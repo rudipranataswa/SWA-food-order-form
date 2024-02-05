@@ -31,7 +31,7 @@
     $(document).ready(function(){
         setTimeout(function() {
             $('#flashdata').fadeOut('slow');
-        }, 5000); // <-- time in milliseconds, 10000 ms = 10 sec
+        }, 5000); // <-- time in milliseconds, 5000 ms = 5 sec
     });
     document.querySelector('.card-header .btn-copy').addEventListener('click', function() {
       var text = document.querySelector('.body-text').innerText;

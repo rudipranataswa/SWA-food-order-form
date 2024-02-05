@@ -15,7 +15,7 @@
                             <strong>Add Category</strong>
                         </div>
                         <div class="card-body card-block">
-                            <form action="<?php echo site_url('Category/create_new'); ?>" method="post" class="form-horizontal" id="productForm">
+                            <form action="<?php echo site_url('category/add_category'); ?>" method="post" class="form-horizontal" id="productForm">
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
                                         <label for="input-normal" class=" form-control-label">Category</label>
