@@ -28,31 +28,37 @@
                   </a>
                 </div>
               </div>
-              <!-- <form class="form-inline">
-                <div class="form-group mb-2">
-                  <label for="select-category" class="sr-only">Sort Category:</label>
-                  <select name="category" id="select-category" class="form-control">
-                    <?php $i = 1;
-                    foreach ($category as $cat) : ?>
-                      <option value="<?= $i++; ?>" <?= (isset($_GET['category']) && $_GET['category'] == $i) ? 'selected' : ''; ?>><?= $cat['category']; ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="form-group mx-sm-3 mb-2">
-                  <div class="input-group">
-                    <input
-                      type="email"
-                      id="input2-group2"
-                      name="input2-group2"
+              <div class="form-inline col-md-6">
+                <form action="<?= base_url('product')?>" method="post" class="form-inline">
+                  <div class="form-group mb-2">
+                    <label for="select-category" class="sr-only">Sort Category:</label>
+                    <select name="category" id="select-category" class="form-control">
+                      <option value="0" >All Menu</option>
+                      <?php $i = 1;
+                      foreach ($category as $cat) : ?>
+                        <option value="<?php echo $cat['id']; ?>" <?= (isset($_GET['category']) && $_GET['category'] == $i) ? 'selected' : ''; ?>><?= $cat['category']; ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                </form>
+                <form action="<?= base_url('product')?>" method="post" class="form-inline">
+                  <div class="form-group mx-sm-2 mb-2">
+                    <div class="input-group">
+                      <input
+                      type="text"
+                      id=""
+                      name="keyword"
                       placeholder="Search Menu..."
                       class="form-control"
-                    />
-                    <div class="input-group-btn">
-                      <button class="btn btn-danger">Search</button>
-                    </div>
-                  </div>		
-                </div>
-              </form> -->
+                      autocomplete="off"
+                      />
+                      <div class="input-group-btn">
+                        <button class="btn text-white au-btn--green" type="submit" name="submitSearch">Search</button>
+                      </div>
+                    </div>		
+                  </div>
+                </form>
+              </div>
               <div class="table-responsive table-responsive-data2">
                 <table
                   id="zero_config"

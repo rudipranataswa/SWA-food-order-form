@@ -18,6 +18,31 @@ class Product_model extends CI_Model
                 return $query->row_array();
         }
 
+        public function paginate($limit, $start, $keyword = null)
+        {
+                $this->db->select('menu.id, menu.name, category.category');
+                $this->db->from('menu');
+                $this->db->join('category', 'menu.id_category = category.id');
+                // if($category){
+                //         $this->db->where('id_category', $category);
+                // }
+                if($keyword){
+                        $this->db->like('name', $keyword);
+                }
+                $this->db->limit($limit, $start);
+                return $this->db->get('menu', $limit, $start, $keyword)->result_array();
+        }
+
+        public function sort_category($limit, $start, $category)
+        {
+                $this->db->select('menu.id, menu.name, category.category');
+                $this->db->from('menu');
+                $this->db->join('category', 'menu.id_category = category.id');
+                $this->db->where('id_category', $category);
+                $this->db->limit($limit, $start);
+                $query = $this->db->get();
+                return $query->result_array();
+        }
 
         public function get_dates($slug = FALSE)
         {
@@ -29,18 +54,6 @@ class Product_model extends CI_Model
 
                 $query = $this->db->get_where('po_purchase_meal_hdr', array('id' => $slug, 'status' => 'active'));
                 return $query->row_array();
-        }
-
-        public function sort_category($id)
-        {
-                $this->db->select('menu.id, menu.name, category.category');
-                $this->db->from('menu');
-                $this->db->join('category', 'menu.id_category = category.id');
-                if ($id) {
-                        $this->db->where('id_category', $id);
-                }
-                $query = $this->db->get();
-                return $query->result_array();
         }
 
         // public function insert_data()

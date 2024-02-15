@@ -29,41 +29,30 @@ class Product extends CI_Controller
 
     public function index()
     {
-        $config['full_tag_open'] = '<nav><ul class="pagination justify-content-center">';
-        $config['full_tag_close'] = '</ul></nav>';
+        if($this->input->post('keyword')){
+            $data['keyword'] =  $this->input->post('keyword');
+            $this->session->set_userdata('keyword', $data['keyword']);
+        } else {
+            $data['keyword'] = $this->session->userdata('keyword');
+        }
 
-        $config['first_link'] = 'First';
-        $config['first_tag_open'] = '<li class="page-item">';
-        $config['first_tag_close'] = '</li>';
-        
-        $config['last_link'] = 'Last';
-        $config['last_tag_open'] = '<li class="page-item">';
-        $config['last_tag_close'] = '</li>';
-        
-        // $config['next_link'] = '&raquo';
-        $config['next_tag_open'] = '<li class="page-item">';
-        $config['next_tag_close'] = '</li>';
-        
-        // $config['prev_link'] = '&laquo';
-        $config['prev_tag_open'] = '<li class="page-item">';
-        $config['prev_tag_close'] = '</li>';
+        // $config['base_url'] = base_url('product/index');
 
-        $config['cur_tag_open'] = '<li class="page-item"><a class="page-link" href="#"><strong>';
-        $config['cur_tag_close'] = '</li></a></strong>';
-        $config['num_tag_open'] = '<li class="page-item">';
-        $config['num_tag_close'] = '</li>';
-
-        $config['attributes'] = array('class' => 'page-link');
-
-        $config['base_url'] = base_url('product/index');
-        $config['total_rows'] = $this->db->count_all('menu');
+        // $this->db->like('name', $data['keyword']);
+        // $this->db->from('menu');
+        $config['total_rows'] = $this->db->count_all_results();
         $config['per_page'] = 10;
 
         $this->pagination->initialize($config);
 
         $data['judul'] = 'Menu';
         $data['page'] = $this->uri->segment(3);
-        $data['product'] = $this->product_model->paginate($config['per_page'], $this->uri->segment(3));
+        $category = $this->input->post('category');
+        // if ($category == ""){
+            $data['product'] = $this->product_model->paginate($config['per_page'], $data['page'], $data['keyword']);
+        // } else {
+        //     $data['product'] = $this->product_model->paginate($config['per_page'], $data['page'], $category);
+        // }
         $data['category'] = $this->product_model->get_category();
 
         $this->load->view('templates/header', $data);
@@ -74,12 +63,6 @@ class Product extends CI_Controller
         header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
         header('Pragma: no-cache');
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-    }
-
-    public function fetch_menu() {
-            if($this->input->post('id_category')) {
-                    echo $this->menu_model->fetch_menu($this->input->post('id_category'));
-            }
     }
 
     public function add_product()
@@ -172,7 +155,7 @@ class Product extends CI_Controller
         $name = $this->input->post('name');
 
         if ($query->num_rows() > 0) {
-            $this->session->set_flashdata('flash', 'Fail: Cannot edit product because it exists in PO Purchase');
+            $this->session->set_flashdata('flash', 'Fail: Cannot edit menu because it exists in PO Purchase');
             redirect('product');
         } else {
             $this->product_model->update_menu($id, $category_id, $name);
@@ -188,7 +171,7 @@ class Product extends CI_Controller
         $query = $this->db->get('po_purchase_meal_dtl');
 
         if ($query->num_rows() > 0) {
-            $this->session->set_flashdata('flash', 'Fail: Cannot delete product because it exists in PO Purchase');
+            $this->session->set_flashdata('flash', 'Fail: Cannot delete menu because it exists in PO Purchase');
             redirect('product');
         } else {
             $this->product_model->delete_menu($id);
