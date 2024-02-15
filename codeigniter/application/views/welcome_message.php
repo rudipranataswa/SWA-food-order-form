@@ -11,7 +11,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>/css/main.css">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Viga&display=swap" rel="stylesheet">
-	<title>Welcome to CodeIgniter</title>
+	<!-- <title>Welcome to CodeIgniter</title> -->
 
 	<style type="text/css">
 		body {
@@ -158,12 +158,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			text-align: center;
 		}
 
-		@media screen and (max-width: 600px) {
-			.block-display1 textarea {
-				width: 100%;
-			}
-		}
-
 		.modal {
 			display: none;
 			position: fixed;
@@ -178,37 +172,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			background-color: rgba(0, 0, 0, 0.9);
 		}
 
+		.modal-container {
+			position: relative;
+			width: 25%;
+			max-width: 25%;
+			margin: auto;
+		}
+
 		.modal-content {
 			margin: auto;
 			display: block;
-			width: 25%;
-			max-width: 25%;
-			align-items: center;
-		}
-
-		@media screen and (min-width: 201px) and (max-width: 600px) {
-			.block-display1 textarea {
-				width: 50%;
-			}
-
-			.modal-content {
-				margin: auto;
-				display: block;
-				width: 75%;
-				max-width: 75%;
-				align-items: center;
-			}
+			width: 100%;
+			max-width: 100%;
+			position: relative;
+			/* This makes .close position relative to .modal-content */
 		}
 
 		.close {
 			position: absolute;
 			top: 15px;
-			right: 35px;
+			/* Adjust as needed */
+			right: 15px;
+			/* Adjust as needed */
 			color: #f1f1f1;
-			font-size: 40px;
+			font-size: 35px;
 			font-weight: bold;
-			transition: 0.3s;
 		}
+
 
 		.close:hover,
 		.close:focus {
@@ -221,6 +211,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			font-size: 30px;
 			color: white;
 			text-align: center;
+			margin-top: 5%;
 		}
 
 		.container {
@@ -250,9 +241,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			background-color: lightgray;
 		}
 
-		/* .col-md-3 {
-			padding-top: 40px;
-		} */
+		.col-md-3 {
+			font-size: 16px;
+		}
 
 		.center-image {
 			display: flex;
@@ -279,10 +270,44 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			text-align: left;
 		}
 
+
+
 		.menu-container {
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
+		}
+
+		.block-display1 textarea {
+			width: 50%;
+		}
+
+		@media screen and (min-width: 201px) and (max-width: 600px) {
+			.block-display1 textarea {
+				width: 70%;
+			}
+
+			.modal-content {
+				margin: auto;
+				display: block;
+				width: 75%;
+				max-width: 75%;
+				position: relative;
+			}
+
+			.modal-container {
+				position: relative;
+				width: 75%;
+				max-width: 75%;
+				margin: auto;
+			}
+
+			#noImage {
+				font-size: 20px;
+				color: white;
+				text-align: center;
+				margin-top: 10%;
+			}
 		}
 	</style>
 
@@ -362,15 +387,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		<div class="container">
 			<div class="row">
-				<div class="col-md-9">
-					<h1 id="dailySetHeading">Daily Set</span></h1>
+				<div class="col-md-15">
+					<h1>Daily Set<span id="dailySetHeading"><span id="arrow" style="float: right; cursor: pointer;">▼</span></span></h1>
 				</div>
-				<div class="col-md-3">Click on the menu name to display image</div>
 			</div>
 		</div>
-
-
 		<div id="dailySetTable" style="display: none;">
+			<div class="col-md-3">Click on the menu name to display image</div>
 			<div class="table-responsive">
 				<table>
 					<tr>
@@ -460,18 +483,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 														echo '<span style="display:inline-block; width: 7px;"></span><input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]"  value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $child_menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br> ';
 														$checkboxId++;
 														$length = strlen($child_menu['name']);
-														if ($max_length > 30) {
-															echo '<div class="menu-container">';
-															echo '</div>'; // Add line
-															echo '<div class="menu-container">';
-															echo '</div>'; // Add line
-														}
-														if ($length < 30) {
-															echo '<div class="menu-container">';
-															echo '</div>'; // Add line
-															echo '<div class="menu-container">';
-															echo '</div>'; // Add line
-														}
 													}
 												}
 											}
@@ -490,10 +501,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 						?>
 						<div id="myModal" class="modal">
-							<span class="close">×</span>
-							<img class="modal-content" id="img01">
+							<div class="modal-container">
+								<img class="modal-content" id="img01">
+								<span class="close">×</span>
+							</div>
 							<div id="noImage" style="display: none;">Image is not available</div>
 						</div>
+
 
 					</tr>
 
@@ -578,18 +592,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 													echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]" value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $child_menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
 													$checkboxId++;
 													$length = strlen($child_menu['name']);
-													if ($max_length > 30) {
-														echo '<div class="menu-container">';
-														echo '</div>'; // Add line
-														echo '<div class="menu-container">';
-														echo '</div>'; // Add line
-													}
-													if ($length < 30) {
-														echo '<div class="menu-container">';
-														echo '</div>'; // Add line
-														echo '<div class="menu-container">';
-														echo '</div>'; // Add line
-													}
 												}
 											}
 											$menu_found = true;
@@ -614,13 +616,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-9">
-					<h1 id="pastaHeading">Pasta</span></h1>
+				<div class="col-md-15">
+					<h1>Pasta<span id="pastaHeading"><span id="pastaArrow" style="float: right; cursor: pointer;">▼</span></span>
+					</h1>
 				</div>
-				<div class="col-md-3">Click on the menu name to display image</div>
 			</div>
 		</div>
 		<div id="pastaTable" style="display: none;">
+			<div class="col-md-3">Click on the menu name to display image</div>
 			<table>
 				<tr>
 					<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall2"></th>
@@ -790,13 +793,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</div>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-9">
-					<h1 id="breakfastHeading">Breakfastand and Stall</span></h1>
+				<div class="col-md-15">
+					<h1>Breakfastand and Stall<span id="breakfastHeading"><span id="breakfastArrow" style="float: right; cursor: pointer; ">▼</span></span></h1>
 				</div>
-				<div class="col-md-3">Click on the menu name to display image</div>
 			</div>
 		</div>
 		<div id="breakfastTable" style="display: none;">
+			<div class="col-md-3">Click on the menu name to display image</div>
 			<table>
 				<tr>
 					<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall3"></th>

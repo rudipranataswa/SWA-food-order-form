@@ -72,7 +72,7 @@ class Welcome extends CI_Controller
 			// Transaction failed
 			$this->session->set_flashdata('error_message', 'Ordering menu failed');
 		}
-		redirect($this->agent->referrer());
-		$this->load->view('summary', $data);
+		// redirect($this->agent->referrer());	
+		$this->load->view('summary');
 	}
 }
