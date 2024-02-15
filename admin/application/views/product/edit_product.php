@@ -7,24 +7,24 @@
 					<!-- Horizontal Form -->
 					<div class="card">
 						<div class="card-header">
-							<strong>Edit product</strong>
+							<strong>Edit Menu</strong>
 						</div>
 						<div class="card-body card-block">
 							<form action="<?php echo base_url('product/update_menu/'. $menu['menu_id']); ?>" method="post" class="form-horizontal" id="menu_form">
-								<div class="row form-group">
+								<!-- <div class="row form-group">
 									<div class="col col-md-3">
 										<label for="hf-id" class=" form-control-label">ID</label>
 									</div>
 									<div class="col-12 col-md-9">
 										<input value="<?= $this->uri->segment(3); ?>" type="int" id="hf-id" name="hf-id" placeholder="<?= $this->uri->segment(3); ?>" class="form-control" readonly>
 									</div>
-								</div>
+								</div> -->
 								<div class="row form-group">
-									<div class="col col-md-3">
-										<label for="hf-menu" class=" form-control-label">Category</label>
+									<div class="col col-sm-5">
+										<label for="hf-menu" class=" form-control-label">Category<span class="text-danger">*</span></label>
 									</div>
-									<div class="col-12 col-md-9">
-										<select name="Category" id="category" style="width: 373px;">
+									<div class="col col-6">
+										<select name="Category" id="category" class="form-control">
 											<?php
 											$selected_category = $menu['category'];
 											foreach ($category as $cat) : ?>
@@ -34,10 +34,10 @@
 									</div>
 								</div>
 								<div class="row form-group">
-									<div class="col col-md-3">
-										<label for="hf-menu" class=" form-control-label">Menu name</label>
+									<div class="col col-sm-5">
+										<label for="hf-menu" class=" form-control-label">Menu name<span class="text-danger">*</span></label>
 									</div>
-									<div class="col-12 col-md-9">
+									<div class="col col-6">
 										<input type="text" id="name" name="name" value="<?= $menu['name']; ?>" class="form-control" required>
 									</div>
 								</div>

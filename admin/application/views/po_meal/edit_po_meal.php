@@ -15,7 +15,7 @@
                             <form action="" method="post" class="form-horizontal">
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="input-normal" class=" form-control-label">Title</label>
+                                        <label for="input-normal" class=" form-control-label">Title<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="text" id="input-normal" name="input-normal" placeholder="Indonesia Chinese Food" class="form-control" readonly>
@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="input-normal" class=" form-control-label">Begin Date</label>
+                                        <label for="input-normal" class=" form-control-label">Begin Date<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="text" id="input-normal" name="input-normal" placeholder="12-12-2012" class="form-control" readonly>
@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="input-normal" class=" form-control-label">End Date</label>
+                                        <label for="input-normal" class=" form-control-label">End Date<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="text" id="input-normal" name="input-normal" placeholder="1-1-2013" class="form-control" readonly>
@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="row form-group">
                                         <div class="col col-sm-5">
-                                            <label for="input-normal" class=" form-control-label">Status</label>
+                                            <label for="input-normal" class=" form-control-label">Status<span class="text-danger">*</span></label>
                                         </div>
                                         <div class="col col-sm-6">
                                             <select

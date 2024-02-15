@@ -22,7 +22,7 @@
 						<form action="<?php echo site_url('product/add_product'); ?>" method="post" class="form-horizontal" id="productForm">
 							<div class="row form-group">
 								<div class="col col-sm-5">
-									<label class="pb-1">Choose Category:</label>
+									<label class="pb-1">Choose Category<span class="text-danger">*</span></label>
 								</div>
 								<div class="col col-sm-6">
 									<select name="category" id="category" class="form-control">
@@ -35,7 +35,7 @@
 							</div>
 							<div class="row form-group">
 								<div class="col col-sm-5">
-									<label for="input-normal" class=" form-control-label">Menu Name</label>
+									<label for="input-normal" class=" form-control-label">Menu Name<span class="text-danger">*</span></label>
 								</div>
 								<div class="col col-sm-6">
 									<input type="text" id="input-normal" name="name" placeholder="Type here..." class="form-control" required>

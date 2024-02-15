@@ -18,9 +18,10 @@ class Product_model extends CI_Model
                 return $query->row_array();
         }
 
-        public function paginate($limit, $start, $keyword = null)
+        public function paginate($limit, $start, $keyword = null) //
         {
-                $this->db->select('menu.id, menu.name, category.category');
+                $this->db->limit($limit, $start);
+                $this->db->select('menu.id, menu.name, category.category, category.id as cat_id');
                 $this->db->from('menu');
                 $this->db->join('category', 'menu.id_category = category.id');
                 // if($category){
@@ -29,17 +30,14 @@ class Product_model extends CI_Model
                 if($keyword){
                         $this->db->like('name', $keyword);
                 }
-                $this->db->limit($limit, $start);
-                return $this->db->get('menu', $limit, $start, $keyword)->result_array();
-        }
+                $query = $this->db->get();
+                return $query->result_array(); //'menu', $limit, $start, $keyword
+        } 
 
-        public function sort_category($limit, $start, $category)
+        public function get_category($category)
         {
-                $this->db->select('menu.id, menu.name, category.category');
-                $this->db->from('menu');
-                $this->db->join('category', 'menu.id_category = category.id');
-                $this->db->where('id_category', $category);
-                $this->db->limit($limit, $start);
+                $this->db->select('*');
+                $this->db->from('category');
                 $query = $this->db->get();
                 return $query->result_array();
         }

@@ -29,31 +29,32 @@ class Product extends CI_Controller
 
     public function index()
     {
-        if($this->input->post('keyword')){
-            $data['keyword'] =  $this->input->post('keyword');
+        if($this->input->get('keyword')){
+            $data['keyword'] =  $this->input->get('keyword');
             $this->session->set_userdata('keyword', $data['keyword']);
         } else {
             $data['keyword'] = $this->session->userdata('keyword');
         }
 
-        // $config['base_url'] = base_url('product/index');
-
+        
         // $this->db->like('name', $data['keyword']);
         // $this->db->from('menu');
-        $config['total_rows'] = $this->db->count_all_results();
+        $config['base_url'] = base_url('product/index');
+        $config['total_rows'] = $this->db->count_all('menu');
         $config['per_page'] = 10;
 
         $this->pagination->initialize($config);
 
         $data['judul'] = 'Menu';
         $data['page'] = $this->uri->segment(3);
+        $data['category'] = $this->product_model->get_category();
         $category = $this->input->post('category');
         // if ($category == ""){
-            $data['product'] = $this->product_model->paginate($config['per_page'], $data['page'], $data['keyword']);
+            $data['product'] = $this->product_model->paginate($config['per_page'], $this->uri->segment(3), $data['keyword']); //
         // } else {
         //     $data['product'] = $this->product_model->paginate($config['per_page'], $data['page'], $category);
         // }
-        $data['category'] = $this->product_model->get_category();
+        // $data['category'] = $this->product_model->get_category();
 
         $this->load->view('templates/header', $data);
         $this->load->view('product/index', $data);

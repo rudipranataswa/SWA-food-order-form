@@ -169,7 +169,7 @@
                           </div>
                         </div>
                         <div class="account-dropdown__footer">
-                          <a href="<?= base_url(); ?>Login/forget_password"> <i class="zmdi zmdi-key"></i>Reset Password</a>
+                          <a href="<?= base_url(); ?>Login/forget_password"> <i class="zmdi zmdi-key"></i>Change Password</a>
                           <a href="<?= base_url(); ?>Login/logout"> <i class="zmdi zmdi-power"></i>Logout</a>
                         </div>
                       </div>

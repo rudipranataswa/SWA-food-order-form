@@ -48,7 +48,7 @@
 							<div class="card-body card-block">
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class="form-control-label">Title <span class="required">*</span></label>
+										<label for="input-normal" class="form-control-label">Title<span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
 										<input type="text" id="input-normal" name="Title" placeholder="Type here..." class="form-control" required>
@@ -56,7 +56,7 @@
 								</div>
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">Begin Date <span class="required">*</span></label>
+										<label for="input-normal" class=" form-control-label">Begin Date<span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
 										<input type="date" id="input-normal" name="Begin" placeholder="Type here..." class="form-control" required>
@@ -64,7 +64,7 @@
 								</div>
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">End Date <span class="required">*</span></label>
+										<label for="input-normal" class=" form-control-label">End Date<span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
 										<input type="date" id="input-normal" name="End" placeholder="Type here..." class="form-control" required>
@@ -72,7 +72,7 @@
 								</div>
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">Status <span class="required">*</span></label>
+										<label for="input-normal" class=" form-control-label">Status<span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
 										<select name="Status" id="input-normal" class="form-control" required>

@@ -18,7 +18,7 @@
                             <form action="<?php echo site_url('category/add_category'); ?>" method="post" class="form-horizontal" id="productForm">
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="input-normal" class=" form-control-label">Category</label>
+                                        <label for="input-normal" class=" form-control-label">Category<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="text" id="input-normal" name="Category" placeholder="Type here..." class="form-control">
@@ -29,7 +29,7 @@
                                 <div class="alert alert-warning">
                                     <?php echo validation_errors('<div class="error">', '</div>'); ?>
                                 </div>
-                                <?php endif; ?>
+                            <?php endif; ?>
                         </div>
                         <div class="card-footer">
                             <a href="<?php echo site_url('Category/index'); ?>" class="btn btn-secondary btn-sm">

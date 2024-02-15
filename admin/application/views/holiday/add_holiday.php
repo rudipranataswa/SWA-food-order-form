@@ -13,7 +13,7 @@
                             <div class="card-body card-block">
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="input-date" class=" form-control-label">Date <span class="text-danger">*</span></label>
+                                        <label for="input-date" class=" form-control-label">Date<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="date" id="date" name="date" placeholder="" class="form-control">
@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="input-description" class=" form-control-label">Description <span class="text-danger">*</span></label>
+                                        <label for="input-description" class=" form-control-label">Description<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="text" id="description" name="description" placeholder="Type here..." class="form-control">

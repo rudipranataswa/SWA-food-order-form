@@ -11,17 +11,17 @@
                                 <strong>Edit holiday</strong>
                             </div>
                             <div class="card-body card-block">
-                                <div class="row form-group">
+                                <!-- <div class="row form-group">
                                     <div class="col col-md-3">
                                         <label for="id" class=" form-control-label">ID</label>
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <input type="int" id="id" name="id" value="<?= $holiday['id']; ?>" class="form-control" disabled>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                        <label for="date" class=" form-control-label">Date</label>
+                                        <label for="date" class=" form-control-label">Date<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <input type="date" id="date" name="date" value="<?= $holiday['date']; ?>" class="form-control">
@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                        <label for="description" class=" form-control-label">Description</label>
+                                        <label for="description" class=" form-control-label">Description<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <input type="text" id="description" name="description" value="<?= $holiday['description']; ?>" class="form-control" required>

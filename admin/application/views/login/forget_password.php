@@ -49,8 +49,8 @@
 </div>
 
 
-Modal Pop-up
-<!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Modal Pop-up
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -64,7 +64,7 @@ Modal Pop-up
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <!-- Add a click event to the 'Yes' button to submit the form -->
+                Add a click event to the 'Yes' button to submit the form 
 <button type="button" class="btn btn-primary" onclick="document.forms[0].submit();">Yes</button>
 </div>
 </div>

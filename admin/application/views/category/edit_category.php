@@ -11,7 +11,7 @@
                         </div>
                         <div class="card-body card-block">
                             <form action="<?php echo site_url('Category/update_category'); ?>" method="post" class="form-horizontal" id="editForm">
-                                <div class="row form-group">
+                                <!-- <div class="row form-group">
                                     <div class="col col-sm-5">
                                         <label for="hf-id" class=" form-control-label">ID</label>
                                     </div>
@@ -19,10 +19,10 @@
                                         <input type="int" id="hf-id" name="id_number" placeholder="<?= $this->uri->segment(3); ?>" class="form-control" disabled>
                                         <input type="hidden" id="hf-id" name="id_number" value="<?= $this->uri->segment(3); ?>">
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
-                                        <label for="hf-menu" class=" form-control-label">New Category</label>
+                                        <label for="hf-menu" class=" form-control-label">New Category<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="text" id="hf-menu" name="Category1" value="<?= $category_name; ?>" class="form-control" required>
