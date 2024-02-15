@@ -141,14 +141,19 @@
 										<div style="display: flex; flex-direction: column;" class="dailyset-detail pb-2">
 											<div class="protein-collapse pb-2">
 												<a class="btn btn-primary" data-toggle="collapse" href="#proteinMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
-													Dailyset Menu
+													Protein Menu
 												</a>
 
 												<div class="collapse" id="proteinMenu">
 													<div class="card card-body">
 														<?php foreach ($protein as $proteins) : ?>
-															<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-															<p><?php echo $proteins['name']; ?></p>
+															<div class="form-check">
+																<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+																<label class="form-check-label" for="flexRadioDefault1">
+																	<?php echo $proteins['name']; ?>
+																</label>
+															</div>
+
 														<?php endforeach; ?>
 													</div>
 												</div>
