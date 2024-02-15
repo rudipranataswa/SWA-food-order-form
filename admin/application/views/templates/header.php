@@ -134,6 +134,7 @@
 								<i class="fas fa-file-text"></i>Report
 							</a>
 						</li>
+
 						<li class="has-sub">
 							<a class="js-arrow" href="#">
 								<i class="fas fa-user"></i>Profile</a>
@@ -173,23 +174,34 @@
 							} ?>>
 							<a href="<?= base_url(); ?>category"> <i class="fas fa-th"></i>Category</a>
 						</li>
+
 						<li <?php if (strpos($judul, 'Product') !== false) {
 								echo 'class="active"';
 							} ?>>
 							<a href="<?= base_url(); ?>product">
 								<i class="fas fa-briefcase"></i>Product</a>
 						</li>
+
 						<li <?php if (strpos($judul, 'PO Purchase') !== false) {
 								echo 'class="active"';
 							} ?>>
 							<a href="<?= base_url(); ?>po_meal">
 								<i class="fas fa-shopping-cart"></i>PO Purchase</a>
 						</li>
+
 						<li <?php if (strpos($judul, 'Report') !== false) {
 								echo 'class="active"';
 							} ?>>
 							<a href="<?= base_url(); ?>report">
 								<i class="fas fa-file-text"></i>Report</a>
+						</li>
+
+						<li <?php if (strpos($judul, 'Image') !== false) {
+								echo 'class="active"';
+							} ?>>
+							<a href="<?= base_url(); ?>image">
+								<i class="fas fa-image"></i>Upload Image
+							</a>
 						</li>
 						<li class="has-sub">
 							<a class="js-arrow" href="#">

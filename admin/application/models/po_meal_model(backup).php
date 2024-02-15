@@ -48,51 +48,6 @@ class Po_meal_model extends CI_Model
 		return $query->result_array();
 	}
 
-	public function get_protein_menus()
-	{
-		$this->db->select('id, name, category_id');
-		$this->db->from('menu');
-		$this->db->where_in('category_id', 5);
-		$query = $this->db->get();
-		return $query->result_array();
-	}
-
-	public function get_sidedish_menus()
-	{
-		$this->db->select('id, name, category_id');
-		$this->db->from('menu');
-		$this->db->where_in('category_id', 9);
-		$query = $this->db->get();
-		return $query->result_array();
-	}
-
-	public function get_vegetable_menus()
-	{
-		$this->db->select('id, name, category_id');
-		$this->db->from('menu');
-		$this->db->where_in('category_id', 10);
-		$query = $this->db->get();
-		return $query->result_array();
-	}
-
-	public function get_soup_menus()
-	{
-		$this->db->select('id, name, category_id');
-		$this->db->from('menu');
-		$this->db->where_in('category_id', 2);
-		$query = $this->db->get();
-		return $query->result_array();
-	}
-
-	public function get_rice_menus()
-	{
-		$this->db->select('id, name, category_id');
-		$this->db->from('menu');
-		$this->db->where_in('category_id', 7);
-		$query = $this->db->get();
-		return $query->result_array();
-	}
-
 	public function insertData($data)
 	{
 		$query = $this->db->query('SELECT id FROM po_purchase_meal_hdr ORDER BY id');

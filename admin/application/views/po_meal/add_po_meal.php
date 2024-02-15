@@ -38,7 +38,6 @@
 					<?php } ?>
 
 
-
 					<div class="card">
 						<div class="card-header">
 							<strong>PO Meal Detail</strong>
@@ -115,6 +114,7 @@
 							</tr>
 						</thead>
 
+
 						<?php
 						$dates = isset($_GET['dates']) ? explode(',', $_GET['dates']) : array();
 						?>
@@ -125,7 +125,7 @@
 								<td rowspan="2" class="align-middle">Daily Set</td>
 								<?php for ($i = 0; $i < 12; $i++) : ?>
 									<td class="dailyset">
-										<div style="display: flex; align-items: center;">
+										<div style="display: flex; align-items: center; width: 450px;">
 											<select name="Dailyset_parent[<?= $i ?>]" id="dailyset<?= $i ?>" class="form-control" onchange="checkCheckbox(<?= $i ?>)">
 												<option disabled selected>Select Menu..</option>
 												<?php foreach ($dailyset as $daily) : ?>
@@ -137,15 +137,80 @@
 											<input type="checkbox" id="open-checkbox<?= $i ?>" onchange="toggleCheckboxes(<?= $i ?>)" style="display: none;">
 										</div>
 										<br>
-										<?php foreach ($menus as $j => $menu) : ?>
-											<div style="display: flex; align-items: center;" class="pb-2">
-												<input name="Id_menu[<?= $i ?>][<?= $j ?>]" id="checkbox<?= $i ?><?= $j ?>" value="<?= $menu['id'] ?>-<?= $menu['category_id'] ?>" type="checkbox" style="margin-right: 7px;" onclick="checkMenuCheckbox(<?= $i ?>, <?= $j ?>)" disabled>
-												<span class="text-dark"><?= wordwrap($menu['name'], 36, "<br />\n", true) ?></span>
-												<input name="Price[<?= $i ?>][<?= $j ?>]" type="number" style="width: 120px; margin-left: 7px;" placeholder="Price..." class="form-control">
-												<input name="Dates[<?= $i ?>][<?= $j ?>]" id="dailysetDate<?= $i ?><?= $j ?>" type="checkbox" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none ;" class="form-control">
-											</div>
-										<?php endforeach; ?>
 
+										<div style="display: flex; flex-direction: column;" class="dailyset-detail pb-2">
+											<div class="protein-collapse pb-2">
+												<a class="btn btn-primary" data-toggle="collapse" href="#proteinMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
+													Dailyset Menu
+												</a>
+
+												<div class="collapse" id="proteinMenu">
+													<div class="card card-body">
+														<?php foreach ($protein as $proteins) : ?>
+															<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+															<p><?php echo $proteins['name']; ?></p>
+														<?php endforeach; ?>
+													</div>
+												</div>
+											</div>
+
+											<div class="sidedish-collapse pb-2">
+												<a class="btn btn-primary" data-toggle="collapse" href="#sidedishMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
+													Side Dish Menu
+												</a>
+
+												<div class="collapse" id="sidedishMenu">
+													<div class="card card-body">
+														<?php foreach ($sidedish as $side) : ?>
+															<p><?php echo $side['name']; ?></p>
+														<?php endforeach; ?>
+													</div>
+												</div>
+											</div>
+
+											<div class="vegetable-collapse pb-2">
+												<a class="btn btn-primary" data-toggle="collapse" href="#vegetableMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
+													Vegetable Menu
+												</a>
+
+												<div class="collapse" id="vegetableMenu">
+													<div class="card card-body">
+														<?php foreach ($vegetable as $vegetables) : ?>
+															<p><?php echo $vegetables['name']; ?></p>
+														<?php endforeach; ?>
+													</div>
+												</div>
+											</div>
+
+											<div class="soup-collapse pb-2">
+												<a class="btn btn-primary" data-toggle="collapse" href="#soupMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
+													Soup Menu
+												</a>
+
+												<div class="collapse" id="soupMenu">
+													<div class="card card-body">
+														<?php foreach ($soup as $soups) : ?>
+															<p><?php echo $soups['name']; ?></p>
+														<?php endforeach; ?>
+													</div>
+												</div>
+											</div>
+
+											<div class="rice-collapse pb-2">
+												<a class="btn btn-primary" data-toggle="collapse" href="#riceMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
+													Rice Menu
+												</a>
+
+												<div class="collapse" id="riceMenu">
+													<div class="card card-body">
+														<?php foreach ($rice as $rices) : ?>
+															<p><?php echo $rices['name']; ?></p>
+														<?php endforeach; ?>
+													</div>
+												</div>
+											</div>
+
+										</div>
 									</td>
 								<?php endfor; ?>
 							</tr>

@@ -1,3 +1,27 @@
+<style>
+	.required {
+		color: red;
+	}
+
+	.table-data2 {
+		margin-left: 16px;
+	}
+
+	.card {
+		margin-bottom: 5px;
+	}
+</style>
+
+<style>
+	.table-responsive {
+		overflow-x: auto;
+	}
+
+	.dailyset {
+		white-space: nowrap;
+	}
+</style>
+
 <!-- MAIN CONTENT-->
 <div class="main-content">
 	<div class="section__content section__content--p30">
@@ -6,6 +30,41 @@
 			<div class="row form-group">
 				<div class="col-lg-6">
 					<h3 class="title-5 m-b-35">New PO Meal</h3>
+					<?php if ($this->session->flashdata('message')) { ?>
+						<div class="alert alert-info" style="background-color: #4bb543; color: #ffff;">
+							<?php echo $this->session->flashdata('message'); ?> <br>
+							<a id="checkLink" href="/SWA-food-order-form/admin/po_meal/history_po_meal">Check PO</a>
+						</div>
+					<?php } ?>
+
+					<p>
+						<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+							Link with href
+						</a>
+						<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+							Button with data-target
+						</button>
+					</p>
+					<div class="collapse" id="collapseExample">
+						<div class="card card-body">
+							Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+						</div>
+					</div>
+
+
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="flexRadioDefault[0]" id="flexRadioDefault1">
+						<label class="form-check-label" for="flexRadioDefault1">
+							Default radio
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="flexRadioDefault[0]" id="flexRadioDefault2" checked>
+						<label class="form-check-label" for="flexRadioDefault2">
+							Default checked radio
+						</label>
+					</div>
+
 					<div class="card">
 						<div class="card-header">
 							<strong>PO Meal Detail</strong>
@@ -15,195 +74,223 @@
 							<div class="card-body card-block">
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class="form-control-label">Title</label>
+										<label for="input-normal" class="form-control-label">Title <span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
-										<input type="text" id="input-normal" name="Title" placeholder="Type here..." class="form-control">
+										<input type="text" id="input-normal" name="Title" placeholder="Type here..." class="form-control" required>
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">Begin Date</label>
+										<label for="input-normal" class=" form-control-label">Begin Date <span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
-										<input type="date" id="input-normal" name="Begin" placeholder="Type here..." class="form-control">
+										<input type="date" id="input-normal" name="Begin" placeholder="Type here..." class="form-control" required>
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">End Date</label>
+										<label for="input-normal" class=" form-control-label">End Date <span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
-										<input type="date" id="input-normal" name="End" placeholder="Type here..." class="form-control">
+										<input type="date" id="input-normal" name="End" placeholder="Type here..." class="form-control" required>
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">Status</label>
+										<label for="input-normal" class=" form-control-label">Status <span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
-										<select name="Status" id="input-normal" class="form-control">
+										<select name="Status" id="input-normal" class="form-control" required>
 											<option value="ACTIVE">Active</option>
 											<option value="INACTIVE">Inactive</option>
 										</select>
 									</div>
 								</div>
-								<div class="generate-btn">
-									<button type="button" class="btn btn-secondary">Generate</button>
-								</div>
 							</div>
 
+							<div class="generate-btn ml-3 mb-3">
+								<button type="button" class="btn btn-secondary">Generate</button>
+							</div>
 					</div>
+
 				</div>
 			</div>
+		</div>
 
 
-			<!-- Table -->
-			<div class="row form-group">
-				<div class="col-md-12">
-					<!-- DATA TABLE -->
-					<div class="table-responsive">
-						<table id="dataTable" class="table table-data2">
-							<thead>
-								<tr>
-									<th style="text-align: center; font-size: 16px;"></th>
-									<th style="text-align: center; font-size: 16px;" id="date1"></th>
-									<th style="text-align: center; font-size: 16px;" id="date2"></th>
-									<th style="text-align: center; font-size: 16px;" id="date3"></th>
-									<th style="text-align: center; font-size: 16px;" id="date4"></th>
-									<th style="text-align: center; font-size: 16px;" id="date5"></th>
-								</tr>
-							</thead>
+		<!-- Table -->
+		<div class="row form-group">
+			<div class="col-md-12">
+				<!-- DATA TABLE -->
+				<div class="table-responsive">
+					<table id="dataTable" class="table table-data2">
+						<thead>
+							<tr>
+								<th style="text-align: center; font-size: 16px;"></th>
+								<th style="text-align: center; font-size: 16px;" id="date1"></th>
+								<th style="text-align: center; font-size: 16px;" id="date2"></th>
+								<th style="text-align: center; font-size: 16px;" id="date3"></th>
+								<th style="text-align: center; font-size: 16px;" id="date4"></th>
+								<th style="text-align: center; font-size: 16px;" id="date5"></th>
+								<th style="text-align: center; font-size: 16px;" id="date6"></th>
+								<th style="text-align: center; font-size: 16px;" id="date7"></th>
+								<th style="text-align: center; font-size: 16px;" id="date8"></th>
+								<th style="text-align: center; font-size: 16px;" id="date9"></th>
+								<th style="text-align: center; font-size: 16px;" id="date10"></th>
+							</tr>
+						</thead>
 
-							<?php
-							$dates = isset($_GET['dates']) ? explode(',', $_GET['dates']) : array();
-							?>
+						<?php
+						$dates = isset($_GET['dates']) ? explode(',', $_GET['dates']) : array();
+						?>
 
-							<!-- Daily Set -->
-							<tbody>
-								<tr>
-									<td rowspan="2" class="align-middle">Daily Set</td>
-									<?php for ($i = 0; $i < 6; $i++) : ?>
-										<td class="dailyset">
-											<div style="display: flex; align-items: center;">
-												<select name="Dailyset_parent[<?= $i ?>]" id="dailyset<?= $i ?>" class="form-control" onchange="checkCheckbox(<?= $i ?>)">
-													<option disabled selected>Select Menu..</option>
-													<?php foreach ($dailyset as $daily) : ?>
-														<option value="<?= $daily['id'] ?>"> <?= $daily['name'] ?></option>
-													<?php endforeach; ?>
-												</select>
-												<input name="Dailyset_price[<?= $i ?>]" type="number" style="width: 30%; margin-left: 7px;" placeholder="Price..." class="form-control" onclick="document.getElementById('open-checkbox<?= $i ?>').checked = true;">
-												<input name="Dates[<?= $i ?>]" id="dailysetParentDate<?= $i ?>" type="checkbox" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-												<input type="checkbox" id="open-checkbox<?= $i ?>" onchange="toggleCheckboxes(<?= $i ?>)">
+						<!-- Daily Set -->
+						<tbody>
+							<tr>
+								<td rowspan="2" class="align-middle">Daily Set</td>
+								<?php for ($i = 0; $i < 12; $i++) : ?>
+									<td class="dailyset">
+										<div style="display: flex; align-items: center;">
+											<select name="Dailyset_parent[<?= $i ?>]" id="dailyset<?= $i ?>" class="form-control" onchange="checkCheckbox(<?= $i ?>)">
+												<option disabled selected>Select Menu..</option>
+												<?php foreach ($dailyset as $daily) : ?>
+													<option value="<?= $daily['id'] ?>"> <?= $daily['name'] ?></option>
+												<?php endforeach; ?>
+											</select>
+											<input name="Dailyset_price[<?= $i ?>]" type="number" style="width: 30%; margin-left: 7px;" placeholder="Price..." class="form-control" onclick="document.getElementById('open-checkbox<?= $i ?>').checked = true;">
+											<input name="Dates[<?= $i ?>]" id="dailysetParentDate<?= $i ?>" type="checkbox" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: ;" class="form-control">
+											<input type="checkbox" id="open-checkbox<?= $i ?>" onchange="toggleCheckboxes(<?= $i ?>)" style="display: none;">
+										</div>
+										<br>
+										<?php foreach ($menus as $j => $menu) : ?>
+											<div style="display: flex; align-items: center;" class="pb-2">
+												<input name="Id_menu[<?= $i ?>][<?= $j ?>]" id="checkbox<?= $i ?><?= $j ?>" value="<?= $menu['id'] ?>-<?= $menu['category_id'] ?>" type="checkbox" style="margin-right: 7px;" onclick="checkMenuCheckbox(<?= $i ?>, <?= $j ?>)" disabled>
+												<span class="text-dark"><?= wordwrap($menu['name'], 36, "<br />\n", true) ?></span>
+												<input name="Price[<?= $i ?>][<?= $j ?>]" type="number" style="width: 120px; margin-left: 7px;" placeholder="Price..." class="form-control">
+												<input name="Dates[<?= $i ?>][<?= $j ?>]" id="dailysetDate<?= $i ?><?= $j ?>" type="checkbox" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display:  ;" class="form-control">
 											</div>
-											<br>
-											<?php foreach ($menus as $j => $menu) : ?>
-												<div style="display: flex; align-items: center;" class="pb-2">
-													<input name="Id_menu[<?= $i ?>][<?= $j ?>]" id="checkbox<?= $i ?><?= $j ?>" value="<?= $menu['id'] ?>-<?= $menu['category_id'] ?>" type="checkbox" style="margin-right: 7px;" onclick="checkMenuCheckbox(<?= $i ?>, <?= $j ?>)" disabled>
-													<span class="text-dark"><?= $menu['name'] ?></span>
-													<input name="Price[<?= $i ?>][<?= $j ?>]" type="number" style="width: 30%; margin-left: 7px;" placeholder="Price..." class="form-control">
-													<input name="Dates[<?= $i ?>][<?= $j ?>]" id="dailysetDate<?= $i ?><?= $j ?>" type="checkbox" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none ;" class="form-control">
-												</div>
+										<?php endforeach; ?>
+
+									</td>
+								<?php endfor; ?>
+							</tr>
+						</tbody>
+
+
+
+						<tbody>
+							<tr>
+								<td rowspan="2" class="align-middle">Pasta</td>
+								<?php for ($i = 0; $i < 12; $i++) : ?>
+									<td class="pasta">
+										<select name="Pasta_parent[<?= $i ?>]" id="pasta<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
 											<?php endforeach; ?>
-										</td>
-									<?php endfor; ?>
-								</tr>
-							</tbody>
+										</select>
+										<input type="number" name="Pasta_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+									</td>
+								<?php endfor; ?>
+							</tr>
+						</tbody>
+
+						<!--
+										<select name="Pasta_parent2[<?= $i ?>]" id="pasta2<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate2<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<input type="number" name="Pasta_price2[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+										<br><br>
 
 
-							<tbody>
-								<tr>
-									<td rowspan="2" class="align-middle">Pasta</td>
-									<?php for ($i = 0; $i < 6; $i++) : ?>
-										<td class="pasta">
-											<select name="Pasta_parent[<?= $i ?>]" id="pasta<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate<?= $i ?>').checked = this.value !== '';">
-												<option disabled selected>Select Menu..</option>
-												<?php foreach ($pastas as $pasta) : ?>
-													<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-											<input type="number" name="Pasta_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-											<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-											<br><br>
+										<select name="Pasta_parent3[<?= $i ?>]" id="pasta3<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate3<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<input type="number" name="Pasta_price3[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+										<br><br>
 
 
-											<select name="Pasta_parent2[<?= $i ?>]" id="pasta2<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate2<?= $i ?>').checked = this.value !== '';">
-												<option disabled selected>Select Menu..</option>
-												<?php foreach ($pastas as $pasta) : ?>
-													<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-											<input type="number" name="Pasta_price2[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-											<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-											<br><br>
+										<select name="Pasta_parent4[<?= $i ?>]" id="pasta4<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate4<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<input type="number" name="Pasta_price4[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+										<br><br>
 
 
-											<select name="Pasta_parent3[<?= $i ?>]" id="pasta3<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate3<?= $i ?>').checked = this.value !== '';">
-												<option disabled selected>Select Menu..</option>
-												<?php foreach ($pastas as $pasta) : ?>
-													<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-											<input type="number" name="Pasta_price3[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-											<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-											<br><br>
-
-
-											<select name="Pasta_parent4[<?= $i ?>]" id="pasta4<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate4<?= $i ?>').checked = this.value !== '';">
-												<option disabled selected>Select Menu..</option>
-												<?php foreach ($pastas as $pasta) : ?>
-													<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-											<input type="number" name="Pasta_price4[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-											<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-											<br><br>
-
-
-											<select name="Pasta_parent5[<?= $i ?>]" id="pasta5<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate5<?= $i ?>').checked = this.value !== '';">
-												<option disabled selected>Select Menu..</option>
-												<?php foreach ($pastas as $pasta) : ?>
-													<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-											<input type="number" name="Pasta_price5[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-											<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-										</td>
-									<?php endfor; ?>
-								</tr>
-							</tbody>
+										<select name="Pasta_parent5[<?= $i ?>]" id="pasta5<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate5<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<input type="number" name="Pasta_price5[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+											-->
 
 
 
-							<tbody>
-								<tr class="tr">
-									<td rowspan="2" class="align-middle">Breakfast and Stall</td>
-									<?php for ($i = 0; $i < 6; $i++) : ?>
-										<td class="breakfast">
-											<select name="Breakfast_parent[<?= $i ?>]" id="breakfast<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate<?= $i ?>').checked = this.value !== '';">
-												<option disabled selected>Select Menu..</option>
-												<?php foreach ($breakfasts as $breakfast) : ?>
-													<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-												<?php endforeach; ?>
-											</select>
-											<input type="number" name="Breakfast_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-											<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-										</td>
-									<?php endfor; ?>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<!-- END DATA TABLE -->
+						<tbody>
+							<tr class="tr">
+								<td rowspan="2" class="align-middle">Breakfast and Stall</td>
+								<?php for ($i = 0; $i < 12; $i++) : ?>
+									<td class="breakfast">
+										<select name="Breakfast_parent[<?= $i ?>]" id="breakfast<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($breakfasts as $breakfast) : ?>
+												<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<input type="number" name="Breakfast_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+										<br><br>
 
+										<select name="Breakfast_parent2[<?= $i ?>]" id="breakfast2<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate2<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($breakfasts as $breakfast) : ?>
+												<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<input type="number" name="Breakfast_price2[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+										<br><br>
+
+										<select name="Breakfast_parent3[<?= $i ?>]" id="breakfast3<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate3<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($breakfasts as $breakfast) : ?>
+												<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<input type="number" name="Breakfast_price3[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+										<br><br>
+									</td>
+								<?php endfor; ?>
+							</tr>
+						</tbody>
+					</table>
 				</div>
+				<!-- END DATA TABLE -->
+
 			</div>
-			<div class="row form-group">
-				<div class="col-md-12">
-					<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
-						Submit
-					</button>
-				</div>
+		</div>
+		<div class="row form-group">
+			<div class="col-md-12">
+				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter" onclick="return validatePrices()">Submit</button>
+
 			</div>
 		</div>
 	</div>
@@ -287,7 +374,6 @@
 			});
 		}
 
-		// Set the Title, Status, Begin, and End input values from the URL parameters
 		var titleParam = urlParams.get('title');
 		var statusParam = urlParams.get('status');
 		var beginParam = urlParams.get('begin');
@@ -320,8 +406,6 @@
 </script>
 
 
-
-
 <script>
 	function checkCheckbox(i) {
 		var select = document.getElementById('dailyset' + i);
@@ -350,7 +434,7 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', (event) => {
-		for (let i = 0; i < 6; i++) {
+		for (let i = 0; i < 12; i++) {
 			let priceInput = document.querySelector(`input[name="Dailyset_price[${i}]"]`);
 			let openCheckbox = document.getElementById(`open-checkbox${i}`);
 
@@ -375,6 +459,57 @@
 
 
 
+<!--
+<script>
+	function checkMenuCheckbox(i, j) {
+		let checkbox = document.getElementById('checkbox' + i + j);
+		let price = document.getElementsByName('Price[' + i + '][' + j + ']')[0];
+
+		if (checkbox.checked && price.value === '') {
+			alert('PLEASE INSERT THE PRICE FIRST BEFORE CLICK THE CHECKBOX');
+			checkbox.checked = false;
+		}
+	}
+</script>
+-->
+
+<script>
+	function checkPriceInput(i, j) {
+		var checkbox = document.getElementById('checkbox' + i + j);
+		var priceInput = document.getElementsByName('Price[' + i + '][' + j + ']')[0];
+
+		if (checkbox.checked && priceInput.value === '') {
+			alert('There is an empty price, please check it!');
+			return false;
+		}
+
+		return true;
+	}
+</script>
+
+<script>
+	function validatePrices() {
+		for (var i = 0; i < 12; i++) {
+			for (var j = 0; j < <?= count($menus) ?>; j++) {
+				if (!checkPriceInput(i, j)) {
+					return false;
+				}
+			}
+		}
+
+		document.getElementById('productForm');
+		return true;
+	}
+</script>
+
+
+<script>
+	var url = window.location.href;
+
+	var value = url.split("/").pop();
+
+	document.getElementById("checkLink").href += "/" + value;
+</script>
 
 
 

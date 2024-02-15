@@ -24,9 +24,14 @@ class Po_meal extends CI_Controller
 		$data['judul'] = 'Create New PO Purchase Meal';
 		// $data['po_meal'] = $this->po_meal_model->get_po_meal();
 		$data['dailyset'] = $this->po_meal_model->get_daily_set();
+		$data['menus'] = $this->po_meal_model->get_menus();
 		$data['pastas'] = $this->po_meal_model->get_pasta();
 		$data['breakfasts'] = $this->po_meal_model->get_breakfast();
-		$data['menus'] = $this->po_meal_model->get_menus();
+		$data['protein'] = $this->po_meal_model->get_protein_menus();
+		$data['sidedish'] = $this->po_meal_model->get_sidedish_menus();
+		$data['vegetable'] = $this->po_meal_model->get_vegetable_menus();
+		$data['soup'] = $this->po_meal_model->get_soup_menus();
+		$data['rice'] = $this->po_meal_model->get_rice_menus();
 		$this->load->view('templates/header', $data);
 		$this->load->view('po_meal/add_po_meal', $data);
 		$this->load->view('templates/footer');
