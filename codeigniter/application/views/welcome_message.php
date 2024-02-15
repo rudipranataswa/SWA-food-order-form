@@ -164,12 +164,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			}
 		}
 
-		@media screen and (min-width: 601px) and (max-width: 2000px) {
-			.block-display1 textarea {
-				width: 50%;
-			}
-		}
-
 		.modal {
 			display: none;
 			position: fixed;
@@ -187,9 +181,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		.modal-content {
 			margin: auto;
 			display: block;
-			width: 80%;
-			max-width: 700px;
+			width: 25%;
+			max-width: 25%;
 			align-items: center;
+		}
+
+		@media screen and (min-width: 201px) and (max-width: 600px) {
+			.block-display1 textarea {
+				width: 50%;
+			}
+
+			.modal-content {
+				margin: auto;
+				display: block;
+				width: 75%;
+				max-width: 75%;
+				align-items: center;
+			}
 		}
 
 		.close {
@@ -264,6 +272,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		.table-responsive {
 			padding-bottom: 0px;
+		}
+
+		td {
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.menu-container {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
 		}
 	</style>
 
@@ -344,16 +363,267 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9">
-					<h1>Daily Set</h1>
+					<h1 id="dailySetHeading">Daily Set</span></h1>
 				</div>
 				<div class="col-md-3">Click on the menu name to display image</div>
 			</div>
 		</div>
 
-		<div class="table-responsive">
+
+		<div id="dailySetTable" style="display: none;">
+			<div class="table-responsive">
+				<table>
+					<tr>
+						<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall1"></th>
+						<th style="width: 19%;">Monday<br>
+						<th style="width: 19%;">Tuesday<br>
+						<th style="width: 19%;">Wednesday<br>
+						<th style="width: 19%;">Thursday<br>
+						<th style="width: 19%;">Friday<br>
+					</tr>
+					<tr>
+						<td rowspan="2">Week 1<br><input type="checkbox" id="checkboxweek1daily"></td>
+						<?php foreach ($dates as $item) : ?>
+						<?php
+							$previous_date = null;
+							$date = new DateTime($item['begin_date']);
+							$days_added = 0;
+
+							for ($i = 0; $days_added < 5; $i++) : // Add a day
+								// Print the date and increment the counter
+								echo '<td>' . $date->format('j M Y') . '</td>';
+								$date->modify('+1 day');
+								$days_added++;
+							endfor;
+						endforeach; ?>
+					</tr>
+					<tr>
+						<?php
+						$counter = 1;
+						$previous_date = null; // Add this line
+						foreach ($dates as $item) :
+							$begin_date = new DateTime($item['begin_date']);
+							$end_date = clone $begin_date;
+							$end_date->modify('+5 day');
+
+							for ($i = 0; $i < 5; $i++) :
+								$date_to_check = clone $begin_date;
+								$date_to_check->modify("+$i day");
+								if ($date_to_check == $previous_date) continue;
+								$previous_date = clone $date_to_check;
+								$is_holiday = false;
+								$holiday_description = '';
+
+								foreach ($holidays as $holiday) {
+									$holiday_date = new DateTime($holiday['date']);
+
+									if ($holiday_date == $date_to_check) {
+										$is_holiday = true;
+										$holiday_description = $holiday['description'];
+										break;
+									}
+								}
+
+								if ($is_holiday) {
+									echo '<td class="center-text">' . $holiday_description . '</td>';
+								} else {
+									$menu_found = false;
+									$max_length = 0;
+									foreach ($menu_daily_set as $menu) {
+										$menu_date = new DateTime($menu['date']);
+
+										if ($menu_date == $date_to_check) {
+											$max_length = 0;
+											foreach ($child_menus as $child_menu_array) {
+												foreach ($child_menu_array as $child_menu) {
+													$length = strlen($child_menu['name']);
+													if ($length > $max_length) {
+														$max_length = $length;
+													}
+												}
+											}
+											echo '<td>';
+											$link = isset($menu['link']) ? $menu['link'] : '';
+											echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+											echo '<input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)">';
+											echo '<div class="menu-container">';
+											echo '<hr>';
+											echo '</div>'; // Add this line
+
+											if (isset($child_menus[$menu['id']])) {
+												$checkboxId = 2;
+												foreach ($child_menus[$menu['id']] as $child_menu) {
+													$child_menu_date = new DateTime($child_menu['date']);
+													$link = isset($child_menu['link']) ? $child_menu['link'] : '';
+													if ($child_menu_date == $date_to_check) {
+														echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $child_menu['name'] . "</a> - " . $child_menu['price'] . " ";
+														echo '<span style="display:inline-block; width: 7px;"></span><input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]"  value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $child_menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br> ';
+														$checkboxId++;
+														$length = strlen($child_menu['name']);
+														if ($max_length > 30) {
+															echo '<div class="menu-container">';
+															echo '</div>'; // Add line
+															echo '<div class="menu-container">';
+															echo '</div>'; // Add line
+														}
+														if ($length < 30) {
+															echo '<div class="menu-container">';
+															echo '</div>'; // Add line
+															echo '<div class="menu-container">';
+															echo '</div>'; // Add line
+														}
+													}
+												}
+											}
+											$menu_found = true;
+											break;
+										}
+									}
+
+									if (!$menu_found) {
+										echo '<td></td>';  // Display a blank cell if no menu found
+									}
+									echo '<input type="hidden" id="hiddenInput" name="date">';
+								}
+							endfor;
+						endforeach;
+
+						?>
+						<div id="myModal" class="modal">
+							<span class="close">×</span>
+							<img class="modal-content" id="img01">
+							<div id="noImage" style="display: none;">Image is not available</div>
+						</div>
+
+					</tr>
+
+
+
+
+
+					<tr>
+						<td rowspan="2">Week 2<br><input type="checkbox" id="checkboxweek2daily"></td>
+						<?php foreach ($dates as $item) : ?>
+						<?php
+							$date = new DateTime($item['begin_date']);
+							$date->modify('+7 day'); // Add 7 days to the start date
+							$days_added = 0;
+
+							for ($i = 0; $days_added < 5; $i++) : // Add a day
+								// Print the date and increment the counter
+								echo '<td>' . $date->format('j M Y') . '</td>';
+								$date->modify('+1 day');
+								$days_added++;
+							endfor;
+						endforeach; ?>
+					</tr>
+
+					<tr>
+						<?php
+						foreach ($dates as $item) :
+							$begin_date = new DateTime($item['begin_date']);
+							$end_date = clone $begin_date;
+							$end_date->modify('+5 day');
+
+							for ($i = 7; $i < 12; $i++) :
+								$date_to_check = clone $begin_date;
+								$date_to_check->modify("+$i day");
+								$menu_name = '';
+								$menu_price = '';
+								$menu1_name = '';
+								$menu1_price = '';
+								$is_holiday = false;
+								$holiday_description = '';
+
+								foreach ($holidays as $holiday) {
+									$holiday_date = new DateTime($holiday['date']);
+
+									if ($holiday_date == $date_to_check) {
+										$is_holiday = true;
+										$holiday_description = $holiday['description'];
+										break;
+									}
+								}
+
+								if ($is_holiday) {
+									echo '<td class="center-text">' . $holiday_description . '</td>';
+								} else {
+									$menu_found = false;
+									foreach ($menu_daily_set as $menu) {
+										$menu_date = new DateTime($menu['date']);
+
+										if ($menu_date == $date_to_check) {
+											$max_length = 0;
+											foreach ($child_menus as $child_menu_array) {
+												foreach ($child_menu_array as $child_menu) {
+													$length = strlen($child_menu['name']);
+													if ($length > $max_length) {
+														$max_length = $length;
+													}
+												}
+											}
+											echo '<td>';
+											$link = isset($menu['link']) ? $menu['link'] : '';
+											echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+											echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)"><br>';
+											echo '<div class="menu-container">';
+											echo '<hr>';
+											echo '</div>'; // Add this line
+
+											if (isset($child_menus[$menu['id']])) {
+												$checkboxId = 2;
+												foreach ($child_menus[$menu['id']] as $child_menu) {
+													$link = isset($child_menu['link']) ? $child_menu['link'] : '';
+													echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $child_menu['name'] . "</a> - " . $child_menu['price'] . " ";
+													echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]" value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $child_menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
+													$checkboxId++;
+													$length = strlen($child_menu['name']);
+													if ($max_length > 30) {
+														echo '<div class="menu-container">';
+														echo '</div>'; // Add line
+														echo '<div class="menu-container">';
+														echo '</div>'; // Add line
+													}
+													if ($length < 30) {
+														echo '<div class="menu-container">';
+														echo '</div>'; // Add line
+														echo '<div class="menu-container">';
+														echo '</div>'; // Add line
+													}
+												}
+											}
+											$menu_found = true;
+											break;
+										}
+									}
+									if (!$menu_found) {
+										echo '<td></td>';  // Display a blank cell if no menu found
+									}
+								}
+						?>
+						<?php
+							endfor;
+						endforeach;
+						?>
+
+						<!-- Add more rows as needed -->
+				</table>
+				<p class="daily_info">Two dishes with vegetables served alongside steamed rice, soup, and dessert provided during lunchtime.</p>
+
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<h1 id="pastaHeading">Pasta</span></h1>
+				</div>
+				<div class="col-md-3">Click on the menu name to display image</div>
+			</div>
+		</div>
+		<div id="pastaTable" style="display: none;">
 			<table>
 				<tr>
-					<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall1"></th>
+					<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall2"></th>
 					<th style="width: 19%;">Monday<br>
 					<th style="width: 19%;">Tuesday<br>
 					<th style="width: 19%;">Wednesday<br>
@@ -361,10 +631,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<th style="width: 19%;">Friday<br>
 				</tr>
 				<tr>
-					<td rowspan="2">Week 1<br><input type="checkbox" id="checkboxweek1daily"></td>
+					<td rowspan="2">Week 1<br><input type="checkbox" id="checkboxweek1pasta"></td>
 					<?php foreach ($dates as $item) : ?>
 					<?php
-						$previous_date = null;
 						$date = new DateTime($item['begin_date']);
 						$days_added = 0;
 
@@ -376,10 +645,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						endfor;
 					endforeach; ?>
 				</tr>
+
 				<tr>
 					<?php
-					$counter = 1;
-					$previous_date = null; // Add this line
 					foreach ($dates as $item) :
 						$begin_date = new DateTime($item['begin_date']);
 						$end_date = clone $begin_date;
@@ -388,8 +656,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						for ($i = 0; $i < 5; $i++) :
 							$date_to_check = clone $begin_date;
 							$date_to_check->modify("+$i day");
-							if ($date_to_check == $previous_date) continue;
-							$previous_date = clone $date_to_check;
+							$menu_name = '';
+							$menu_price = '';
 							$is_holiday = false;
 							$holiday_description = '';
 
@@ -406,49 +674,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							if ($is_holiday) {
 								echo '<td class="center-text">' . $holiday_description . '</td>';
 							} else {
+								$checkboxIdPasta = 1;
 								$menu_found = false;
-								foreach ($menu_daily_set as $menu) {
+								echo '<td>';  // Open the cell here
+								foreach ($menu_pasta as $menu) {
 									$menu_date = new DateTime($menu['date']);
 
 									if ($menu_date == $date_to_check) {
-										echo '<td>';
+										$menu_name = $menu['name'];
+										$menu_price = $menu['price'];
+										$menu_id = $menu['id'];
+
+										// Don't open a new cell here, just add the menu
 										$link = isset($menu['link']) ? $menu['link'] : '';
 										echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
-										echo '<input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)">';
-										echo '<hr>';
-
-										if (isset($child_menus[$menu['id']])) {
-											$checkboxId = 2;
-											foreach ($child_menus[$menu['id']] as $child_menu) {
-												$child_menu_date = new DateTime($child_menu['date']);
-												$link = isset($child_menu['link']) ? $child_menu['link'] : '';
-												if ($child_menu_date == $date_to_check) {
-													echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $child_menu['name'] . "</a> - " . $child_menu['price'] . " ";
-													echo '<span style="display:inline-block; width: 7px;"></span><input type="checkbox" class="week1-checkbox" id="checkboxdaily_week1_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]"  value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $child_menu['price'] . '" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br> ';
-													$checkboxId++;
-												}
-											}
-										}
+										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week1_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
+										$checkboxIdPasta++;
 										$menu_found = true;
-										break;
 									}
 								}
-
 								if (!$menu_found) {
-									echo '<td></td>';  // Display a blank cell if no menu found
+									// echo 'No menu found';  // Display a message if no menu found
 								}
-								echo '<input type="hidden" id="hiddenInput" name="date">';
+								echo '</td>';  // Close the cell here
 							}
 						endfor;
 					endforeach;
-
 					?>
-					<div id="myModal" class="modal">
-						<span class="close">×</span>
-						<img class="modal-content" id="img01">
-						<div id="noImage" style="display: none;">Image is not available</div>
-					</div>
-
 				</tr>
 
 
@@ -456,7 +708,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 				<tr>
-					<td rowspan="2">Week 2<br><input type="checkbox" id="checkboxweek2daily"></td>
+					<td rowspan="2">Week 2<br><input type="checkbox" id="checkboxweek2pasta"></td>
 					<?php foreach ($dates as $item) : ?>
 					<?php
 						$date = new DateTime($item['begin_date']);
@@ -484,8 +736,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							$date_to_check->modify("+$i day");
 							$menu_name = '';
 							$menu_price = '';
-							$menu1_name = '';
-							$menu1_price = '';
 							$is_holiday = false;
 							$holiday_description = '';
 
@@ -502,34 +752,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							if ($is_holiday) {
 								echo '<td class="center-text">' . $holiday_description . '</td>';
 							} else {
+								$checkboxIdPasta = 1;
 								$menu_found = false;
-								foreach ($menu_daily_set as $menu) {
+								echo '<td>';  // Open the cell here
+								foreach ($menu_pasta as $menu) {
 									$menu_date = new DateTime($menu['date']);
 
 									if ($menu_date == $date_to_check) {
-										echo '<td>';
+										$menu_name = $menu['name'];
+										$menu_price = $menu['price'];
+										$menu_id = $menu['id'];
+
+										// Don't open a new cell here, just add the menu
 										$link = isset($menu['link']) ? $menu['link'] : '';
 										echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
-										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_1" name="checkboxes[]" value="' . $menu['id'] . '|' . $menu_date->format('Y-m-d') . '" data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"   onclick="addValue(this)"><br>';
-										echo '<hr>';
 
-										if (isset($child_menus[$menu['id']])) {
-											$checkboxId = 2;
-											foreach ($child_menus[$menu['id']] as $child_menu) {
-												$link = isset($child_menu['link']) ? $child_menu['link'] : '';
-												echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $child_menu['name'] . "</a> - " . $child_menu['price'] . " ";
-												echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxdaily_week2_day' . ($i + 1) . '_' . $checkboxId . '" name="checkboxes[]" value="' . $child_menu['id'] . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $child_menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
-												$checkboxId++;
-											}
-										}
-										echo '</td>';
+										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week2_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
+										$checkboxIdPasta++;
 										$menu_found = true;
-										break;
 									}
 								}
 								if (!$menu_found) {
-									echo '<td></td>';  // Display a blank cell if no menu found
+									// Display a message if no menu found
 								}
+								echo '</td>';  // Close the cell here
 							}
 					?>
 					<?php
@@ -538,347 +784,179 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					?>
 
 					<!-- Add more rows as needed -->
-		</div>
-		</table>
-		<p class="daily_info">Two dishes with vegetables served alongside steamed rice, soup, and dessert provided during lunchtime.</p>
+			</table>
+			<p class="daily_info">A variety of pasta provided during snack time & lunch time</p>
 
+		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9">
-					<h1>Pasta</h1>
+					<h1 id="breakfastHeading">Breakfastand and Stall</span></h1>
 				</div>
 				<div class="col-md-3">Click on the menu name to display image</div>
 			</div>
 		</div>
-		<table>
-			<tr>
-				<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall2"></th>
-				<th style="width: 19%;">Monday<br>
-				<th style="width: 19%;">Tuesday<br>
-				<th style="width: 19%;">Wednesday<br>
-				<th style="width: 19%;">Thursday<br>
-				<th style="width: 19%;">Friday<br>
-			</tr>
-			<tr>
-				<td rowspan="2">Week 1<br><input type="checkbox" id="checkboxweek1pasta"></td>
-				<?php foreach ($dates as $item) : ?>
-				<?php
-					$date = new DateTime($item['begin_date']);
-					$days_added = 0;
+		<div id="breakfastTable" style="display: none;">
+			<table>
+				<tr>
+					<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall3"></th>
+					<th style="width: 19%;">Monday<br>
+					<th style="width: 19%;">Tuesday<br>
+					<th style="width: 19%;">Wednesday<br>
+					<th style="width: 19%;">Thursday<br>
+					<th style="width: 19%;">Friday<br>
+				<tr>
+					<td rowspan="2">Week 1<br><input type="checkbox" id="checkboxweek1breakfast"></td>
+					<?php foreach ($dates as $item) : ?>
+					<?php
+						$date = new DateTime($item['begin_date']);
+						$days_added = 0;
 
-					for ($i = 0; $days_added < 5; $i++) : // Add a day
-						// Print the date and increment the counter
-						echo '<td>' . $date->format('j M Y') . '</td>';
-						$date->modify('+1 day');
-						$days_added++;
-					endfor;
-				endforeach; ?>
-			</tr>
+						for ($i = 0; $days_added < 5; $i++) : // Add a day
+							// Print the date and increment the counter
+							echo '<td>' . $date->format('j M Y') . '</td>';
+							$date->modify('+1 day');
+							$days_added++;
+						endfor;
+					endforeach; ?>
+				</tr>
 
-			<tr>
-				<?php
-				foreach ($dates as $item) :
-					$begin_date = new DateTime($item['begin_date']);
-					$end_date = clone $begin_date;
-					$end_date->modify('+5 day');
+				<tr>
+					<?php
+					foreach ($dates as $item) :
+						$begin_date = new DateTime($item['begin_date']);
+						$end_date = clone $begin_date;
+						$end_date->modify('+5 day');
 
-					for ($i = 0; $i < 5; $i++) :
-						$date_to_check = clone $begin_date;
-						$date_to_check->modify("+$i day");
-						$menu_name = '';
-						$menu_price = '';
-						$is_holiday = false;
-						$holiday_description = '';
+						for ($i = 0; $i < 5; $i++) :
+							$date_to_check = clone $begin_date;
+							$date_to_check->modify("+$i day");
+							$menu_name = '';
+							$menu_price = '';
+							$is_holiday = false;
+							$holiday_description = '';
 
-						foreach ($holidays as $holiday) {
-							$holiday_date = new DateTime($holiday['date']);
+							foreach ($holidays as $holiday) {
+								$holiday_date = new DateTime($holiday['date']);
 
-							if ($holiday_date == $date_to_check) {
-								$is_holiday = true;
-								$holiday_description = $holiday['description'];
-								break;
-							}
-						}
-
-						if ($is_holiday) {
-							echo '<td class="center-text">' . $holiday_description . '</td>';
-						} else {
-							$checkboxIdPasta = 1;
-							$menu_found = false;
-							echo '<td>';  // Open the cell here
-							foreach ($menu_pasta as $menu) {
-								$menu_date = new DateTime($menu['date']);
-
-								if ($menu_date == $date_to_check) {
-									$menu_name = $menu['name'];
-									$menu_price = $menu['price'];
-									$menu_id = $menu['id'];
-
-									// Don't open a new cell here, just add the menu
-									$link = isset($menu['link']) ? $menu['link'] : '';
-									echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week1_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
-									$checkboxIdPasta++;
-									$menu_found = true;
+								if ($holiday_date == $date_to_check) {
+									$is_holiday = true;
+									$holiday_description = $holiday['description'];
+									break;
 								}
 							}
-							if (!$menu_found) {
-								// echo 'No menu found';  // Display a message if no menu found
+
+							if ($is_holiday) {
+								echo '<td class="center-text">' . $holiday_description . '</td>';
+							} else {
+								$max_length = 0;
+								$checkboxIdBreakfast = 1;
+								echo '<td>';  // Open the cell here
+								foreach ($menu_breakfast as $menu) {
+									$menu_date = new DateTime($menu['date']);
+
+									if ($menu_date == $date_to_check) {
+										$menu_name = $menu['name'];
+										$menu_price = $menu['price'];
+										$menu_id = $menu['id'];
+										// Don't open a new cell here, just add the menu
+										$link = isset($menu['link']) ? $menu['link'] : '';
+										echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week1_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
+										echo '<div class="menu-container">';
+										echo '</div>'; // Add this line
+										$checkboxIdBreakfast++;
+									}
+								}
+								echo '</td>';  // Close the cell here
 							}
-							echo '</td>';  // Close the cell here
-						}
-					endfor;
-				endforeach;
-				?>
-			</tr>
+						endfor;
+					endforeach;
+					?>
+				</tr>
 
 
 
 
 
-			<tr>
-				<td rowspan="2">Week 2<br><input type="checkbox" id="checkboxweek2pasta"></td>
-				<?php foreach ($dates as $item) : ?>
-				<?php
-					$date = new DateTime($item['begin_date']);
-					$date->modify('+7 day'); // Add 7 days to the start date
-					$days_added = 0;
+				<tr>
+					<td rowspan="2">Week 2<br><input type="checkbox" id="checkboxweek2breakfast"></td>
+					<?php foreach ($dates as $item) : ?>
+					<?php
+						$date = new DateTime($item['begin_date']);
+						$date->modify('+7 day'); // Add 7 days to the start date
+						$days_added = 0;
 
-					for ($i = 0; $days_added < 5; $i++) : // Add a day
-						// Print the date and increment the counter
-						echo '<td>' . $date->format('j M Y') . '</td>';
-						$date->modify('+1 day');
-						$days_added++;
-					endfor;
-				endforeach; ?>
-			</tr>
+						for ($i = 0; $days_added < 5; $i++) : // Add a day
+							// Print the date and increment the counter
+							echo '<td>' . $date->format('j M Y') . '</td>';
+							$date->modify('+1 day');
+							$days_added++;
+						endfor;
+					endforeach; ?>
+				</tr>
 
-			<tr>
-				<?php
-				foreach ($dates as $item) :
-					$begin_date = new DateTime($item['begin_date']);
-					$end_date = clone $begin_date;
-					$end_date->modify('+5 day');
+				<tr>
+					<?php
+					foreach ($dates as $item) :
+						$begin_date = new DateTime($item['begin_date']);
+						$end_date = clone $begin_date;
+						$end_date->modify('+5 day');
 
-					for ($i = 7; $i < 12; $i++) :
-						$date_to_check = clone $begin_date;
-						$date_to_check->modify("+$i day");
-						$menu_name = '';
-						$menu_price = '';
-						$is_holiday = false;
-						$holiday_description = '';
+						for ($i = 7; $i < 12; $i++) :
+							$date_to_check = clone $begin_date;
+							$date_to_check->modify("+$i day");
+							$menu_name = '';
+							$menu_price = '';
+							$is_holiday = false;
+							$holiday_description = '';
 
-						foreach ($holidays as $holiday) {
-							$holiday_date = new DateTime($holiday['date']);
+							foreach ($holidays as $holiday) {
+								$holiday_date = new DateTime($holiday['date']);
 
-							if ($holiday_date == $date_to_check) {
-								$is_holiday = true;
-								$holiday_description = $holiday['description'];
-								break;
-							}
-						}
-
-						if ($is_holiday) {
-							echo '<td class="center-text">' . $holiday_description . '</td>';
-						} else {
-							$checkboxIdPasta = 1;
-							$menu_found = false;
-							echo '<td>';  // Open the cell here
-							foreach ($menu_pasta as $menu) {
-								$menu_date = new DateTime($menu['date']);
-
-								if ($menu_date == $date_to_check) {
-									$menu_name = $menu['name'];
-									$menu_price = $menu['price'];
-									$menu_id = $menu['id'];
-
-									// Don't open a new cell here, just add the menu
-									$link = isset($menu['link']) ? $menu['link'] : '';
-									echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
-
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxpasta_week2_day' . ($i + 1) . '_' . $checkboxIdPasta . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
-									$checkboxIdPasta++;
-									$menu_found = true;
+								if ($holiday_date == $date_to_check) {
+									$is_holiday = true;
+									$holiday_description = $holiday['description'];
+									break;
 								}
 							}
-							if (!$menu_found) {
-								// Display a message if no menu found
+
+							if ($is_holiday) {
+								echo '<td class="center-text">' . $holiday_description . '</td>';
+							} else {
+								$max_length = 0;
+								$checkboxIdBreakfast = 1;
+								echo '<td>';  // Open the cell here
+								foreach ($menu_breakfast as $menu) {
+									$menu_date = new DateTime($menu['date']);
+
+									if ($menu_date == $date_to_check) {
+										$menu_name = $menu['name'];
+										$menu_price = $menu['price'];
+										$menu_id = $menu['id'];
+
+										// Don't open a new cell here, just add the menu
+										$link = isset($menu['link']) ? $menu['link'] : '';
+										echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
+										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week2_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
+										echo '<div class="menu-container">';
+										echo '</div>'; // Add this line
+										$checkboxIdBreakfast++;
+									}
+								}
+								echo '</td>';  // Close the cell here
 							}
-							echo '</td>';  // Close the cell here
-						}
-				?>
-				<?php
-					endfor;
-				endforeach;
-				?>
+					?>
+					<?php
+						endfor;
+					endforeach;
+					?>
 
-				<!-- Add more rows as needed -->
-		</table>
-		<p class="daily_info">A variety of pasta provided during snack time & lunch time</p>
+					<!-- Add more rows as needed -->
+			</table>
+			<p class="daily_info">A variety of breakfast items served in the morning and a selection of snacks provided during snack time.</p>
 
-		<div class="container">
-			<div class="row">
-				<div class="col-md-9">
-					<h1>Breakfast and Stall</h1>
-				</div>
-				<div class="col-md-3">Click on the menu name to display image</div>
-			</div>
 		</div>
-		<table>
-			<tr>
-				<th style="width: 5%;">All <br><input type="checkbox" id="checkboxall3"></th>
-				<th style="width: 19%;">Monday<br>
-				<th style="width: 19%;">Tuesday<br>
-				<th style="width: 19%;">Wednesday<br>
-				<th style="width: 19%;">Thursday<br>
-				<th style="width: 19%;">Friday<br>
-			<tr>
-				<td rowspan="2">Week 1<br><input type="checkbox" id="checkboxweek1breakfast"></td>
-				<?php foreach ($dates as $item) : ?>
-				<?php
-					$date = new DateTime($item['begin_date']);
-					$days_added = 0;
-
-					for ($i = 0; $days_added < 5; $i++) : // Add a day
-						// Print the date and increment the counter
-						echo '<td>' . $date->format('j M Y') . '</td>';
-						$date->modify('+1 day');
-						$days_added++;
-					endfor;
-				endforeach; ?>
-			</tr>
-
-			<tr>
-				<?php
-				foreach ($dates as $item) :
-					$begin_date = new DateTime($item['begin_date']);
-					$end_date = clone $begin_date;
-					$end_date->modify('+5 day');
-
-					for ($i = 0; $i < 5; $i++) :
-						$date_to_check = clone $begin_date;
-						$date_to_check->modify("+$i day");
-						$menu_name = '';
-						$menu_price = '';
-						$is_holiday = false;
-						$holiday_description = '';
-
-						foreach ($holidays as $holiday) {
-							$holiday_date = new DateTime($holiday['date']);
-
-							if ($holiday_date == $date_to_check) {
-								$is_holiday = true;
-								$holiday_description = $holiday['description'];
-								break;
-							}
-						}
-
-						if ($is_holiday) {
-							echo '<td class="center-text">' . $holiday_description . '</td>';
-						} else {
-							$checkboxIdBreakfast = 1;
-							echo '<td>';  // Open the cell here
-							foreach ($menu_breakfast as $menu) {
-								$menu_date = new DateTime($menu['date']);
-
-								if ($menu_date == $date_to_check) {
-									$menu_name = $menu['name'];
-									$menu_price = $menu['price'];
-									$menu_id = $menu['id'];
-
-									// Don't open a new cell here, just add the menu
-									$link = isset($menu['link']) ? $menu['link'] : '';
-									echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
-
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week1_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
-									$checkboxIdBreakfast++;
-								}
-							}
-							echo '</td>';  // Close the cell here
-						}
-					endfor;
-				endforeach;
-				?>
-			</tr>
-
-
-
-
-
-			<tr>
-				<td rowspan="2">Week 2<br><input type="checkbox" id="checkboxweek2breakfast"></td>
-				<?php foreach ($dates as $item) : ?>
-				<?php
-					$date = new DateTime($item['begin_date']);
-					$date->modify('+7 day'); // Add 7 days to the start date
-					$days_added = 0;
-
-					for ($i = 0; $days_added < 5; $i++) : // Add a day
-						// Print the date and increment the counter
-						echo '<td>' . $date->format('j M Y') . '</td>';
-						$date->modify('+1 day');
-						$days_added++;
-					endfor;
-				endforeach; ?>
-			</tr>
-
-			<tr>
-				<?php
-				foreach ($dates as $item) :
-					$begin_date = new DateTime($item['begin_date']);
-					$end_date = clone $begin_date;
-					$end_date->modify('+5 day');
-
-					for ($i = 7; $i < 12; $i++) :
-						$date_to_check = clone $begin_date;
-						$date_to_check->modify("+$i day");
-						$menu_name = '';
-						$menu_price = '';
-						$is_holiday = false;
-						$holiday_description = '';
-
-						foreach ($holidays as $holiday) {
-							$holiday_date = new DateTime($holiday['date']);
-
-							if ($holiday_date == $date_to_check) {
-								$is_holiday = true;
-								$holiday_description = $holiday['description'];
-								break;
-							}
-						}
-
-						if ($is_holiday) {
-							echo '<td class="center-text">' . $holiday_description . '</td>';
-						} else {
-							$checkboxIdBreakfast = 1;
-							echo '<td>';  // Open the cell here
-							foreach ($menu_breakfast as $menu) {
-								$menu_date = new DateTime($menu['date']);
-
-								if ($menu_date == $date_to_check) {
-									$menu_name = $menu['name'];
-									$menu_price = $menu['price'];
-									$menu_id = $menu['id'];
-
-									// Don't open a new cell here, just add the menu
-									$link = isset($menu['link']) ? $menu['link'] : '';
-									echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
-									echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week2_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
-									$checkboxIdBreakfast++;
-								}
-							}
-							echo '</td>';  // Close the cell here
-						}
-				?>
-				<?php
-					endfor;
-				endforeach;
-				?>
-
-				<!-- Add more rows as needed -->
-		</table>
-		<p class="daily_info">A variety of breakfast items served in the morning and a selection of snacks provided during snack time.</p>
-
 		<input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
 
 		<label for="Name">Notes: </label>
@@ -1385,6 +1463,52 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 			document.body.style.overflow = "hidden"; // Disable scrolling
 		}
+
+		document.getElementById("dailySetHeading").addEventListener("click", function() {
+			var table = document.getElementById("dailySetTable");
+			var arrow = document.getElementById("arrow");
+			if (table.style.display === "none") {
+				table.style.display = "block";
+				arrow.textContent = "▲";
+			} else {
+				table.style.display = "none";
+				arrow.textContent = "▼";
+			}
+		});
+
+		document.getElementById("pastaHeading").addEventListener("click", function() {
+			var table = document.getElementById("pastaTable");
+			var arrow = document.getElementById("pastaArrow");
+			if (table.style.display === "none") {
+				table.style.display = "block";
+				arrow.textContent = "▲";
+			} else {
+				table.style.display = "none";
+				arrow.textContent = "▼";
+			}
+		});
+
+		document.getElementById("breakfastHeading").addEventListener("click", function() {
+			var table = document.getElementById("breakfastTable");
+			var arrow = document.getElementById("breakfastArrow");
+			if (table.style.display === "none") {
+				table.style.display = "block";
+				arrow.textContent = "▲";
+			} else {
+				table.style.display = "none";
+				arrow.textContent = "▼";
+			}
+		});
+
+		$(document).ready(function() {
+			var max_height = 0;
+			$("td").each(function() {
+				if ($(this).height() > max_height) {
+					max_height = $(this).height();
+				}
+			});
+			$("td").height(max_height);
+		});
 	</script>
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
