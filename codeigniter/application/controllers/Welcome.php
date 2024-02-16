@@ -70,10 +70,11 @@ class Welcome extends CI_Controller
 				// Transaction was successful
 				$this->session->set_flashdata('thank_you_note', 'Thank you for ordering from us!!');
 			}
-			$this->load->view('summary', $result);
+			$data['order_details'] = $this->product_model->get_last_order_details(); // Get the last order details
+			$this->load->view('summary', $data);
 		} else {
 			// Transaction failed
-			$this->session->set_flashdata('error_message', 'Ordering menu failed');
+			$this->session->set_flashdata('error_message', 'Ordering menu failed as there was no menu selected');
 			redirect($this->agent->referrer());
 		}
 	}

@@ -187,4 +187,12 @@ class Product_model extends CI_Model
                         return TRUE;
                 }
         }
+
+        public function get_last_order_details()
+        {
+                $this->db->select('id, email, student_name, grade_level, parent_phone_number');
+                $this->db->order_by('id', 'DESC');
+                $result = $this->db->get('order_hdr')->row();
+                $last_id = $result->id;
+        }
 }

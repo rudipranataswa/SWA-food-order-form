@@ -13,6 +13,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php echo base_url(); ?>/css/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Viga&display=swap" rel="stylesheet">
+    <style>
+    </style>
 </head>
 
 <body>
@@ -35,22 +37,51 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span class="font-weight-bold">Order Summary</span>
                             </div>
                             <div class="card-body card-block body-text">
-                                <?php if (!empty($order_data)) : ?>
-                                    <?php foreach ($order_data as $order) : ?>
-                                        <div>
-                                            <h2>Order ID: <?php echo $order['id_order']; ?></h2>
-                                            <p>Email: <?php echo $order['email']; ?></p>
-                                            <p>Student Name: <?php echo $order['student_name']; ?></p>
-                                            <p>Grade Level: <?php echo $order['grade_level']; ?></p>
-                                            <p>Parent Phone Number: <?php echo $order['parent_phone_number']; ?></p>
-                                            <p>Submitted Date: <?php echo $order['submitted_date']; ?></p>
-                                            <p>Notes: <?php echo $order['notes']; ?></p>
-                                            <!-- Add more fields as needed -->
-                                        </div>
-                                    <?php endforeach; ?>
-                                <?php else : ?>
-                                    <p>No orders found.</p>
-                                <?php endif; ?>
+                                <p>Email: <?php echo $order_details->email; ?></p>
+                                <p>Student Name: <?php echo $order_details->student_name; ?></p>
+                                <p>Grade Level: <?php echo $order_details->grade_level; ?></p>
+                                <p>Parent Phone Number: <?php echo $order_details->parent_phone_number; ?></p>
+
+
+
+
+                                <p style="font-weight:bold; font-style: italic;">
+                                    Thank you for submitting Pre Order Purchase, our canteen team will prepare your requested order and you can pick up your order at Bamboo Court or request delivery to the classroom (only for EYES Students).
+                                </p>
+
+                                <p style="font-weight:bold; font-style: italic;">
+                                    There is NO CANCELLATION for the food that has been ordered.
+                                </p>
+
+                                <p style="font-weight: bold; font-style: italic;">
+                                    You need to pay your food order directly at Canteen's cashier by using your ID card or do transfer payment to School Account:
+                                </p>
+
+                                <p style="font-weight:bold; font-style: italic;">
+                                    0000554103 (Bank Sinarmas)
+                                </p>
+
+                                <p style="font-weight:bold; font-style: italic;">
+                                    or
+                                </p>
+
+                                <p style="font-weight:bold; font-style: italic;">
+                                    4970350018 (BCA).
+                                </p>
+
+                                <p style="font-weight:bold; font-style: italic;">
+                                    Please view the total amount which needs to be transferred in the pre order form.
+                                </p>
+
+                                <p style="font-weight: bold; font-style: italic;">
+                                    Orders will only be processed & prepared by the Canteen Staff when the proof of payment has been received, don't forget to send the proof of transfer to following email finance@swa-jkt.com and ervi_liu@swa-jkt.com.
+                                </p>
+
+                                <p style="font-weight:bold; font-style: italic;">
+                                    Thank you for your kind understanding & cooperation.
+                                </p>
+
+
                             </div>
                         </div>
                     </div>

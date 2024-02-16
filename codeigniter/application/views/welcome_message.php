@@ -286,6 +286,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			margin-top: 25px;
 		}
 
+		.center-image {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+
 		@media screen and (min-width: 201px) and (max-width: 600px) {
 			.block-display1 textarea {
 				width: 70%;
@@ -377,12 +384,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="block-display"><input type="text" maxlength=50 name="Phone_Number" required></div>
 		</div>
 		<!-- <?php if ($this->session->flashdata('thank_you_note')) : ?>
-			<p class="thanks_label alert alert-success"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
-		<?php endif; ?>
+			<p class="thanks_label alert alert-danger"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
+		<?php endif; ?> -->
 
 		<?php if ($this->session->flashdata('error_message')) : ?>
-			<p class="thanks_label"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
-		<?php endif; ?> -->
+			<p class="thanks_label alert alert-danger"><?php echo $this->session->flashdata('error_message'); ?></p>
+		<?php endif; ?>
 
 		<div class="total-container">
 			<h3 style="color: white !important;">Total: <span style="display:inline-block; width: 10px;"></span></h3>
@@ -870,8 +877,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										$link = isset($menu['link']) ? $menu['link'] : '';
 										echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week1_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
-										echo '<div class="menu-container">';
-										echo '</div>'; // Add this line
+										// echo '<div class="menu-container">';
+										// echo '</div>'; // Add this line
 										$checkboxIdBreakfast++;
 									}
 								}
@@ -946,8 +953,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										$link = isset($menu['link']) ? $menu['link'] : '';
 										echo "<a href=\"#\" onclick=\"showPopup(event, '" . $link . "')\">" . $menu['name'] . "</a> - " . $menu['price'] . " ";
 										echo '<span style="display:inline-block; width: 7px;"></span><input id="checkboxbreakfast_week2_day' . ($i + 1) . '_' . $checkboxIdBreakfast . '" name="checkboxes[]" value="' . $menu_id . '|' . $menu_date->format('Y-m-d') . '"  data-price="' . $menu['price'] . '" type="checkbox" data-date="' . $menu_date->format('Y-m-d') . '" data-holiday="' . ($is_holiday ? 'true' : 'false') . '"    onclick="addValue(this)"><br>';
-										echo '<div class="menu-container">';
-										echo '</div>'; // Add this line
+										// echo '<div class="menu-container">';
+										// echo '</div>'; // Add this line
 										$checkboxIdBreakfast++;
 									}
 								}
