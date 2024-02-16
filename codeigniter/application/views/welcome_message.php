@@ -245,7 +245,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			font-size: 16px;
 		}
 
-		.center-image {
+		Trend Line .center-image {
 			display: flex;
 			justify-content: center;
 		}
@@ -280,6 +280,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		.block-display1 textarea {
 			width: 50%;
+		}
+
+		.col-md-15 {
+			margin-top: 25px;
 		}
 
 		@media screen and (min-width: 201px) and (max-width: 600px) {
@@ -372,13 +376,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<label for="Phone_Number">Parent's Phone Number: <span style="color: red;">*</span></label>
 			<div class="block-display"><input type="text" maxlength=50 name="Phone_Number" required></div>
 		</div>
-		<?php if ($this->session->flashdata('thank_you_note')) : ?>
+		<!-- <?php if ($this->session->flashdata('thank_you_note')) : ?>
 			<p class="thanks_label alert alert-success"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
 		<?php endif; ?>
 
 		<?php if ($this->session->flashdata('error_message')) : ?>
 			<p class="thanks_label"><?php echo $this->session->flashdata('thank_you_note'); ?></p>
-		<?php endif; ?>
+		<?php endif; ?> -->
 
 		<div class="total-container">
 			<h3 style="color: white !important;">Total: <span style="display:inline-block; width: 10px;"></span></h3>
@@ -794,7 +798,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="container">
 			<div class="row">
 				<div class="col-md-15">
-					<h1>Breakfastand and Stall<span id="breakfastHeading"><span id="breakfastArrow" style="float: right; cursor: pointer; ">▼</span></span></h1>
+					<h1>Breakfast and Stall<span id="breakfastHeading"><span id="breakfastArrow" style="float: right; cursor: pointer; ">▼</span></span></h1>
 				</div>
 			</div>
 		</div>

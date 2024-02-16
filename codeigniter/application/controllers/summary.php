@@ -6,46 +6,17 @@ class summary extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('report_model');
-        $this->load->database();
-        if (!$this->session->userdata('logged_in')) {
-            // Redirect to login page
-            redirect('login');
-        }
-        $this->check_timeout();
+        $this->load->model('summary_model');
     }
-    public function summary()
+
+    public function show_order()
     {
-        $data['id'] = $this->uri->segment(3);
-        $data['summary_id'] = $this->uri->segment(4);
+        $this->load->model('summary_model');
 
-        $data = array(
-            'holidays' => $this->report_model->get_holidays(),
-            'dates' => $this->report_model->get_dates($data['id']),
-            'summary' => $this->report_model->summary($data['summary_id'])
-        );
+        // Get the order data
+        $order_data = $this->summary_model->get_order_data();
 
-        $data['judul'] = 'Summary';
-
-        // Add the condition to the detail_report
-        $po_dates = array();
-        foreach ($data['summary'] as &$drpt) {
-            $datetime = $drpt['date'];
-            $date = new DateTime($datetime);
-            $drpt['date_only'] = $date->format('Y-m-d');
-
-            // Add the po_date to the po_dates array
-            $po_dates[] = $drpt['po_date'];
-        }
-
-        // Remove duplicates from the po_dates array
-        $po_dates = array_unique($po_dates);
-
-        // Add the po_dates array to the data array
-        $data['po_dates'] = $po_dates;
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('report/summary', $data);
-        $this->load->view('templates/footer');
+        // Pass the order data to the view
+        $this->load->view('summary_view', ['order_data' => $order_data]);
     }
 }
