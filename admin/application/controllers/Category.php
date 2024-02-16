@@ -54,6 +54,7 @@ class Category extends CI_Controller
     {
         $data['judul'] = 'Create New Category';
         $category = $this->input->post('Category');
+        $sort = $this->input->post('Sort');
         $this->db->where('category', $category);
         $query = $this->db->get('category');
         $this->form_validation->set_rules('Category', 'Category', 'required', array('required' => 'Category field must not be empty'));
@@ -74,7 +75,7 @@ class Category extends CI_Controller
                 $session_name = $this->session->userdata('fullname');
                 $admin_id = $this->category_model->get_admin_id($session_name);
                 
-                $this->category_model->create_category($category, $admin_id);
+                $this->category_model->create_category($category, $sort, $admin_id);
                 $this->session->set_flashdata('flash', 'Create New Category Succeed!');
                 redirect('category');
             }
@@ -85,7 +86,7 @@ class Category extends CI_Controller
     {
         $data['id'] = $this->uri->segment(3);
         $data['judul'] = 'Edit New Category ' . $data['id'];
-        $data['category_name'] = $this->category_model->get_category_name($data['id']); // Fetch the category name
+        $data['category'] = $this->category_model->get_by_id($data['id']); // Fetch the category name
         $this->load->view('templates/header', $data);
         $this->load->view('category/edit_category', $data);
         $this->load->view('templates/footer');
@@ -125,40 +126,51 @@ class Category extends CI_Controller
     public function update_category()
     {
         $id = $this->input->post('id_number');
-        $category = $this->input->post('Category1');
-        $this->db->where('category', $category);
+        $new_category = $this->input->post('Category');
+        $sort = $this->input->post('Sort');
+        $session_name = $this->session->userdata('fullname');
+        $admin_id = $this->category_model->get_admin_id($session_name);
+
+        // Check for existing category with the same name and different ID
+        $this->db->where('category', $new_category);
+        $this->db->where('id !=', $id);
         $query = $this->db->get('category');
-        $query1 = $this->db->get('po_purchase_meal_dtl');
 
         if ($query->num_rows() > 0) {
             $this->session->set_flashdata('flash', 'Data Already Exist');
             redirect('category');
-        } else if ($query1->num_rows() > 0) {
+        }
+
+        $this->db->where('id_category', $id);
+        $query1 = $this->db->get('po_purchase_meal_dtl');
+
+        if ($query1->num_rows() > 0) {
             $this->session->set_flashdata('flash', 'Fail: Cannot edit category because it exists in PO Purchase');
             redirect('category');
-        } else {
-            $session_name = $this->session->userdata('fullname');
-            $admin_id = $this->category_model->get_admin_id($session_name);
-            
-            $this->category_model->update_category($id, $category, $admin_id);
-            $this->session->set_flashdata('flash', 'Edit Category Succeed!');
-            redirect('category');
-        }  
+        } 
+
+        $this->category_model->update_category($id, $new_category, $sort, $admin_id);
+        $this->session->set_flashdata('flash', 'Edit Category Succeed!');
+        redirect('category');
     }
+
+
 
     public function delete_category()
     {
         $id = $this->input->post('id_number');
         $result = $this->category_model->delete_category($id);
+        $this->db->where('id_category', $id);
         $query = $this->db->get('po_purchase_meal_dtl');
 
         if ($query->num_rows() > 0) {
             $this->session->set_flashdata('flash', 'Fail: Cannot delete category because it exists in PO Purchase');
             redirect('category');
-        } else {
-            $this->category_model->delete_category($id);
-            $this->session->set_flashdata('flash', 'Success: Menu deleted');
-            redirect('category');
-        }
+        } 
+
+        $this->category_model->delete_category($id);
+        $this->session->set_flashdata('flash', 'Success: Menu deleted');
+        redirect('category');
+        
     }
 }

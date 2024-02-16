@@ -41,7 +41,7 @@
                     </select>
                   </div>
                 </form>
-                <form action="<?php echo site_url('search'); ?>" method="get" class="form-inline">
+                <form action="<?php echo site_url('search'); ?>" method="post" class="form-inline">
                   <div class="form-group mx-sm-2 mb-2">
                     <div class="input-group">
                       <input

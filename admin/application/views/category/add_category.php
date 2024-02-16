@@ -15,13 +15,21 @@
                             <strong>Add Category</strong>
                         </div>
                         <div class="card-body card-block">
-                            <form action="<?php echo site_url('category/add_category'); ?>" method="post" class="form-horizontal" id="productForm">
+                            <form action="<?php echo site_url('category/add_category'); ?>" method="post" class="form-horizontal" id="categoryForm">
                                 <div class="row form-group">
                                     <div class="col col-sm-5">
                                         <label for="input-normal" class=" form-control-label">Category<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="text" id="input-normal" name="Category" placeholder="Type here..." class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-sm-5">
+                                        <label for="input-normal" class=" form-control-label">Sequence/Sort<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col col-sm-6">
+                                        <input type="text" id="input-normal" name="Sort" placeholder="Type here..." class="form-control">
                                     </div>
                                 </div>
                             </form>
@@ -61,7 +69,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="submit" class="btn btn-primary" form="productForm">Yes</button>
+                <button type="submit" class="btn btn-primary" form="categoryForm">Yes</button>
             </div>
         </div>
     </div>

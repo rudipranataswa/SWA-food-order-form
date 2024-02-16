@@ -73,26 +73,26 @@
                                 if($vrpt != null) { // Check if $vrpt is not null
                                     foreach($report as $rpt) {
                         ?>  
-                                    <tr class="tr-shadow">
-                                        <td><?= ++$page ?></td>
-                                        <td><?= $vrpt['student_name'] ?></td>
-                                        <td><?= $vrpt['date_only'] ?></td>
-                                        <td><?= $vrpt['time_only'] ?></td>
-                                        <td>
-                                            <div class="table-data-feature">
-                                                <a
-                                                class="item"
-                                                data-toggle="tooltip"
-                                                data-placement="top"
-                                                title="View"
-                                                href="<?= base_url(); ?>report/summary/<?= $rpt['id']; ?>/<?= $vrpt['id']; ?>"
-                                                >
-                                                <i class="zmdi zmdi-eye"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="spacer"></tr>
+                            <tr class="tr-shadow">
+                                <td><?= ++$page ?></td>
+                                <td><?= $vrpt['student_name'] ?></td>
+                                <td><?= $vrpt['date_only'] ?></td>
+                                <td><?= $vrpt['time_only'] ?></td>
+                                <td>
+                                    <div class="table-data-feature">
+                                        <a
+                                        class="item"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="View"
+                                        href="<?= base_url(); ?>report/summary/<?= $rpt['id']; ?>/<?= $vrpt['id']; ?>"
+                                        >
+                                        <i class="zmdi zmdi-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
                         <?php
                                     }
                                 }

@@ -81,7 +81,7 @@ class Holiday extends CI_Controller
 
     public function edit_holiday($id)
     {
-        $data['judul'] = 'Edit Holiday';
+        $data['judul'] = 'Edit Holiday ' . $id;
         $data['holiday'] = $this->holiday_model->get_by_id($id);
         
         $this->load->view('templates/header', $data);

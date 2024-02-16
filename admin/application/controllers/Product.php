@@ -29,8 +29,8 @@ class Product extends CI_Controller
 
     public function index()
     {
-        if($this->input->get('keyword')){
-            $data['keyword'] =  $this->input->get('keyword');
+        if($this->input->post('keyword')){
+            $data['keyword'] =  $this->input->post('keyword');
             $this->session->set_userdata('keyword', $data['keyword']);
         } else {
             $data['keyword'] = $this->session->userdata('keyword');
@@ -112,57 +112,25 @@ class Product extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    // public function create_menu()
-    // {
-    //     $data['judul'] = 'Create New Menu'; 
-    //     $data['categories'] = $this->product_model->get_category();
-    //     $name = $this->input->post('name');
-    //     $this->db->where('name', $name);
-    //     $query = $this->db->get('menu');
-
-    //     $this->form_validation->set_rules('category', 'category', 'required', array('required' => 'Category field must not be empty'));
-    //     $this->form_validation->set_rules('name', 'name', 'required', array('required' => 'Category field must not be empty'));
-
-    //     if ($this->form_validation->run() === FALSE) {
-    //         $this->load->view('templates/header', $data);
-    //         $this->load->view('product/add_product', $data);
-    //         $this->load->view('templates/footer');
-
-    //         $this->session->set_flashdata('flash ', 'Create New Menu Fail!');
-    //         // redirect('product');
-    //     } else {
-    //         if ($query->num_rows() > 0) {
-    //             $this->session->set_flashdata('flash', 'Data already exist');
-    //             redirect('product');
-    //         } else {
-    //             $category = $this->input->post('category');
-    //             $name = $this->input->post('name');
-    //             $session_name = $this->session->userdata('fullname');
-    //             $admin_id = $this->product_model->get_admin_id($session_name);
-
-    //             $this->product_model->create_menu($category, $name, $admin_id);
-    //             $this->session->set_flashdata('flash ', 'Create New Menu Succeed!');
-    //             redirect('product');
-    //         }
-    //     }
-    // }
-
+    
     public function update_menu()
     {
         $id = $this->input->post('hf-id');
         $this->db->where('id_menu', $id);
-        $query = $this->db->get('po_purchase_meal_dtl');
         $category_id = $this->input->post('Category');
-        $name = $this->input->post('name');
-
+        $name = $this->input->post('Name');
+        $session_name = $this->session->userdata('fullname');
+        $admin_id = $this->product_model->get_admin_id($session_name);
+        
+        $query = $this->db->get('po_purchase_meal_dtl');
         if ($query->num_rows() > 0) {
             $this->session->set_flashdata('flash', 'Fail: Cannot edit menu because it exists in PO Purchase');
             redirect('product');
-        } else {
-            $this->product_model->update_menu($id, $category_id, $name);
-            $this->session->set_flashdata('flash', 'Success: Product edited!');
-            redirect('product');
-        }
+        } 
+        
+        $this->product_model->update_menu($id, $category_id, $name, $admin_id);
+        $this->session->set_flashdata('flash', 'Success: Product edited!');
+        redirect('product');
     }
 
     public function delete_menu()
@@ -170,7 +138,7 @@ class Product extends CI_Controller
         $id = $this->input->post('id');
         $this->db->where('id_menu', $id);
         $query = $this->db->get('po_purchase_meal_dtl');
-
+        
         if ($query->num_rows() > 0) {
             $this->session->set_flashdata('flash', 'Fail: Cannot delete menu because it exists in PO Purchase');
             redirect('product');
@@ -181,3 +149,38 @@ class Product extends CI_Controller
         }
     }
 }
+
+// public function create_menu()
+// {
+//     $data['judul'] = 'Create New Menu'; 
+//     $data['categories'] = $this->product_model->get_category();
+//     $name = $this->input->post('name');
+//     $this->db->where('name', $name);
+//     $query = $this->db->get('menu');
+
+//     $this->form_validation->set_rules('category', 'category', 'required', array('required' => 'Category field must not be empty'));
+//     $this->form_validation->set_rules('name', 'name', 'required', array('required' => 'Category field must not be empty'));
+
+//     if ($this->form_validation->run() === FALSE) {
+//         $this->load->view('templates/header', $data);
+//         $this->load->view('product/add_product', $data);
+//         $this->load->view('templates/footer');
+
+//         $this->session->set_flashdata('flash ', 'Create New Menu Fail!');
+//         // redirect('product');
+//     } else {
+//         if ($query->num_rows() > 0) {
+//             $this->session->set_flashdata('flash', 'Data already exist');
+//             redirect('product');
+//         } else {
+//             $category = $this->input->post('category');
+//             $name = $this->input->post('name');
+//             $session_name = $this->session->userdata('fullname');
+//             $admin_id = $this->product_model->get_admin_id($session_name);
+
+//             $this->product_model->create_menu($category, $name, $admin_id);
+//             $this->session->set_flashdata('flash ', 'Create New Menu Succeed!');
+//             redirect('product');
+//         }
+//     }
+// }

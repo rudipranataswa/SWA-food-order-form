@@ -11,12 +11,12 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="<?php echo base_url('product/update_menu/'. $menu['menu_id']); ?>" method="post" class="form-horizontal" id="menu_form">
+								<input value="<?= $this->uri->segment(3); ?>" type="hidden" id="hf-id" name="hf-id" placeholder="<?= $this->uri->segment(3); ?>" class="form-control" readonly>
 								<!-- <div class="row form-group">
 									<div class="col col-md-3">
 										<label for="hf-id" class=" form-control-label">ID</label>
 									</div>
 									<div class="col-12 col-md-9">
-										<input value="<?= $this->uri->segment(3); ?>" type="int" id="hf-id" name="hf-id" placeholder="<?= $this->uri->segment(3); ?>" class="form-control" readonly>
 									</div>
 								</div> -->
 								<div class="row form-group">
@@ -38,7 +38,7 @@
 										<label for="hf-menu" class=" form-control-label">Menu name<span class="text-danger">*</span></label>
 									</div>
 									<div class="col col-6">
-										<input type="text" id="name" name="name" value="<?= $menu['name']; ?>" class="form-control" required>
+										<input type="text" id="name" name="Name" value="<?= $menu['name']; ?>" class="form-control" required>
 									</div>
 								</div>
 							</form>

@@ -11,13 +11,13 @@
                         </div>
                         <div class="card-body card-block">
                             <form action="<?php echo site_url('Category/update_category'); ?>" method="post" class="form-horizontal" id="editForm">
+                                <input type="hidden" id="hf-id" name="id_number" value="<?= $this->uri->segment(3); ?>">
                                 <!-- <div class="row form-group">
                                     <div class="col col-sm-5">
                                         <label for="hf-id" class=" form-control-label">ID</label>
                                     </div>
                                     <div class="col col-sm-6">
                                         <input type="int" id="hf-id" name="id_number" placeholder="<?= $this->uri->segment(3); ?>" class="form-control" disabled>
-                                        <input type="hidden" id="hf-id" name="id_number" value="<?= $this->uri->segment(3); ?>">
                                     </div>
                                 </div> -->
                                 <div class="row form-group">
@@ -25,7 +25,15 @@
                                         <label for="hf-menu" class=" form-control-label">New Category<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col col-sm-6">
-                                        <input type="text" id="hf-menu" name="Category1" value="<?= $category_name; ?>" class="form-control" required>
+                                        <input type="text" id="hf-menu" name="Category" value="<?= $category['category']; ?>" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-sm-5">
+                                        <label for="hf-menu" class=" form-control-label">Sequence/Sort<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col col-sm-6">
+                                        <input type="text" id="hf-menu" name="Sort" value="<?= $category['Sort']; ?>" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="card-footer">

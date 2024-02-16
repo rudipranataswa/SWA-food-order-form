@@ -32,6 +32,7 @@
                                         <tr>
                                             <th>no</th>
                                             <th>category</th>
+                                            <th>sort</th>
                                             <th>edit</th>
                                             <th>delete</th>
                                         </tr>
@@ -42,6 +43,7 @@
                                             <tr class="tr-shadow">
                                                 <td><?= ++$page; ?></td>
                                                 <td><?= $cat['category']; ?></td>
+                                                <td><?= $cat['Sort']; ?></td>
                                                 <td>
                                                     <div class="table-data-feature">
                                                         <a class="item" data-toggle="tooltip" data-placement="top" title="Edit" href="<?= base_url(); ?>category/edit_category/<?= $cat['id']; ?>">
