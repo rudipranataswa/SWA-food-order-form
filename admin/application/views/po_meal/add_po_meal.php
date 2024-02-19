@@ -139,19 +139,56 @@
 										<br>
 
 										<div style="display: flex; flex-direction: column;" class="dailyset-detail pb-2">
-											<div class="protein-collapse pb-2">
-												<a class="btn btn-primary" data-toggle="collapse" href="#proteinMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
-													Protein Menu
-												</a>
 
-												<div class="collapse" id="proteinMenu">
+											<div class="protein-collapse pb-2">
+												<a class="btn btn-primary" data-toggle="collapse" href="#proteinMenu<?= $i ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+													Protein
+												</a>
+												<div class="collapse" id="proteinMenu<?= $i ?>">
 													<div class="card card-body">
 														<?php foreach ($protein as $proteins) : ?>
-															<div class="form-check">
-																<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-																<label class="form-check-label" for="flexRadioDefault1">
-																	<?php echo $proteins['name']; ?>
-																</label>
+															<div class="form-group row align-items-center">
+																<div class="col">
+																	<div class="form-check">
+																		<input class="form-check-input" type="radio" name="Protein_menu" id="dailysetRadio">
+																		<label class="form-check-label" for="flexRadioDefault1">
+																			<span class="text-dark"><?= wordwrap($proteins['name'], 25, "<br />\n", true) ?></span>
+																		</label>
+																	</div>
+																</div>
+																<div class="col">
+																	<input name="Price[<?= $i ?>]" name="Protein_price" type="number" style="width: 120px;" placeholder="Price..." class="form-control">
+																	<input name="Dates[<?= $i ?>]" id="dailysetDate<?= $i ?>" type="checkbox" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display:  ;" class="form-control">
+																</div>
+															</div>
+														<?php endforeach; ?>
+													</div>
+												</div>
+											</div>
+
+
+
+											<div class="sidedish-collapse pb-2">
+												<a class="btn btn-primary" data-toggle="collapse" href="#sidedishMenu<?= $i ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+													Side Dish
+												</a>
+
+												<div class="collapse" id="sidedishMenu<?= $i ?>">
+													<div class="card card-body">
+														<?php foreach ($sidedish as $side) : ?>
+															<div class="form-group row align-items-center">
+																<div class="col">
+																	<div class="form-check">
+																		<input class="form-check-input" type="radio" name="Sidedish_menu" id="sidedishRadio">
+																		<label class="form-check-label" for="flexRadioDefault1">
+																			<span class="text-dark"><?= wordwrap($side['name'], 25, "<br />\n", true) ?></span>
+																		</label>
+																	</div>
+																</div>
+																<div class="col">
+																	<input name="Price[<?= $i ?>]" name="Side_price" type="number" style="width: 120px;" placeholder="Price..." class="form-control">
+																	<input name="Dates[<?= $i ?>]" id="dailysetDate<?= $i ?>" type="checkbox" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display:  ;" class="form-control">
+																</div>
 															</div>
 
 														<?php endforeach; ?>
@@ -159,57 +196,82 @@
 												</div>
 											</div>
 
-											<div class="sidedish-collapse pb-2">
-												<a class="btn btn-primary" data-toggle="collapse" href="#sidedishMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
-													Side Dish Menu
-												</a>
-
-												<div class="collapse" id="sidedishMenu">
-													<div class="card card-body">
-														<?php foreach ($sidedish as $side) : ?>
-															<p><?php echo $side['name']; ?></p>
-														<?php endforeach; ?>
-													</div>
-												</div>
-											</div>
-
 											<div class="vegetable-collapse pb-2">
-												<a class="btn btn-primary" data-toggle="collapse" href="#vegetableMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
-													Vegetable Menu
+												<a class="btn btn-primary" data-toggle="collapse" href="#vegetableMenu<?= $i ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+													Vegetable
 												</a>
 
-												<div class="collapse" id="vegetableMenu">
+												<div class="collapse" id="vegetableMenu<?= $i ?>">
 													<div class="card card-body">
 														<?php foreach ($vegetable as $vegetables) : ?>
-															<p><?php echo $vegetables['name']; ?></p>
+															<div class="form-group row align-items-center">
+																<div class="col">
+																	<div class="form-check">
+																		<input class="form-check-input" type="radio" name="Vegetable_menu" id="vegetableRadio">
+																		<label class="form-check-label" for="flexRadioDefault1">
+																			<span class="text-dark"><?= wordwrap($vegetables['name'], 25, "<br />\n", true) ?></span>
+																		</label>
+																	</div>
+																</div>
+																<div class="col">
+																	<input name="Price[<?= $i ?>]" name="Vegetable_price" type="number" style="width: 120px;" placeholder="Price..." class="form-control">
+																	<input name="Dates[<?= $i ?>]" id="dailysetDate<?= $i ?>" type="checkbox" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display:  ;" class="form-control">
+																</div>
+															</div>
 														<?php endforeach; ?>
 													</div>
 												</div>
 											</div>
 
 											<div class="soup-collapse pb-2">
-												<a class="btn btn-primary" data-toggle="collapse" href="#soupMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
-													Soup Menu
+												<a class="btn btn-primary" data-toggle="collapse" href="#soupMenu<?= $i ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+													Soup
 												</a>
 
-												<div class="collapse" id="soupMenu">
+												<div class="collapse" id="soupMenu<?= $i ?>">
 													<div class="card card-body">
 														<?php foreach ($soup as $soups) : ?>
-															<p><?php echo $soups['name']; ?></p>
+															<div class="form-group row align-items-center">
+																<div class="col">
+																	<div class="form-check">
+																		<input class="form-check-input" type="radio" name="Soup_menu" id="soupRadio">
+																		<label class="form-check-label" for="flexRadioDefault1">
+																			<span class="text-dark"><?= wordwrap($soups['name'], 25, "<br />\n", true) ?></span>
+																		</label>
+																	</div>
+																</div>
+																<div class="col">
+																	<input name="Price[<?= $i ?>]" name="Soup_price" type="number" style="width: 120px;" placeholder="Price..." class="form-control">
+																	<input name="Dates[<?= $i ?>]" id="dailysetDate<?= $i ?>" type="checkbox" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display:  ;" class="form-control">
+																</div>
+															</div>
 														<?php endforeach; ?>
 													</div>
 												</div>
 											</div>
 
 											<div class="rice-collapse pb-2">
-												<a class="btn btn-primary" data-toggle="collapse" href="#riceMenu" role="button" aria-expanded="false" aria-controls="collapseExample">
-													Rice Menu
+												<a class="btn btn-primary" data-toggle="collapse" href="#riceMenu<?= $i ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+													Rice
 												</a>
 
-												<div class="collapse" id="riceMenu">
+												<div class="collapse" id="riceMenu<?= $i ?>">
 													<div class="card card-body">
 														<?php foreach ($rice as $rices) : ?>
-															<p><?php echo $rices['name']; ?></p>
+															<div class="form-group row align-items-center">
+																<div class="col">
+																	<div class="form-check">
+																		<input class="form-check-input" type="radio" name="Rice_menu" id="riceRadio">
+																		<label class="form-check-label" for="flexRadioDefault1">
+																			<span class="text-dark"><?= wordwrap($rices['name'], 25, "<br />\n", true) ?></span>
+																		</label>
+																	</div>
+																</div>
+																<div class="col">
+																	<input name="Price[<?= $i ?>]" name="Rice_price" type="number" style="width: 120px;" placeholder="Price..." class="form-control">
+																	<input name="Dates[<?= $i ?>]" id="dailysetDate<?= $i ?>" type="checkbox" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display:  ;" class="form-control">
+																</div>
+															</div>
 														<?php endforeach; ?>
 													</div>
 												</div>
@@ -228,14 +290,32 @@
 								<td rowspan="2" class="align-middle">Pasta</td>
 								<?php for ($i = 0; $i < 12; $i++) : ?>
 									<td class="pasta">
-										<select name="Pasta_parent[<?= $i ?>]" id="pasta<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate<?= $i ?>').checked = this.value !== '';">
-											<option disabled selected>Select Menu..</option>
-											<?php foreach ($pastas as $pasta) : ?>
-												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-											<?php endforeach; ?>
-										</select>
-										<input type="number" name="Pasta_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+										<div class="pasta-collapse pb-2">
+											<a class="btn btn-primary" data-toggle="collapse" href="#pastaMenu<?= $i ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+												Pasta Menu
+											</a>
+
+											<div class="collapse" id="pastaMenu<?= $i ?>">
+												<div class="card card-body">
+													<?php foreach ($pasta as $pastas) : ?>
+														<div class="form-group row align-items-center">
+															<div class="col">
+																<div class="form-check">
+																	<input class="form-check-input" type="radio" name="Pasta_menu" id="pastaRadio">
+																	<label class="form-check-label" for="flexRadioDefault1">
+																		<span class="text-dark"><?= wordwrap($pastas['name'], 25, "<br />\n", true) ?></span>
+																	</label>
+																</div>
+															</div>
+															<div class="col">
+																<input type="number" name="Pasta_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+																<input name="Dates[<?= $i ?>]" id="dailysetDate<?= $i ?>" type="checkbox" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display:  ;" class="form-control">
+															</div>
+														</div>
+													<?php endforeach; ?>
+												</div>
+											</div>
+										</div>
 									</td>
 								<?php endfor; ?>
 							</tr>
@@ -292,35 +372,32 @@
 								<td rowspan="2" class="align-middle">Breakfast and Stall</td>
 								<?php for ($i = 0; $i < 12; $i++) : ?>
 									<td class="breakfast">
-										<select name="Breakfast_parent[<?= $i ?>]" id="breakfast<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate<?= $i ?>').checked = this.value !== '';">
-											<option disabled selected>Select Menu..</option>
-											<?php foreach ($breakfasts as $breakfast) : ?>
-												<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-											<?php endforeach; ?>
-										</select>
-										<input type="number" name="Breakfast_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-										<br><br>
+										<div class="breakfast-collapse pb-2">
+											<a class="btn btn-primary" data-toggle="collapse" href="#breakfastMenu<?= $i ?>" role="button" aria-expanded="false" aria-controls="collapseExample">
+												Breakfast and Stall Menu
+											</a>
 
-										<select name="Breakfast_parent2[<?= $i ?>]" id="breakfast2<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate2<?= $i ?>').checked = this.value !== '';">
-											<option disabled selected>Select Menu..</option>
-											<?php foreach ($breakfasts as $breakfast) : ?>
-												<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-											<?php endforeach; ?>
-										</select>
-										<input type="number" name="Breakfast_price2[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-										<br><br>
-
-										<select name="Breakfast_parent3[<?= $i ?>]" id="breakfast3<?= $i ?>" class="form-control" onchange="document.getElementById('breakfastDate3<?= $i ?>').checked = this.value !== '';">
-											<option disabled selected>Select Menu..</option>
-											<?php foreach ($breakfasts as $breakfast) : ?>
-												<option value="<?= $breakfast['id'] ?>"><?= $breakfast['name'] ?></option>
-											<?php endforeach; ?>
-										</select>
-										<input type="number" name="Breakfast_price3[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-										<br><br>
+											<div class="collapse" id="breakfastMenu<?= $i ?>">
+												<div class="card card-body">
+													<?php foreach ($breakfast as $breakfasts) : ?>
+														<div class="form-group row align-items-center">
+															<div class="col">
+																<div class="form-check">
+																	<input class="form-check-input" type="radio" name="Breakfast_menu" id="breakfastRadio">
+																	<label class="form-check-label" for="flexRadioDefault1">
+																		<span class="text-dark"><?= wordwrap($breakfasts['name'], 25, "<br />\n", true) ?></span>
+																	</label>
+																</div>
+															</div>
+															<div class="col">
+																<input type="number" name="Breakfast_price[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+																<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="breakfastDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+															</div>
+														</div>
+													<?php endforeach; ?>
+												</div>
+											</div>
+										</div>
 									</td>
 								<?php endfor; ?>
 							</tr>

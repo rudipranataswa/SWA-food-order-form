@@ -32,6 +32,8 @@ class Po_meal extends CI_Controller
 		$data['vegetable'] = $this->po_meal_model->get_vegetable_menus();
 		$data['soup'] = $this->po_meal_model->get_soup_menus();
 		$data['rice'] = $this->po_meal_model->get_rice_menus();
+		$data['pasta'] = $this->po_meal_model->get_pasta_menus();
+		$data['breakfast'] = $this->po_meal_model->get_breakfast_menus();
 		$this->load->view('templates/header', $data);
 		$this->load->view('po_meal/add_po_meal', $data);
 		$this->load->view('templates/footer');

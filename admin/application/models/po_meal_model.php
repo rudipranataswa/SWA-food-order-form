@@ -93,6 +93,24 @@ class Po_meal_model extends CI_Model
 		return $query->result_array();
 	}
 
+	public function get_pasta_menus()
+	{
+		$this->db->select('id, name, category_id');
+		$this->db->from('menu');
+		$this->db->where_in('category_id', 3);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function get_breakfast_menus()
+	{
+		$this->db->select('id, name, category_id');
+		$this->db->from('menu');
+		$this->db->where_in('category_id', 4);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
 	public function insertData($data)
 	{
 		$query = $this->db->query('SELECT id FROM po_purchase_meal_hdr ORDER BY id');
