@@ -26,6 +26,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                        <!-- With Detail Report Button -->
                         <!-- <?php // Initialize $no variable
                             foreach ($view_report as $vrpt) : 
                                 if($vrpt != null) { // Check if $vrpt is not null
@@ -66,19 +67,21 @@
                             <?php 
                                     $no++; // Increment $no variable
                                 }
-                        endforeach; ?> -->
+                        endforeach; ?> -->\
+                        <!-- Only Data Summary View -->
                         <?php
-                            $page = 0;
+                            // $page = 0;
                             foreach ($view_report as $vrpt) {
                                 if($vrpt != null) { // Check if $vrpt is not null
                                     foreach($report as $rpt) {
                         ?>  
                             <tr class="tr-shadow">
-                                <td><?= ++$page ?></td>
+                                <td><?= $vrpt['id'] ?></td>
                                 <td><?= $vrpt['student_name'] ?></td>
                                 <td><?= $vrpt['date_only'] ?></td>
                                 <td><?= $vrpt['time_only'] ?></td>
                                 <td>
+                                    <!-- Button for view summary by customer -->
                                     <div class="table-data-feature">
                                         <a
                                         class="item"

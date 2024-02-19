@@ -8,13 +8,6 @@
 						<div class="card-body">
 							<!-- DATA TABLE -->
 							<h3 class="title-5 m-b-35">PO Meal List</h3>
-							<!-- Flash message trigger -->
-							<?php if ($this->session->flashdata('message')) : ?>
-								<div class="alert alert-success" style="background-color: #4bb543; color: #ffff;">
-									<?php echo $this->session->flashdata('message'); ?>
-								</div>
-							<?php endif; ?>
-
 							<div class="table-data__tool">
 								<div class="table-data__tool-left">
 									<a class="au-btn au-btn-icon au-btn--green au-btn--small" href="<?= base_url(); ?>po_meal/add_po_meal">
@@ -37,10 +30,8 @@
 									</thead>
 
 									<tbody>
-										<!-- View Po Header Data -->
 										<?php foreach ($po_meal as $po) : ?>
 											<tr class="tr-shadow">
-												<!-- Button to see meal list in the po detail data based on title -->
 												<td style="vertical-align: middle;">
 													<a id="checkLink" href="<?= base_url(); ?>po_meal/history_po_meal/<?= $po['id']; ?>"><?= $po['id']; ?></a>
 												</td>
@@ -48,7 +39,6 @@
 												<td><?= $po['begin_date']; ?></td>
 												<td><?= $po['end_date']; ?></td>
 												<td>
-													<!-- Trigger Color -->
 													<?php if ($po['status'] == 'ACTIVE') : ?>
 														<span class="status--process"><?= $po['status']; ?></span>
 													<?php else : ?>
@@ -56,7 +46,6 @@
 													<?php endif; ?>
 												</td>
 												<td>
-													<!-- Edit PO Meal Button -->
 													<div class="table-data-feature">
 														<?php
 														$begin = new DateTime($po['begin_date']);
@@ -80,6 +69,7 @@
 														</a>
 													</div>
 												</td>
+
 												<td>
 													<div class="table-data-feature">
 														<button type="button" class="btn item" data-toggle="modal" data-target="#exampleModalCenter" title="Delete">
@@ -91,6 +81,10 @@
 											<tr class="spacer"></tr>
 										<?php endforeach; ?>
 									</tbody>
+
+
+
+
 								</table>
 							</div>
 							<!-- END DATA TABLE -->

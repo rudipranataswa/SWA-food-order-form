@@ -6,11 +6,11 @@
                 <div class="col-lg-6">
                     <!-- Input Size -->
                     <div class="card">
-                        <div class="card-header">
-                            <strong>Edit Category</strong>
-                        </div>
-                        <div class="card-body card-block">
-                            <form action="<?php echo site_url('Category/update_category'); ?>" method="post" class="form-horizontal" id="editForm">
+                        <form action="<?php echo site_url('Category/update_category'); ?>" method="post" class="form-horizontal" id="editForm">
+                            <div class="card-header">
+                                <strong>Edit Category <?= $this->uri->segment(3); ?></strong>
+                            </div>
+                            <div class="card-body card-block">
                                 <input type="hidden" id="hf-id" name="id_number" value="<?= $this->uri->segment(3); ?>">
                                 <!-- <div class="row form-group">
                                     <div class="col col-sm-5">
@@ -44,9 +44,9 @@
                                         <i class="fa fa-dot-circle-o"></i> Submit
                                     </button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

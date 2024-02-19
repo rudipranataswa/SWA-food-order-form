@@ -6,10 +6,8 @@ class Report extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // Load Model
         $this->load->model('report_model');
 		$this->load->database();
-        // Login Validator
         if (!$this->session->userdata('logged_in')) {
             // Redirect to login page
             redirect('login');
@@ -17,12 +15,10 @@ class Report extends CI_Controller
         $this->check_timeout();
     }
 
-    // Timeout Website
     public function check_timeout()
     {
         $login_time = $this->session->userdata('login_time');
 
-        // Timeout after 1 hour
         if (isset($login_time) && time() - $login_time > 3600) {
             $this->session->set_flashdata('timeout', 'Your session has expired due to inactivity.');
             $this->session->sess_destroy();
@@ -32,10 +28,8 @@ class Report extends CI_Controller
         }
     }
 
-    // Load Report View Index from PO Purchase Header
     public function index() 
     {
-        // Pagination Config
         $config['base_url'] = base_url('po_meal/index');
 		$config['total_rows'] = $this->db->count_all('po_purchase_meal_hdr');
 		$config['per_page'] = 10;
@@ -45,63 +39,33 @@ class Report extends CI_Controller
         $data['judul'] = 'Report';
         $data['page'] = $this->uri->segment(3);
         $data['report'] = $this->report_model->get_report($config['per_page'], $data['page']);
-
         $this->load->view('templates/header', $data);
         $this->load->view('report/index', $data);    
         $this->load->view('templates/footer');
     }
 
-    // Load Customer from PO Purchase Header
     public function view_report($id) 
     {
-        // Get all IDs
-        $this->db->select('id');
-        $this->db->where('po_purchase_meal_hdr_id', $id);
-        // $this->db->order_by('id', 'ASC');
-        $all_ids = $this->db->get('order_hdr')->result_array();
-
-        // Convert the result to a simple array of IDs
-        $ids = array_column($all_ids, 'id');
-
-        // print_r($ids); exit;
-
-        // Pagination Config
         $config['base_url'] = base_url('po_meal/view_report');
-        $config['total_rows'] = count($ids);
-        $config['per_page'] = 10;
+		$config['total_rows'] = $this->db->count_all('order_hdr');
+		$config['per_page'] = 10;
 
-        // Get the page number from the URL
-        $page = $this->uri->segment(4) ? $this->uri->segment(4) : 0;
-
-        // Calculate the start index for the array slice
-        $start_index = $page * $config['per_page'];
-
-        // Get the IDs for the current page
-        $page_ids = array_slice($ids, $start_index, $config['per_page']);
-
-        // // Pagination Config
-        // $config['base_url'] = base_url('po_meal/view_report');
-		// $config['total_rows'] = $this->db->count_all('order_hdr', $id);
-		// $config['per_page'] = 10;
-
-        // // Get the page number from the URL
-        // $page = $this->uri->segment(4) ? $this->uri->segment(4) : 0;
-
-        // // Calculate the start ID for the query
-        // $start_id = $page * $config['per_page'];
-
-        $this->pagination->initialize($config);
+		$this->pagination->initialize($config);
 
         $data['judul'] = 'View Report';
-        $data['page'] = $page;
-        $data['view_report'] = $this->report_model->get_view_report($page_ids); // $id, $config['per_page'], $start_id
+        $data['page'] = $this->uri->segment(3);
+        $data['view_report'] = $this->report_model->get_view_report($config['per_page'], $data['page'], $id);
         $data['report'] = $this->report_model->get_dates($id);
 
+        // $config['base_url'] = base_url('Holiday/index');
+		// $config['total_rows'] = $this->db->count_all('holiday');
+		// $config['per_page'] = 10;
+        
 		// $this->pagination->initialize($config);
-        // $data['judul'] = 'View Report';
-        // $data['page'] = $this->uri->segment(4);
-        // $data['view_report'] = $this->report_model->get_view_report($id, $config['per_page'], $data['page']);
-        // $data['report'] = $this->report_model->get_dates($id);
+        
+        // $data['judul'] = 'Holiday';
+        // $data['page'] = $this->uri->segment(3);
+        // $data['holiday'] = $this->holiday_model->paginate($config['per_page'], $data['page']);
 
         foreach ($data['view_report'] as &$vrpt) {
             $datetime = $vrpt['submitted_date'];
@@ -141,14 +105,11 @@ class Report extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    // Load summary from per customer order
     public function summary() 
     {
-        // Take id from link url
         $data['id'] = $this->uri->segment(3);
         $data['summary_id'] = $this->uri->segment(4);
 
-        // Load data like holiday, po dates and data for summary
         $data = array(
             'holidays' => $this->report_model->get_holidays(),
             'dates' => $this->report_model->get_dates($data['id']),
@@ -170,8 +131,6 @@ class Report extends CI_Controller
         
         // Remove duplicates from the po_dates array
         $po_dates = array_unique($po_dates);
-        sort($po_dates);
-        // print_r($po_dates); exit;
         
         // Add the po_dates array to the data array
         $data['po_dates'] = $po_dates;

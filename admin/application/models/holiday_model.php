@@ -7,6 +7,7 @@ class Holiday_model extends CI_Model
         $this->load->database();
     }
 
+    // Model for Holiday Data
     public function get_holiday($slug = FALSE)
     {
         if ($slug === FALSE) {
@@ -18,12 +19,14 @@ class Holiday_model extends CI_Model
         return $query->row_array();
     }
 
+    // Model for Get Data by Id
     public function get_by_id($id)
     {
         return $this->db->get_where('holiday', ['id' => $id])->row_array();
     }
 
-    public function paginate($limit, $start)
+    // Model for Holiday Index
+    public function index($limit, $start)
     {
         $this->db->limit($limit, $start);        
         $this->db->select('*');
@@ -32,6 +35,7 @@ class Holiday_model extends CI_Model
 		return $query->result_array();
     }
 
+    // Model for get admin fullname 
     public function get_admin_id($fullname)
     {
         $this->db->select('id');
@@ -48,6 +52,7 @@ class Holiday_model extends CI_Model
         }
     }
 
+    // Model for Add Holiday Data
     public function add_holiday_data($admin_id)
     {
         $this->db->select_max('id');
@@ -65,19 +70,21 @@ class Holiday_model extends CI_Model
         $this->db->insert('holiday', $data);
     }
 
+    // Model for Edit Holiday Data
     public function edit_holiday_data($id, $data, $admin_id)
     {
         $data = [
             "date" => $this->input->post('date', true),
             "description" => $this->input->post('description', true),
             'modified_by' => $admin_id,
-            'modified_date' => date('Y-m-d H:i:s', strtotime('+6 hours'))
+            'modified_on' => date('Y-m-d H:i:s', strtotime('+6 hours'))
         ];
 
         $this->db->where('id', $id);
         $this->db->update('holiday', $data);
     }
     
+    // Model for Delete Holiday Data
     public function delete_holiday_data($id)
     {
         $this->db->where('id', $id);

@@ -25,6 +25,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <!-- Data View -->
                                         <?php
                                             foreach ($report as $rpt) : 
                                                 if($rpt != null) { // Check if $vrpt is not null
@@ -35,6 +36,7 @@
                                                     <td><?= $rpt['begin_date']; ?></td>
                                                     <td><?= $rpt['end_date']; ?></td>
                                                     <td>
+                                                        <!-- View All Customer by Id Button -->
                                                         <div class="table-data-feature">
                                                             <a
                                                             class="item"

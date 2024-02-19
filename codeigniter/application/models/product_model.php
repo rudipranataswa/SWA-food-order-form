@@ -7,6 +7,7 @@ class Product_model extends CI_Model
                 $this->load->database();
         }
 
+        // Model for get Menu data
         public function get_product($slug = FALSE)
         {
                 if ($slug === FALSE) {
@@ -18,6 +19,7 @@ class Product_model extends CI_Model
                 return $query->row_array();
         }
 
+        // Model for Menu Index View Data
         public function paginate($limit, $start, $keyword = null) //
         {
                 $this->db->limit($limit, $start);
@@ -34,6 +36,7 @@ class Product_model extends CI_Model
                 return $query->result_array(); //'menu', $limit, $start, $keyword
         } 
 
+        // Model for get all category data
         public function get_category()
         {
                 $this->db->select('*');
@@ -42,6 +45,7 @@ class Product_model extends CI_Model
                 return $query->result_array();
         }
 
+        // Model for get status which is active in po header
         public function get_dates($slug = FALSE)
         {
                 if ($slug === FALSE) {
@@ -54,6 +58,7 @@ class Product_model extends CI_Model
                 return $query->row_array();
         }
 
+        // Model for get admin fullname
         public function get_admin_id($fullname)
         {
                 $this->db->select('id');
@@ -70,6 +75,7 @@ class Product_model extends CI_Model
                 }
         }
 
+        // Model for Add Menu Data
         public function create_menu($category, $name, $admin_id)
 	{
                 $this->db->select_max('id');
@@ -88,6 +94,7 @@ class Product_model extends CI_Model
                 return $this->db->insert('menu', $data);
 	}
 
+        // Model for Edit Menu Data
 	public function update_menu($id, $category_id, $name, $admin_id)
 	{
 		$data = array(
@@ -101,6 +108,7 @@ class Product_model extends CI_Model
 		return $this->db->update('menu', $data);
 	}
 
+        // Model for Delete menu Data
 	public function delete_menu($id)
 	{
                 $this->db->where('id', $id);

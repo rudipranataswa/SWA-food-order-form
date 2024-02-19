@@ -30,7 +30,6 @@
 			<div class="row form-group">
 				<div class="col-lg-6">
 					<h3 class="title-5 m-b-35">New PO Meal</h3>
-					<!-- Flash message trigger -->
 					<?php if ($this->session->flashdata('message')) { ?>
 						<div class="alert alert-info" style="background-color: #4bb543; color: #ffff;">
 							<?php echo $this->session->flashdata('message'); ?> <br>
@@ -38,16 +37,18 @@
 						</div>
 					<?php } ?>
 
+
+
 					<div class="card">
 						<div class="card-header">
 							<strong>PO Meal Detail</strong>
 						</div>
-						<!-- Form for add new PO Header -->
+
 						<form action="<?php echo site_url('Po_meal/submit'); ?>" method="post" class="form-horizontal" id="productForm">
 							<div class="card-body card-block">
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class="form-control-label">Title <span class="required">*</span></label>
+										<label for="input-normal" class="form-control-label">Title<span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
 										<input type="text" id="input-normal" name="Title" placeholder="Type here..." class="form-control" required>
@@ -55,7 +56,7 @@
 								</div>
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">Begin Date <span class="required">*</span></label>
+										<label for="input-normal" class=" form-control-label">Begin Date<span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
 										<input type="date" id="input-normal" name="Begin" placeholder="Type here..." class="form-control" required>
@@ -63,7 +64,7 @@
 								</div>
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">End Date <span class="required">*</span></label>
+										<label for="input-normal" class=" form-control-label">End Date<span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
 										<input type="date" id="input-normal" name="End" placeholder="Type here..." class="form-control" required>
@@ -71,7 +72,7 @@
 								</div>
 								<div class="row form-group">
 									<div class="col col-sm-5">
-										<label for="input-normal" class=" form-control-label">Status <span class="required">*</span></label>
+										<label for="input-normal" class=" form-control-label">Status<span class="required">*</span></label>
 									</div>
 									<div class="col col-sm-6">
 										<select name="Status" id="input-normal" class="form-control" required>
@@ -81,9 +82,9 @@
 									</div>
 								</div>
 							</div>
-							<!-- Submit button -->
+
 							<div class="generate-btn ml-3 mb-3">
-								<button type="button" class="btn btn-secondary btn-success">Generate</button>
+								<button type="button" class="btn btn-secondary">Generate</button>
 							</div>
 					</div>
 
@@ -121,7 +122,6 @@
 						<!-- Daily Set -->
 						<tbody>
 							<tr>
-								<!-- Add Daily Set Row -->
 								<td rowspan="2" class="align-middle">Daily Set</td>
 								<?php for ($i = 0; $i < 12; $i++) : ?>
 									<td class="dailyset">
@@ -151,9 +151,10 @@
 							</tr>
 						</tbody>
 
+
+
 						<tbody>
 							<tr>
-								<!-- Add Pasta Row -->
 								<td rowspan="2" class="align-middle">Pasta</td>
 								<?php for ($i = 0; $i < 12; $i++) : ?>
 									<td class="pasta">
@@ -171,52 +172,53 @@
 						</tbody>
 
 						<!--
-							<select name="Pasta_parent2[<?= $i ?>]" id="pasta2<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate2<?= $i ?>').checked = this.value !== '';">
-								<option disabled selected>Select Menu..</option>
-								<?php foreach ($pastas as $pasta) : ?>
-									<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-								<?php endforeach; ?>
-							</select>
-							<input type="number" name="Pasta_price2[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-							<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-							<br><br>
+										<select name="Pasta_parent2[<?= $i ?>]" id="pasta2<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate2<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<input type="number" name="Pasta_price2[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+										<br><br>
 
 
-							<select name="Pasta_parent3[<?= $i ?>]" id="pasta3<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate3<?= $i ?>').checked = this.value !== '';">
-								<option disabled selected>Select Menu..</option>
-								<?php foreach ($pastas as $pasta) : ?>
-									<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-								<?php endforeach; ?>
-							</select>
-							<input type="number" name="Pasta_price3[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-							<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-							<br><br>
+										<select name="Pasta_parent3[<?= $i ?>]" id="pasta3<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate3<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<input type="number" name="Pasta_price3[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+										<br><br>
 
 
-							<select name="Pasta_parent4[<?= $i ?>]" id="pasta4<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate4<?= $i ?>').checked = this.value !== '';">
-								<option disabled selected>Select Menu..</option>
-								<?php foreach ($pastas as $pasta) : ?>
-									<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-								<?php endforeach; ?>
-							</select>
-							<input type="number" name="Pasta_price4[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-							<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-							<br><br>
+										<select name="Pasta_parent4[<?= $i ?>]" id="pasta4<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate4<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<input type="number" name="Pasta_price4[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+										<br><br>
 
 
-							<select name="Pasta_parent5[<?= $i ?>]" id="pasta5<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate5<?= $i ?>').checked = this.value !== '';">
-								<option disabled selected>Select Menu..</option>
-								<?php foreach ($pastas as $pasta) : ?>
-									<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
-								<?php endforeach; ?>
-							</select>
-							<input type="number" name="Pasta_price5[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
-							<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
-						-->
+										<select name="Pasta_parent5[<?= $i ?>]" id="pasta5<?= $i ?>" class="form-control" onchange="document.getElementById('pastaDate5<?= $i ?>').checked = this.value !== '';">
+											<option disabled selected>Select Menu..</option>
+											<?php foreach ($pastas as $pasta) : ?>
+												<option value="<?= $pasta['id'] ?>"><?= $pasta['name'] ?></option>
+											<?php endforeach; ?>
+										</select>
+										<input type="number" name="Pasta_price5[<?= $i ?>]" placeholder="Enter price.." class="form-control mt-2">
+										<input name="Dates[<?= $i ?>][<?= $i ?>]" type="checkbox" id="pastaDate<?= $i ?>" value="<?= isset($dates[$i]) ? $dates[$i] : '' ?>" style="width: 30%; margin-left: 7px; display: none;" class="form-control">
+											-->
+
+
 
 						<tbody>
 							<tr class="tr">
-								<!-- Add Breakfast and Stall Row -->
 								<td rowspan="2" class="align-middle">Breakfast and Stall</td>
 								<?php for ($i = 0; $i < 12; $i++) : ?>
 									<td class="breakfast">
@@ -261,8 +263,8 @@
 		</div>
 		<div class="row form-group">
 			<div class="col-md-12">
-				<!-- Submit All Menu Input -->
 				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter" onclick="return validatePrices()">Submit</button>
+
 			</div>
 		</div>
 	</div>

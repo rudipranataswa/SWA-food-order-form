@@ -3,10 +3,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Category extends CI_Controller
 {
+    // Load Model and Validator
     public function __construct()
     {
         parent::__construct();
+        // Load Model
         $this->load->model('category_model'); 
+        // Log In Validator
         if (!$this->session->userdata('logged_in')) {
             // Redirect to login page
             redirect('login');
@@ -14,10 +17,12 @@ class Category extends CI_Controller
         $this->check_timeout();
     }
 
+    // Timeout Website
     public function check_timeout()
     {
         $login_time = $this->session->userdata('login_time');
 
+        // Session End after 1 hour
         if (isset($login_time) && time() - $login_time > 3600) {
             $this->session->set_flashdata('timeout', 'Your session has expired due to inactivity.');
             $this->session->sess_destroy();
@@ -27,19 +32,20 @@ class Category extends CI_Controller
         }
     }
     
+    // Index View Controller
     public function index()
     {
+        $data['judul'] = 'Category';
+
+        // Pagination Config
         $config['base_url'] = base_url('category/index');
         $config['total_rows'] = $this->db->count_all('category');
         $config['per_page'] = 10;
-
-        $data['judul'] = 'Category';
         $data['page'] = $this->uri->segment(3);
-
         $this->pagination->initialize($config);
+        $data['category_item'] = $this->category_model->paginate($config['per_page'], $data['page']);
 
-        $data['category_item'] = $this->category_model->paginate($config['per_page'], $this->uri->segment(3));
-
+        // Loading Index View
         $this->load->view('templates/header', $data);
         $this->load->view('category/index', $data);
         $this->load->view('templates/footer');
@@ -50,15 +56,22 @@ class Category extends CI_Controller
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
     }
 
+    // Load Add Category View and Function
     public function add_category()
     {
         $data['judul'] = 'Create New Category';
+
+        // Load Input Value
         $category = $this->input->post('Category');
         $sort = $this->input->post('Sort');
+
+        // Condition for Exist Data
         $this->db->where('category', $category);
         $query = $this->db->get('category');
+
         $this->form_validation->set_rules('Category', 'Category', 'required', array('required' => 'Category field must not be empty'));
 
+        // Form Empty Validator
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('category/add_category', $data);
@@ -67,10 +80,12 @@ class Category extends CI_Controller
             $this->session->set_flashdata('flash ', 'Create New Category Fail!');
             // redirect('category');
         } else {
+            // Flash Message for Data Existed
             if ($query->num_rows() > 0) {
                 $this->session->set_flashdata('flash', 'Data Already Exist');
                 redirect('category');
             } else {
+                // Run add new data
                 $category = $this->input->post('Category');
                 $session_name = $this->session->userdata('fullname');
                 $admin_id = $this->category_model->get_admin_id($session_name);
@@ -82,6 +97,7 @@ class Category extends CI_Controller
         }
     }
 
+    // Load Edit Category View 
     public function edit_category()
     {
         $data['id'] = $this->uri->segment(3);
@@ -123,8 +139,10 @@ class Category extends CI_Controller
     //     }
     // }
         
+    // Update Category Function
     public function update_category()
     {
+        // Load Input Data
         $id = $this->input->post('id_number');
         $new_category = $this->input->post('Category');
         $sort = $this->input->post('Sort');
@@ -141,6 +159,7 @@ class Category extends CI_Controller
             redirect('category');
         }
 
+        // Check for category that exist in PO Purchase
         $this->db->where('id_category', $id);
         $query1 = $this->db->get('po_purchase_meal_dtl');
 
@@ -149,17 +168,21 @@ class Category extends CI_Controller
             redirect('category');
         } 
 
+        // When if function is not meet, it go to this edit programm below 
         $this->category_model->update_category($id, $new_category, $sort, $admin_id);
         $this->session->set_flashdata('flash', 'Edit Category Succeed!');
         redirect('category');
     }
 
 
-
+    // Delete Category Function
     public function delete_category()
     {
+        // Checking id category
         $id = $this->input->post('id_number');
         $result = $this->category_model->delete_category($id);
+
+        // Check for category that exist in PO Purchase
         $this->db->where('id_category', $id);
         $query = $this->db->get('po_purchase_meal_dtl');
 
@@ -168,6 +191,7 @@ class Category extends CI_Controller
             redirect('category');
         } 
 
+        // Delete function
         $this->category_model->delete_category($id);
         $this->session->set_flashdata('flash', 'Success: Menu deleted');
         redirect('category');

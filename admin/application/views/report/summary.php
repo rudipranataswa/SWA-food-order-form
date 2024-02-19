@@ -174,7 +174,7 @@
                                             $date_end = DateTime::createFromFormat('Y-m-d', end($po_dates));
                                             $formatted_date_end = $date_end->format('d M Y');
                                             // echo '<div class="form-group">';
-                                            $total = 'IDR ' . number_format($total_price, 0, ',', '.');
+                                            $total = '<strong>IDR ' . number_format($total_price, 0, ',', '.') . '</strong>';
                                             echo '<label class="form-control-label">Sub Total : ' . $total . '</label></br></br>';
                                             echo '<label class="form-control-label">The total amount need to be transferred to our School Account 0000554103 (Bank Sinarmas) or 4970350018 (BCA) is ' . $total . '</label></br></br>';
                                             echo '<label class="form-control-label">Please kindly send the payment proof of the pre order meal to <a href="mailto:finance@swa-jkt.com">finance@swa-jkt.com</a> or <a href="mailto:ervi_liu@swa-jkt.com">ervi_liu@swa-jkt.com</a> , 

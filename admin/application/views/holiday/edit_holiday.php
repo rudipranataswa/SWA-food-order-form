@@ -8,7 +8,7 @@
                     <div class="card">
                         <form action="<?php echo base_url("holiday/update_holiday/" . $holiday['id']); ?>" method="post" class="form-horizontal" id="holiday_form">
                             <div class="card-header">
-                                <strong>Edit holiday</strong>
+                                <strong>Edit Holiday <?php echo $holiday['id']; ?></strong>
                             </div>
                             <div class="card-body card-block">
                                 <!-- <div class="row form-group">

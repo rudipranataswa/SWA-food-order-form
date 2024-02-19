@@ -12,6 +12,7 @@
           <div class="card">
             <div class="card-body">
               <h3 class="title-5 m-b-35">Menu List</h3>
+              <!-- Flash message for trigger -->
               <?php if($this->session->flashdata('flash')): ?>
                 <div class="alert alert-info" id="flashdata" >
                   <?php echo $this->session->flashdata('flash'); ?>
@@ -19,6 +20,7 @@
               <?php endif; ?> 
               <!-- DATA TABLE -->
               <div class="table-data__tool">
+                <!-- Add Menu Button -->
                 <div class="table-data__tool-left">
                   <a
                     class="au-btn au-btn-icon au-btn--green au-btn--small"
@@ -28,6 +30,7 @@
                   </a>
                 </div>
               </div>
+              <!-- Sort and Search Function -->
               <div class="form-inline col-md-6">
                 <form action="<?= base_url('product')?>" method="post" class="form-inline">
                   <div class="form-group mb-2">
@@ -75,6 +78,7 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <!-- Data View -->
                     <?php 
                       foreach ($product as $pro) : ?>
                       <tr class="tr-shadow">
@@ -82,6 +86,7 @@
                         <td><?= $pro['category']; ?></td>
                         <td><?= $pro['name']; ?></td>
                         <td>
+                          <!-- Edit button -->
                           <div class="table-data-feature">
                             <a 
                               class="item" 
@@ -94,6 +99,7 @@
                           </div>
                         </td>
                         <td>
+                          <!-- Delete button -->
                           <div class="table-data-feature">
                             <form action="<?= base_url('product/delete_menu'); ?>" method="post" class="form-horizontal">
                               <input type="hidden" name="id" value="<?= $pro['menu_id']; ?>">

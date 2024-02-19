@@ -13,12 +13,14 @@
                         <div class="card-body">
                             <!-- DATA TABLE -->
                             <h3 class="title-5 m-b-35">Category List</h3>
+                            <!-- Flash message for trigger -->
                             <?php if ($this->session->flashdata('flash')) : ?>
                                 <div class="alert alert-info" id="flashdata">
                                     <?php echo $this->session->flashdata('flash'); ?>
                                 </div>
                             <?php endif; ?>
                             <div class="table-data__tool">
+                                <!-- Add category button -->
                                 <div class="table-data__tool-left">
                                     <a class="au-btn au-btn-icon au-btn--green au-btn--small" 
                                         href="<?= base_url(); ?>category/add_category">
@@ -38,6 +40,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <!-- Data View -->
                                         <?php 
                                         foreach ($category_item as $cat) : ?>
                                             <tr class="tr-shadow">
@@ -45,6 +48,7 @@
                                                 <td><?= $cat['category']; ?></td>
                                                 <td><?= $cat['Sort']; ?></td>
                                                 <td>
+                                                    <!-- Edit category button -->
                                                     <div class="table-data-feature">
                                                         <a class="item" data-toggle="tooltip" data-placement="top" title="Edit" href="<?= base_url(); ?>category/edit_category/<?= $cat['id']; ?>">
                                                             <i class="zmdi zmdi-edit"></i>
@@ -53,6 +57,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="table-data-feature">
+                                                        <!-- Delete category button  -->
                                                         <form action="<?= base_url(); ?>category/delete_category" method="post" id="deleteForm<?= $cat['id']; ?>">
                                                             <input type="hidden" name="id_number" value="<?= $cat['id']; ?>">
                                                             <button type="button" class="btn item" data-toggle="modal" data-target="#deleteModal<?= $cat['id']; ?>" title="Delete">

@@ -6,11 +6,11 @@
 				<div class="col-lg-6">
 					<!-- Horizontal Form -->
 					<div class="card">
-						<div class="card-header">
-							<strong>Edit Menu</strong>
-						</div>
-						<div class="card-body card-block">
-							<form action="<?php echo base_url('product/update_menu/'. $menu['menu_id']); ?>" method="post" class="form-horizontal" id="menu_form">
+						<form action="<?php echo base_url('product/update_menu/'. $menu['menu_id']); ?>" method="post" class="form-horizontal" id="menu_form">
+							<div class="card-header">
+								<strong>Edit Menu <?= $this->uri->segment(3); ?></strong>
+							</div>
+							<div class="card-body card-block">
 								<input value="<?= $this->uri->segment(3); ?>" type="hidden" id="hf-id" name="hf-id" placeholder="<?= $this->uri->segment(3); ?>" class="form-control" readonly>
 								<!-- <div class="row form-group">
 									<div class="col col-md-3">
@@ -41,13 +41,13 @@
 										<input type="text" id="name" name="Name" value="<?= $menu['name']; ?>" class="form-control" required>
 									</div>
 								</div>
-							</form>
-						</div>
-						<div class="card-footer">
-							<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
-								<i class=""></i> Submit
-							</button>
-						</div>
+							</div>
+							<div class="card-footer">
+								<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+									<i class=""></i> Submit
+								</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

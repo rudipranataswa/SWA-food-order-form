@@ -12,6 +12,7 @@
           <div class="card">
             <div class="card-body">
               <h3 class="title-5 m-b-35">Holiday List</h3>
+              <!-- Flash message for trigger -->
               <?php if($this->session->flashdata('flash')): ?>
                 <div class="alert alert-info" id="flashdata" >
                   <?php echo $this->session->flashdata('flash'); ?>
@@ -19,6 +20,7 @@
               <?php endif; ?>              
               <!-- DATA TABLE -->
               <div class="table-data__tool">
+                <!-- Add holiday button -->
                 <div class="table-data__tool-left">
                   <a
                   class="au-btn au-btn-icon au-btn--green au-btn--small"
@@ -44,6 +46,7 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <!-- Data view -->
                     <?php 
                       foreach ($holiday as $hdy) : ?>
                       <tr class="tr-shadow">
@@ -51,6 +54,7 @@
                         <td><?= $hdy['date']; ?></td>
                         <td><?= $hdy['description']; ?></td>
                         <td>
+                          <!-- Button to edit holiday -->
                             <div class="table-data-feature">
                             <a
                                 class="item"
@@ -64,6 +68,7 @@
                             </div>
                         </td>
                         <td>
+                          <!-- Button to delete holiday -->
                           <div class="table-data-feature">
                             <form action="<?= base_url();?>holiday/delete_holiday" method="post" id="deleteForm<?= $hdy['id']; ?>">
                               <input type="hidden" name="id_number" value="<?= $hdy['id']; ?>">  

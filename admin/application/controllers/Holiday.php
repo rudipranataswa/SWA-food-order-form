@@ -27,6 +27,7 @@ class Holiday extends CI_Controller
         }
     }
 
+    // Function for Index Holiday view
     public function index()
     {
         $config['base_url'] = base_url('Holiday/index');
@@ -37,7 +38,7 @@ class Holiday extends CI_Controller
         
         $data['judul'] = 'Holiday';
         $data['page'] = $this->uri->segment(3);
-        $data['holiday'] = $this->holiday_model->paginate($config['per_page'], $this->uri->segment(3));
+        $data['holiday'] = $this->holiday_model->index($config['per_page'], $data['page']);
         
         $this->load->view('templates/header', $data);
         $this->load->view('holiday/index', $data);
@@ -49,6 +50,7 @@ class Holiday extends CI_Controller
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
     }
 
+    // Function for add holiday view and trigger
     public function add_holiday()
     {
         $data['judul'] = 'Create New Holiday';
@@ -65,20 +67,22 @@ class Holiday extends CI_Controller
             $this->load->view('templates/footer');
 
             $this->session->set_flashdata('flash', 'Create New Holiday Fail!');
-        } else {
-            if ($query->num_rows() > 0) {
-            $this->session->set_flashdata('flash', 'Data already exist');
-            redirect('holiday');
-            } else {
-                $session_name = $this->session->userdata('fullname');
-                $admin_id = $this->holiday_model->get_admin_id($session_name);
-                $this->holiday_model->add_holiday_data($admin_id);
-                $this->session->set_flashdata('flash', 'Create New Holiday Succeed!');
-                redirect('holiday');
-            }
+        } 
+
+        if ($query->num_rows() > 0) {
+        $this->session->set_flashdata('flash', 'Data already exist');
+        redirect('holiday');
         }
+
+        $session_name = $this->session->userdata('fullname');
+        $admin_id = $this->holiday_model->get_admin_id($session_name);
+        
+        $this->holiday_model->add_holiday_data($admin_id);
+        $this->session->set_flashdata('flash', 'Create New Holiday Succeed!');
+        redirect('holiday');
     }
 
+    // Function for edit holiday view
     public function edit_holiday($id)
     {
         $data['judul'] = 'Edit Holiday ' . $id;
@@ -89,6 +93,7 @@ class Holiday extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    // Function for edit holiday data
     public function update_holiday($id)
     {
         $data = array(
@@ -103,6 +108,7 @@ class Holiday extends CI_Controller
         redirect('holiday');
     }
 
+    // Function for delete holiday data
     public function delete_holiday()
     {
         $id = $this->input->post('id_number');

@@ -7,27 +7,45 @@ class Report_model extends CI_Model
         $this->load->database();
     }
 
-    public function get_report($slug = FALSE)
+	// Model for Index
+    public function get_report($limit, $start)
     {
-        if ($slug === FALSE) {
-            $query = $this->db->get('po_purchase_meal_hdr');
-            return $query->result_array();
-        }
-
-        $query = $this->db->get_where('po_purchase_meal_hdr', array('id' => $slug));
-        return $query->row_array();
-    }
-
-    public function get_view_report($id)
-	{
-		$this->db->select('*');
-		$this->db->from('order_hdr');
-		$this->db->where('po_purchase_meal_hdr_id', $id);
+        $this->db->limit($limit, $start);        
+        $this->db->select('*');
+		$this->db->from('po_purchase_meal_hdr');
 		$query = $this->db->get();
 		return $query->result_array();
+    }
+
+	// Model for Customer Report
+    public function get_view_report($ids) //, $limit, $start
+	{
+        $this->db->where_in('id', $ids);
+		$query = $this->db->get('order_hdr');
+		return $query->result_array();
+		// $this->db->limit($limit);
+		// $this->db->where('po_purchase_meal_hdr_id', $id);
+		// $this->db->where('id >=', $start);
+		// $this->db->order_by('id', 'ASC');
+		// $query = $this->db->get('order_hdr');
+		// return $query->result_array();
 	}
 
+	// public function get_view_report($limit, $start, $id)
+	// {
+	// 	$this->db->limit($limit, $start);        
+	// 	$this->db->select('*');
+	// 	$this->db->from('order_hdr');
+	// 	// $this->db->join('order_dtl', 'order_dtl.id_order = order_hdr.id');
+	// 	// $this->db->join('po_purchase_meal_dtl', 'po_purchase_meal_dtl.id = order_dtl.id_po_purchase_meal_dtl');
+	// 	$this->db->join('po_purchase_meal_hdr', 'po_purchase_meal_dtl.id_po_purchase_meal_hdr = po_purchase_meal_hdr.id');
+	// 	// $this->db->where('id_po_purchase_meal_hdr', $id);
+	// 	$this->db->where('po_purchase_meal_hdr_id', $id);
+	// 	$query = $this->db->get();
+	// 	return $query->result_array();
+	// }
 
+	// Model for Get Menu Data
     public function get_product($slug = FALSE)
 	{
 		if ($slug === FALSE) {
@@ -39,6 +57,7 @@ class Report_model extends CI_Model
 		return $query->row_array();
 	}
 
+	// Model for Get PO Schedule Date
     public function get_dates($id)
 	{
 		$this->db->select('*');
@@ -48,6 +67,34 @@ class Report_model extends CI_Model
 		return $query->result_array();
 	}
 
+	// Model for Summary Customer
+	public function summary($id)
+	{
+		$this->db->select(
+			'po_purchase_meal_dtl.id as id,
+			po_purchase_meal_dtl.price,
+			po_purchase_meal_dtl.date as po_date,
+			order_dtl.id_po_purchase_meal_dtl, 
+			order_dtl.id_po_purchase_meal_dtl, 
+			order_hdr.student_name,
+			order_hdr.submitted_date as date,
+			order_hdr.id as id_ord,
+			order_hdr.grade_level as grade,
+			menu.id as menu_id,
+			menu.name as menu,
+			category.category as category'
+		);
+		$this->db->from('order_dtl');
+		$this->db->join('po_purchase_meal_dtl', 'order_dtl.id_po_purchase_meal_dtl = po_purchase_meal_dtl.id');
+		$this->db->join('order_hdr', 'order_dtl.id_order = order_hdr.id');
+		$this->db->join('menu', 'menu.id = po_purchase_meal_dtl.id_menu');
+		$this->db->join('category', 'category.id = po_purchase_meal_dtl.id_category');
+		$this->db->where('order_hdr.id', $id);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	// Not used for the program
     public function get_menu_daily_set($id)
 	{
 		$this->db->select('po_purchase_meal_dtl.id, menu.name, po_purchase_meal_dtl.date, po_purchase_meal_dtl.price, po_purchase_meal_dtl.id_menu');
@@ -145,30 +192,6 @@ class Report_model extends CI_Model
 		return $query->result_array();
 	}
 
-    public function summary($id)
-    {
-        $this->db->select(
-			'po_purchase_meal_dtl.id as id,
-			po_purchase_meal_dtl.price,
-			po_purchase_meal_dtl.date as po_date,
-			order_dtl.id_po_purchase_meal_dtl, 
-			order_hdr.student_name,
-			order_hdr.submitted_date as date,
-			order_hdr.id as id_ord,
-			order_hdr.grade_level as grade,
-			menu.id as menu_id,
-			menu.name as menu,
-			category.category as category'
-		);
-        $this->db->from('order_dtl');
-        $this->db->join('po_purchase_meal_dtl', 'order_dtl.id_po_purchase_meal_dtl = po_purchase_meal_dtl.id');
-        $this->db->join('order_hdr', 'order_dtl.id_order = order_hdr.id');
-        $this->db->join('menu', 'menu.id = po_purchase_meal_dtl.id_menu');
-        $this->db->join('category', 'category.id = po_purchase_meal_dtl.id_category');
-		$this->db->where('order_hdr.id', $id);
-        $query = $this->db->get();
-		return $query->result_array();
-	}
 		
 
 	public function get_child_menus($id)
