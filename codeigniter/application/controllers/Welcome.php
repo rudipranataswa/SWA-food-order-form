@@ -84,14 +84,14 @@ class Welcome extends CI_Controller
 	public function summary()
 	{
 		// Fetch the summary data
-		$data['summary'] = $this->report_model->summary();
 		$data['id'] = $this->product_model->get_last_order_id();
 		$data['summary_id'] = $this->product_model->getActiveMealId();
 
-		// Add more data to the array without overwriting it
-		$data['holidays'] = $this->report_model->get_holidays();
-		$data['dates'] = $this->report_model->get_date($data['id']);
-		$data['judul'] = 'Summary';
+		$data = array(
+			'holidays' => $this->report_model->get_holidays(),
+			'dates' => $this->report_model->get_date($data['id']),
+			'summary' => $this->report_model->summary($data['summary_id'])
+		);
 
 		// Add the condition to the detail_report
 		$po_dates = array();
@@ -111,6 +111,6 @@ class Welcome extends CI_Controller
 		$data['po_dates'] = $po_dates;
 
 		// Load the view with the data
-		$this->load->view('report/summary', $data);
+		$this->load->view('summary', $data);
 	}
 }
