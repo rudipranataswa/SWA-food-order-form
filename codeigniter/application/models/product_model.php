@@ -127,9 +127,20 @@ class Product_model extends CI_Model
                 // Load the database library
                 $this->db->trans_start();
 
+                $this->db->select('id');
+                $this->db->from('po_purchase_meal_hdr');
+                $this->db->where('status', 'active');
+                $query = $this->db->get();
+
+                $row = $query->row();
+                if (isset($row)) {
+                        $id_po_purchse_meal_hdr = $row->id;
+                }
+
                 // Get form data
                 $data = array(
                         'email' => $this->input->post('Email'),
+                        'id_po_purchase_meal_hdr' => $id_po_purchse_meal_hdr,
                         'student_name' => $this->input->post('Name'),
                         'grade_level' => $this->input->post('Grade'),
                         'parent_phone_number' => $this->input->post('Phone_Number'),
@@ -193,6 +204,57 @@ class Product_model extends CI_Model
                 $this->db->select('id, email, student_name, grade_level, parent_phone_number');
                 $this->db->order_by('id', 'DESC');
                 $result = $this->db->get('order_hdr')->row();
-                $last_id = $result->id;
+                return $result;
+        }
+
+        public function get_date($id)
+        {
+                $this->db->select('*');
+                $this->db->from('po_purchase_meal_hdr');
+                $this->db->where('id', $id);
+                $query = $this->db->get();
+                return $query->result_array();
+        }
+
+        public function summary($id)
+        {
+                $this->db->select(
+                        'po_purchase_meal_dtl.id as id,
+                            po_purchase_meal_dtl.price,
+                            po_purchase_meal_dtl.date as po_date,
+                            order_dtl.id_po_purchase_meal_dtl, 
+                            order_hdr.student_name,
+                            order_hdr.submitted_date as date,
+                            order_hdr.id as id_ord,
+                            order_hdr.grade_level as grade,
+                            menu.id as menu_id,
+                            menu.name as menu,
+                            category.category as category'
+                );
+                $this->db->from('order_dtl');
+                $this->db->join('po_purchase_meal_dtl', 'order_dtl.id_po_purchase_meal_dtl = po_purchase_meal_dtl.id');
+                $this->db->join('order_hdr', 'order_dtl.id_order = order_hdr.id');
+                $this->db->join('menu', 'menu.id = po_purchase_meal_dtl.id_menu');
+                $this->db->join('category', 'category.id = po_purchase_meal_dtl.id_category');
+                $this->db->where('order_hdr.id', $id);
+                $query = $this->db->get();
+                return $query->result_array();
+        }
+
+        public function getActiveMealId()
+        {
+                $this->db->select('id');
+                $this->db->where('status', 'active');
+                $query = $this->db->get('po_purchase_meal_hdr');
+                $result = $query->row_array();
+                return $result ? $result['id'] : null;
+        }
+
+        public function get_last_order_id()
+        {
+                $this->db->select('id');
+                $this->db->order_by('id', 'DESC');
+                $result = $this->db->get('order_hdr')->row();
+                return $result ? $result->id : null;
         }
 }
